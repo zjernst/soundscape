@@ -34,11 +34,18 @@ By the end of Week 9, this app will, at minimum, satisfy the following criteria:
   - [ ] Adequate CSS styling
 
 ## Design Docs
-* [React Components]
-* [Flux Cycles]
-* [Wireframes]
-* [API endpoints]
-* [DB schema]
+* [React Components][components]
+* [Flux Cycles][flux-cycles]
+* [Wireframes][wireframes]
+* [API endpoints][api-endpoints]
+* [DB schema][schema]
+
+[components]: docs/components.md
+[flux-cycles]: docs/flux-cycles.md
+[api-endpoints]: docs/api-endpoints.md
+[schema]: docs/schema.md
+
+
 
 ## Implementation Timeline
 
