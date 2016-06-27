@@ -9,8 +9,6 @@ _**exactly**_ match the nesting of your routes.)
 
 * **App**
   * Navbar
-  * WelcomeIndex
-    * WelcomeIndexItem
   * EnvironmentsIndex
     * EnvironmentsIndexItem
   * **TrackIndex**
@@ -19,20 +17,27 @@ _**exactly**_ match the nesting of your routes.)
       * Search
       * Sort
     * **TrackDetail**
-      * TrackTags
       * TrackEdit
     * TrackForm
-  * RecentActivityIndex
-    * RecentlyAddedItem
-    * MemberActivityItem
-  * AdditionalInfoIndex
-    * AdditionalInfoIndexItem
-  * Business
   * **UserPage**
     * Profile
       * ProfilePic
       * UserStats
     * TrackIndex
+
+
+* ***BONUS***
+  * **App**
+    * WelcomeIndex
+      * WelcomeIndexItem
+    * RecentActivityIndex
+      * RecentlyAddedItem
+      * MemberActivityItem
+    * AdditionalInfoIndex
+      * AdditionalInfoIndexItem
+    * Business
+
+  * **UserPage**
     * CommunityIndex
       * CommunityIndexItem
 
@@ -41,7 +46,5 @@ _**exactly**_ match the nesting of your routes.)
 
 * **component:** `App` **path:** `/`
   * **component:** `TracksIndex` **path:** `environments/:environmentsId`
-    * **component:** `TrackDetail` **path:** `tracks/:trackId`
-  * **component:** `TracksIndex` **path:** none
     * **component:** `TrackDetail` **path:** `tracks/:trackId`
   * **component:** `UserPage` **path:** `users/:userId`

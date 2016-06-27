@@ -36,18 +36,18 @@
 - `GET /api/tracks/:id`
 - `PATCH /api/tracks/:id`
 - `DELETE /api/tracks/:id`
-- `GET /api/tracks/:id/environments`
+- `GET /api/environments/:id/tracks`
   - index of all tracks for an environment
-  - accepts pagination params
 
 ### Tags
 
 - A track's tags will be included in the environment show template
 - `GET /api/tags`
   - includes query param for typeahead suggestions
-- `POST /api/tracks/:track_id/tags`: add tag to environment by name
-- `DELETE /api/tracks/:track_id/tags/:tag_name`: remove tag from track by
-  name
+- Tags will be attached to tracks and created/destroyed on Track form
+
+
+* ***BONUS***
 
 ### Welcomes
 
