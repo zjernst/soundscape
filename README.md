@@ -28,17 +28,21 @@ By the end of Week 9, this app will, at minimum, satisfy the following criteria:
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
-- [ ] Upload/download tracks
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
 
 ## Design Docs
-* [React Components]
-* [Flux Cycles]
-* [Wireframes]
-* [API endpoints]
-* [DB schema]
+* [React Components][components]
+* [Flux Cycles][flux-cycles]
+* [Wireframes][wireframes]
+* [API endpoints][api-endpoints]
+* [DB schema][schema]
+
+[components]: docs/components.md
+[flux-cycles]: docs/flux-cycles.md
+[wireframes]: docs/wireframes.md
+[api-endpoints]: docs/api-endpoints.md
+[schema]: docs/schema.md
+
+
 
 ## Implementation Timeline
 
@@ -115,15 +119,15 @@ By the end of Week 9, this app will, at minimum, satisfy the following criteria:
 
 **Objective** Build out extras to help site feel alive and legitimate
 
-- implement and build out additional components, flux cycles, API for:
-  - [ ] welcome
-  - [ ] info
-  - [ ] community
 - [ ] Revisit styling
 - [ ] add transitions and other flourishes
 - [ ] implement more seed data, pump up site
 
 ### Bonus Features
+- implement and build out additional components, flux cycles, API for:
+  - [ ] welcome
+  - [ ] info
+  - [ ] community
 - [ ] community features
 - [ ] multiple sessions
 - [ ] purchase track functionality

@@ -5,6 +5,7 @@ column name    | data type | details
 ---------------|-----------|-----------------------
 id             | integer   | not null, primary key
 title          | string    | not null
+track_url      | string    | not null (hosted on CDN)
 description    | text      |
 location       | text      |
 rating         | float     | range 1-5, initialized null
@@ -17,6 +18,7 @@ column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
 title       | string    | not null
+image_url   | string    | not null
 description | string    |
 
 
@@ -39,6 +41,7 @@ column name     | data type | details
 ----------------|-----------|-----------------------
 id              | integer   | not null, primary key
 username        | string    | not null, indexed, unique
+profile_pic     | string    |
 password_digest | string    | not null
 session_token   | string    | not null, indexed, unique
 
@@ -49,6 +52,17 @@ id               | integer    | not null, primary key
 track_id         | integer    | not null, foreign key (references tracks), indexed
 user_id          | integer    | not null, foreign key (references users), indexed
 purchased        | boolean    | not null, defaults false
+
+## playlists
+column name      | data type  | details
+-----------------|------------|-----------------------
+id               | integer    | not null, primary key
+track_id         | integer    | not null, foreign key (references tracks), indexed
+user_id          | integer    | not null, foreign key (references users), indexed
+title            | string     | not null
+
+
+* ***BONUS***
 
 ## welcomes
 column name      | data type  | details
