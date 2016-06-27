@@ -38,7 +38,7 @@ By the end of Week 9, this app will, at minimum, satisfy the following criteria:
 
 [components]: docs/components.md
 [flux-cycles]: docs/flux-cycles.md
-[wireframes]: docs/wireframes.md
+[wireframes]: docs/wireframes
 [api-endpoints]: docs/api-endpoints.md
 [schema]: docs/schema.md
 
