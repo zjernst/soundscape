@@ -35,16 +35,13 @@ module.exports = {
     });
   },
 
-  fetchCurrentUser(success, complete) {
+  fetchCurrentUser(success) {
     $.ajax({
       url: 'api/session',
       method: 'GET',
-      success,
+      success: success,
       error: function(res) {
         console.log("error in SessionApiUtil#fetchCurrentUser")
-      },
-      complete: function() {
-        complete();
       }
     });
   }
