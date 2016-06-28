@@ -15,6 +15,7 @@ function _logout() {
 };
 
 SessionStore.__onDispatch = function(payload) {
+  debugger
   switch(payload.actionType) {
     case SessionConstants.LOGIN:
       _login(payload.user);
@@ -29,6 +30,10 @@ SessionStore.__onDispatch = function(payload) {
 
 SessionStore.currentUser = function() {
   return Object.assign({}, _currentUser);
+};
+
+SessionStore.isUserLoggedIn = function() {
+  return !!_currentUser.id;
 };
 
 module.exports = SessionStore;

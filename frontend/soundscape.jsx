@@ -11,6 +11,8 @@ const SessionApiUtil = window.SessionApiUtil = require('./util/session_api_util'
 const SessionActions = window.SessionActions = require('./actions/session_actions');
 const SessionStore = window.SessionStore = require('./stores/session_store');
 
+const LoginForm = require('./components/sessions/login_form');
+
 const App = React.createClass({
   render() {
     return(
@@ -25,6 +27,8 @@ const App = React.createClass({
 const appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
+      <Route path="/login" component={LoginForm} />
+      <Route path="/signup" component={LoginForm} />
     </Route>
   </Router>
 );

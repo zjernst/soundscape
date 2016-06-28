@@ -59,6 +59,8 @@
 	var SessionActions = window.SessionActions = __webpack_require__(254);
 	var SessionStore = window.SessionStore = __webpack_require__(231);
 
+	var LoginForm = __webpack_require__(256);
+
 	var App = React.createClass({
 	  displayName: 'App',
 	  render: function render() {
@@ -78,7 +80,12 @@
 	var appRouter = React.createElement(
 	  Router,
 	  { history: hashHistory },
-	  React.createElement(Route, { path: '/', component: App })
+	  React.createElement(
+	    Route,
+	    { path: '/', component: App },
+	    React.createElement(Route, { path: '/login', component: LoginForm }),
+	    React.createElement(Route, { path: '/signup', component: LoginForm })
+	  )
 	);
 
 	document.addEventListener("DOMContentLoaded", function () {
@@ -25992,16 +25999,13 @@
 	      }
 	    });
 	  },
-	  fetchCurrentUser: function fetchCurrentUser(success, _complete) {
+	  fetchCurrentUser: function fetchCurrentUser(success) {
 	    $.ajax({
 	      url: 'api/session',
 	      method: 'GET',
 	      success: success,
 	      error: function error(res) {
 	        console.log("error in SessionApiUtil#fetchCurrentUser");
-	      },
-	      complete: function complete() {
-	        _complete();
 	      }
 	    });
 	  }
@@ -26030,6 +26034,7 @@
 	};
 
 	SessionStore.__onDispatch = function (payload) {
+	  debugger;
 	  switch (payload.actionType) {
 	    case SessionConstants.LOGIN:
 	      _login(payload.user);
@@ -26044,6 +26049,10 @@
 
 	SessionStore.currentUser = function () {
 	  return Object.assign({}, _currentUser);
+	};
+
+	SessionStore.isUserLoggedIn = function () {
+	  return !!_currentUser.id;
 	};
 
 	module.exports = SessionStore;
@@ -32840,10 +32849,11 @@
 	  logout: function logout() {
 	    SessionApiUtil.logout(this.removeCurrentUser);
 	  },
-	  fetchCurrentUser: function fetchCurrentUser(complete) {
-	    SessionApiUtil.fetchCurrentUser(this.receiveCurrentUser, complete);
+	  fetchCurrentUser: function fetchCurrentUser() {
+	    SessionApiUtil.fetchCurrentUser(this.receiveCurrentUser);
 	  },
 	  receiveCurrentUser: function receiveCurrentUser(currentUser) {
+	    debugger;
 	    AppDispatcher.dispatch({
 	      actionType: SessionConstants.LOGIN,
 	      user: currentUser
@@ -32855,6 +32865,96 @@
 	    });
 	  }
 	};
+
+/***/ },
+/* 255 */,
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	var React = __webpack_require__(1);
+	var Link = __webpack_require__(168).Link;
+	var SessionActions = __webpack_require__(254);
+	var SessionStore = __webpack_require__(231);
+	var hashHistory = __webpack_require__(168).hashHistory;
+
+	var LoginForm = React.createClass({
+	  displayName: 'LoginForm',
+	  getInitialState: function getInitialState() {
+	    return { username: "", password: "" };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.sessionListener = SessionStore.addListener(this._redirectIfLoggedIn);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.sessionListener.remove();
+	  },
+	  _redirectIfLoggedIn: function _redirectIfLoggedIn() {
+	    if (SessionStore.isUserLoggedIn()) {
+	      hashHistory.push("/");
+	    }
+	  },
+	  _handleSubmit: function _handleSubmit(e) {
+	    e.preventDefault();
+	    var formData = { username: this.state.username, password: this.state.password };
+	    if (this.props.location.pathname === "/login") {
+	      SessionActions.login(formData);
+	    } else {
+	      SessionActions.signup(formData);
+	    }
+	  },
+	  formType: function formType() {
+	    return this.props.location.pathname.slice(1);
+	  },
+	  _update: function _update(property) {
+	    var _this = this;
+
+	    return function (e) {
+	      return _this.setState(_defineProperty({}, property, e.target.value));
+	    };
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'login-form-container' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        '~..~ Welcome to SoundScape ~..~'
+	      ),
+	      React.createElement(
+	        'h4',
+	        null,
+	        'Please ',
+	        this.formType()
+	      ),
+	      React.createElement(
+	        'form',
+	        { onSubmit: this._handleSubmit, className: 'login-form' },
+	        React.createElement(
+	          'label',
+	          null,
+	          'Username:'
+	        ),
+	        React.createElement('input', { type: 'text', value: this.state.username,
+	          onChange: this._update('username') }),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Password:'
+	        ),
+	        React.createElement('input', { type: 'password', value: this.state.password,
+	          onChange: this._update('password') }),
+	        React.createElement('input', { type: 'submit', value: this.formType() })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = LoginForm;
 
 /***/ }
 /******/ ]);
