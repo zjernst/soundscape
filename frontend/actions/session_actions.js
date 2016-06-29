@@ -27,7 +27,6 @@ module.exports = {
   },
 
   receiveCurrentUser(currentUser) {
-    debugger
     AppDispatcher.dispatch({
       actionType: SessionConstants.LOGIN,
       user: currentUser

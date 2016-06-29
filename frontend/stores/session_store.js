@@ -15,7 +15,6 @@ function _logout() {
 };
 
 SessionStore.__onDispatch = function(payload) {
-  debugger
   switch(payload.actionType) {
     case SessionConstants.LOGIN:
       _login(payload.user);

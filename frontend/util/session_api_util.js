@@ -1,7 +1,7 @@
 module.exports = {
   login(user, success, error) {
     $.ajax({
-      url: 'api/session',
+      url: '/api/session',
       type: 'POST',
       data: {user: user},
       success,
@@ -13,9 +13,9 @@ module.exports = {
 
   logout(success) {
     $.ajax({
-      url: 'api/session',
+      url: '/api/session',
       method: 'DELETE',
-      success,
+      success: success,
       error: function() {
         console.log("Logout error in session api util")
       }
@@ -37,7 +37,7 @@ module.exports = {
 
   fetchCurrentUser(success) {
     $.ajax({
-      url: 'api/session',
+      url: '/api/session',
       method: 'GET',
       success: success,
       error: function(res) {

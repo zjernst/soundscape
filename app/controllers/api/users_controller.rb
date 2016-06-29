@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-  
+
   def index
     @users = User.all
   end
@@ -11,6 +11,15 @@ class Api::UsersController < ApplicationController
       render "api/users/show"
     else
       render json @user.errors, status: 422
+    end
+  end
+
+  def show
+    @user = current_user
+    if @user
+      render 'api/users/show'
+    else
+      render json: nil, status: 404
     end
   end
 
