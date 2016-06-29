@@ -19,7 +19,7 @@ const LoginForm = React.createClass({
 
   _redirectIfLoggedIn() {
     if (SessionStore.isUserLoggedIn()) {
-      hashHistory.push("/");
+      hashHistory.push(`users/${SessionStore.currentUser().id}`);
     }
   },
 
@@ -34,7 +34,11 @@ const LoginForm = React.createClass({
   },
 
   formType() {
-    return this.props.location.pathname.slice(1);
+    if (this.props.location.pathname.slice(1) === "login") {
+      return "login"
+    } else {
+      return "signup"
+    }
   },
 
   _update(property) {
@@ -42,6 +46,13 @@ const LoginForm = React.createClass({
   },
 
   render() {
+    let altForm
+    if (this.formType() === "login") {
+      altForm = "signup"
+    } else {
+      altForm = "login"
+    }
+
     return(
       <div className="login-form-container">
         <h1>~..~ Welcome to SoundScape ~..~</h1>
@@ -55,6 +66,7 @@ const LoginForm = React.createClass({
                  onChange={this._update('password')} />
           <input type="submit" value={this.formType()} />
         </form>
+        <Link to={altForm}>{altForm}</Link>
       </div>
     )
   }

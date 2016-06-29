@@ -10,10 +10,10 @@ description    | text      |
 location       | text      |
 rating         | float     | range 1-5, initialized null
 artist_id      | integer   | not null, foreign key (references users), indexed
-environment_id | integer   | not null, foreign key (references trackbooks), indexed
+soundscape_id | integer   | not null, foreign key (references trackbooks), indexed
 
 
-## environments
+## soundscapes
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
