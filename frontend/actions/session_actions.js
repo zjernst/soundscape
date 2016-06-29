@@ -2,28 +2,31 @@ const AppDispatcher = require('../dispatcher/dispatcher');
 const SessionConstants = require('../constants/session_constants');
 const SessionApiUtil = require('../util/session_api_util');
 const hashHistory = require('react-router').hashHistory;
+const ErrorActions = require('./error_actions');
 
-module.exports = {
+const SessionActions = {
   signup(formData) {
     SessionApiUtil.signup(
       formData,
-      this.receiveCurrentUser
+      SessionActions.receiveCurrentUser,
+      ErrorActions.setErrors()
     );
   },
 
   login(formData) {
     SessionApiUtil.login(
       formData,
-      this.receiveCurrentUser
+      SessionActions.receiveCurrentUser,
+      ErrorActions.setErrors
     );
   },
 
   logout() {
-    SessionApiUtil.logout(this.removeCurrentUser);
+    SessionApiUtil.logout(SessionActions.removeCurrentUser);
   },
 
   fetchCurrentUser() {
-    SessionApiUtil.fetchCurrentUser(this.receiveCurrentUser);
+    SessionApiUtil.fetchCurrentUser(SessionActions.receiveCurrentUser);
   },
 
   receiveCurrentUser(currentUser) {
@@ -39,3 +42,5 @@ module.exports = {
     });
   }
 };
+
+module.exports = SessionActions;
