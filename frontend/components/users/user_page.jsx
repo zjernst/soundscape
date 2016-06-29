@@ -10,16 +10,10 @@ const UserPage = React.createClass({
     return({user: SessionStore.currentUser()})
   },
 
-  _logout() {
-    SessionActions.logout();
-    hashHistory.push('/login');
-  },
-
   render() {
     return(
       <div>
         <h3>Welcome to your page, {this.state.user.username}!</h3>
-        <button onClick={this._logout}>Logout</button>
       </div>
     )
   }

@@ -33,6 +33,14 @@ const Navbar = React.createClass({
     SessionActions.login(guest);
   },
 
+  _gotoIndex() {
+    hashHistory.push('/')
+  },
+
+  _gotoUserpage() {
+    hashHistory.push(`/users/${SessionStore.currentUser().id}`)
+  },
+
   render() {
     let logged_in = SessionStore.isUserLoggedIn();
     let buttons = []
@@ -46,10 +54,10 @@ const Navbar = React.createClass({
     return(
       <div className="navbar">
         <div className="logo_container">
-          <h2 className="logo">sound s_c_a_p_e</h2>
+          <h2 className="logo" onClick={this._gotoIndex}>sound s_c_a_p_e</h2>
         </div>
         {buttons}
-        <div className="account_container">
+        <div className="account_container" onClick={this._gotoUserpage}>
           {SessionStore.currentUser().username}
         </div>
       </div>

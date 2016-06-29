@@ -33157,10 +33157,6 @@
 	  getInitialState: function getInitialState() {
 	    return { user: SessionStore.currentUser() };
 	  },
-	  _logout: function _logout() {
-	    SessionActions.logout();
-	    hashHistory.push('/login');
-	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -33171,11 +33167,6 @@
 	        'Welcome to your page, ',
 	        this.state.user.username,
 	        '!'
-	      ),
-	      React.createElement(
-	        'button',
-	        { onClick: this._logout },
-	        'Logout'
 	      )
 	    );
 	  }
@@ -33284,14 +33275,34 @@
 	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(265);
 	var SoundscapeActions = __webpack_require__(266);
+	var SoundscapeIndexItem = __webpack_require__(270);
 
 	var SoundscapeIndex = React.createClass({
 	  displayName: 'SoundscapeIndex',
+	  getInitialState: function getInitialState() {
+	    return { soundscapes: SoundscapeStore.all() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.ssStoreListener = SoundscapeStore.addListener(this._onChange);
+	    SoundscapeActions.fetchAllSoundscapes();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.ssStoreListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ soundscapes: SoundscapeStore.all() });
+	  },
 	  render: function render() {
+	    var soundscapes = this.state.soundscapes.map(function (soundscape) {
+	      return React.createElement(SoundscapeIndexItem, {
+	        soundscape: soundscape,
+	        key: soundscape.id });
+	    });
+
 	    return React.createElement(
 	      'div',
 	      { className: 'soundscape_index' },
-	      'Index'
+	      soundscapes
 	    );
 	  }
 	});
@@ -33300,17 +33311,89 @@
 
 /***/ },
 /* 265 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+
+	var SoundscapeConstants = __webpack_require__(268);
+	var AppDispatcher = __webpack_require__(232);
+	var Store = __webpack_require__(238).Store;
+
+	var _soundscapes = {};
+
+	var SoundscapeStore = new Store(AppDispatcher);
+
+	SoundscapeStore.all = function () {
+	  var soundscapes = [];
+	  var keys = Object.keys(_soundscapes);
+	  for (var i = 0; i < keys.length; i++) {
+	    soundscapes.push(_soundscapes[keys[i]]);
+	  }
+	  return soundscapes;
+	};
+
+	SoundscapeStore.find = function (id) {
+	  return _soundscapes[id];
+	};
+
+	SoundscapeStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case SoundscapeConstants.ALL_SOUNDSCAPES_RECEIVED:
+	      resetSoundscapes(payload.soundscapes);
+	      SoundscapeStore.__emitChange();
+	      break;
+	    case SoundscapeConstants.SOUNDSCAPE_RECEIVED:
+	      addSoundscape(payload.soundscape);
+	      SoundscapeStore.__emitChange();
+	      break;
+	  }
+	};
+
+	function addSoundscape(soundscape) {
+	  _soundscapes[soundscape.id] = soundscape;
+	};
+
+	function resetSoundscapes(soundscapes) {
+	  _soundscapes = {};
+	  soundscapes.forEach(function (soundscape) {
+	    _soundscapes[soundscape.id] = soundscape;
+	  });
+	};
+
+	module.exports = SoundscapeStore;
 
 /***/ },
 /* 266 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
-	module.exports = {};
+	var SoundscapeApiUtil = __webpack_require__(269);
+	var Dispatcher = __webpack_require__(232);
+	var SoundscapeConstants = __webpack_require__(268);
+
+	var SoundscapeActions = {
+	  fetchAllSoundscapes: function fetchAllSoundscapes() {
+	    SoundscapeApiUtil.fetchAllSoundscapes(SoundscapeActions.receiveAllSoundscapes);
+	  },
+	  getSoundscape: function getSoundscape(id) {
+	    SoundscapeApiUtil.getSoundscape(id, SoundscapeActions.receiveSingleSoundscape);
+	  },
+	  receiveAllSoundscapes: function receiveAllSoundscapes(soundscapes) {
+	    Dispatcher.dispatch({
+	      actionType: SoundscapeConstants.ALL_SOUNDSCAPES_RECEIVED,
+	      soundscapes: soundscapes
+	    });
+	  },
+	  receiveSingleSoundscape: function receiveSingleSoundscape(soundscape) {
+	    Dispatcher.dispatch({
+	      actionType: SoundscapeConstants.SOUNDSCAPE_RECEIVED,
+	      soundscape: soundscape
+	    });
+	  }
+	};
+
+	module.exports = SoundscapeActions;
 
 /***/ },
 /* 267 */
@@ -33347,6 +33430,12 @@
 	    var guest = { username: 'charizard', password: 'password' };
 	    SessionActions.login(guest);
 	  },
+	  _gotoIndex: function _gotoIndex() {
+	    hashHistory.push('/');
+	  },
+	  _gotoUserpage: function _gotoUserpage() {
+	    hashHistory.push('/users/' + SessionStore.currentUser().id);
+	  },
 	  render: function render() {
 	    var logged_in = SessionStore.isUserLoggedIn();
 	    var buttons = [];
@@ -33381,14 +33470,14 @@
 	        { className: 'logo_container' },
 	        React.createElement(
 	          'h2',
-	          { className: 'logo' },
+	          { className: 'logo', onClick: this._gotoIndex },
 	          'sound s_c_a_p_e'
 	        )
 	      ),
 	      buttons,
 	      React.createElement(
 	        'div',
-	        { className: 'account_container' },
+	        { className: 'account_container', onClick: this._gotoUserpage },
 	        SessionStore.currentUser().username
 	      )
 	    );
@@ -33396,6 +33485,73 @@
 	});
 
 	module.exports = Navbar;
+
+/***/ },
+/* 268 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  ALL_SOUNDSCAPES_RECEIVED: 'ALL_SOUNDSCAPES_RECEIVED',
+	  SOUNDSCAPE_RECEIVED: 'SOUNDSCAPE_RECEIVED'
+	};
+
+/***/ },
+/* 269 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  fetchAllSoundscapes: function fetchAllSoundscapes(_success) {
+	    $.ajax({
+	      url: 'api/soundscapes',
+	      success: function success(res) {
+	        _success(res);
+	      }
+	    });
+	  },
+	  getSoundscape: function getSoundscape(id, _success2) {
+	    $.ajax({
+	      url: 'api/soundscapes/' + id,
+	      success: function success(res) {
+	        _success2(res);
+	      }
+	    });
+	  }
+	};
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SoundscapeStore = __webpack_require__(265);
+	var SoundscapeActions = __webpack_require__(266);
+
+	var SoundscapeIndexItem = React.createClass({
+	  displayName: 'SoundscapeIndexItem',
+	  getInitialState: function getInitialState() {
+	    return { details: false };
+	  },
+	  _displayDetails: function _displayDetails() {
+	    this.setState({ details: true });
+	    SoundscapeActions.getSoundscape(this.props.soundscape.id);
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'soundscape_index_item', onClick: this._displayDetails },
+	      this.props.soundscape.title,
+	      this.state.details ? this.props.soundscape.tracks.toString() : ""
+	    );
+	  }
+	});
+
+	module.exports = SoundscapeIndexItem;
 
 /***/ }
 /******/ ]);
