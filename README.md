@@ -1,6 +1,6 @@
 # SoundScape
 
-[Heroku link] **to be implemented**
+[Heroku link] https://sound-scape.herokuapp.com/
 
 ## Minimum Viable Product
 
