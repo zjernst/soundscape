@@ -19,6 +19,7 @@ const LoginForm = require('./components/sessions/login_form');
 const UserPage = require('./components/users/user_page');
 const SoundscapeIndex = require('./components/soundscapes/ss_index');
 const Navbar = require('./components/navbar');
+const SoundscapeDetail = require('./components/soundscapes/ss_detail');
 
 const App = React.createClass({
   render() {
@@ -36,6 +37,7 @@ const appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={SoundscapeIndex} />
+      <Route path="/soundscape/:ss_id" component={SoundscapeDetail} />
       <Route path="/login" component={LoginForm} />
       <Route path="/signup" component={LoginForm} />
       <Route path="/users/:userId" component={UserPage} />

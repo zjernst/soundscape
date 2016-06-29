@@ -67,6 +67,7 @@
 	var UserPage = __webpack_require__(260);
 	var SoundscapeIndex = __webpack_require__(264);
 	var Navbar = __webpack_require__(267);
+	var SoundscapeDetail = __webpack_require__(271);
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -87,6 +88,7 @@
 	    Route,
 	    { path: '/', component: App },
 	    React.createElement(IndexRoute, { component: SoundscapeIndex }),
+	    React.createElement(Route, { path: '/soundscape/:ss_id', component: SoundscapeDetail }),
 	    React.createElement(Route, { path: '/login', component: LoginForm }),
 	    React.createElement(Route, { path: '/signup', component: LoginForm }),
 	    React.createElement(Route, { path: '/users/:userId', component: UserPage })
@@ -33531,6 +33533,7 @@
 	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(265);
 	var SoundscapeActions = __webpack_require__(266);
+	var SoundscapeDetail = __webpack_require__(271);
 
 	var SoundscapeIndexItem = React.createClass({
 	  displayName: 'SoundscapeIndexItem',
@@ -33538,20 +33541,55 @@
 	    return { details: false };
 	  },
 	  _displayDetails: function _displayDetails() {
-	    this.setState({ details: true });
-	    SoundscapeActions.getSoundscape(this.props.soundscape.id);
+	    this.setState({ details: !this.state.details });
 	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
 	      { className: 'soundscape_index_item', onClick: this._displayDetails },
 	      this.props.soundscape.title,
-	      this.state.details ? this.props.soundscape.tracks.toString() : ""
+	      this.state.details ? React.createElement(SoundscapeDetail, { soundscape: this.props.soundscape }) : ""
 	    );
 	  }
 	});
 
 	module.exports = SoundscapeIndexItem;
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SoundscapeStore = __webpack_require__(265);
+	var SoundscapeActions = __webpack_require__(266);
+
+	var SoundscapeDetail = React.createClass({
+	  displayName: 'SoundscapeDetail',
+	  getInitialState: function getInitialState() {
+	    return { tracks: SoundscapeStore.find(this.props.soundscape.id).tracks };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.ssListener = SoundscapeStore.addListener(this._onChange);
+	    SoundscapeActions.getSoundscape(this.props.soundscape.id);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.ssListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ tracks: SoundscapeStore.find(this.props.soundscape.id).tracks });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'soundscape_detail' },
+	      this.props.soundscape.id
+	    );
+	  }
+	});
+
+	module.exports = SoundscapeDetail;
 
 /***/ }
 /******/ ]);
