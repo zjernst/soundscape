@@ -62,6 +62,7 @@
 	var UserActions = window.UserActions = __webpack_require__(257);
 	var ErrorStore = window.ErrorStore = __webpack_require__(263);
 	var ErrorActions = window.ErrorActions = __webpack_require__(261);
+	var SoundscapeStore = window.ssStore = __webpack_require__(265);
 
 	var LoginForm = __webpack_require__(259);
 	var UserPage = __webpack_require__(260);
@@ -33078,7 +33079,7 @@
 	    };
 	  },
 	  _guestLogin: function _guestLogin() {
-	    var guest = { username: 'charizard', password: 'password' };
+	    var guest = { username: 'Charizard', password: 'password' };
 	    SessionActions.login(guest);
 	  },
 	  render: function render() {
@@ -33429,7 +33430,7 @@
 	    hashHistory.push('login');
 	  },
 	  _handleGuest: function _handleGuest() {
-	    var guest = { username: 'charizard', password: 'password' };
+	    var guest = { username: 'Charizard', password: 'password' };
 	    SessionActions.login(guest);
 	  },
 	  _gotoIndex: function _gotoIndex() {
@@ -33530,6 +33531,7 @@
 
 	'use strict';
 
+	var classNames = __webpack_require__(272);
 	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(265);
 	var SoundscapeActions = __webpack_require__(266);
@@ -33544,9 +33546,10 @@
 	    this.setState({ details: !this.state.details });
 	  },
 	  render: function render() {
+	    var itemClass = classNames("soundscape_index_item", this.props.soundscape.title);
 	    return React.createElement(
 	      'div',
-	      { className: 'soundscape_index_item', onClick: this._displayDetails },
+	      { className: itemClass, onClick: this._displayDetails },
 	      this.props.soundscape.title,
 	      this.state.details ? React.createElement(SoundscapeDetail, { soundscape: this.props.soundscape }) : ""
 	    );
@@ -33590,6 +33593,60 @@
 	});
 
 	module.exports = SoundscapeDetail;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
 
 /***/ }
 /******/ ]);
