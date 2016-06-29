@@ -4,7 +4,9 @@ module.exports = {
       url: '/api/session',
       type: 'POST',
       data: {user: user},
-      success,
+      success: function(res) {
+        success(res)
+      },
       error(res) {
         error("login", res.responseJSON)
       }

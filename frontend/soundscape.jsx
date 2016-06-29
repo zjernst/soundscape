@@ -12,15 +12,19 @@ const SessionActions = window.SessionActions = require('./actions/session_action
 const SessionStore = window.SessionStore = require('./stores/session_store');
 const UserStore = window.UserStore = require('./stores/user_store');
 const UserActions = window.UserActions = require('./actions/user_actions');
+const ErrorStore = window.ErrorStore = require('./stores/error_store');
+const ErrorActions = window.ErrorActions = require('./actions/error_actions');
 
 const LoginForm = require('./components/sessions/login_form');
 const UserPage = require('./components/users/user_page');
+const SoundscapeIndex = require('./components/soundscapes/ss_index');
+const Navbar = require('./components/navbar');
 
 const App = React.createClass({
   render() {
     return(
       <div>
-        <h1>SoundScape</h1>
+        <Navbar />
         {this.props.children}
       </div>
     )
@@ -31,7 +35,7 @@ const App = React.createClass({
 const appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={LoginForm} />
+      <IndexRoute component={SoundscapeIndex} />
       <Route path="/login" component={LoginForm} />
       <Route path="/signup" component={LoginForm} />
       <Route path="/users/:userId" component={UserPage} />

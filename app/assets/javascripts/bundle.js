@@ -60,9 +60,13 @@
 	var SessionStore = window.SessionStore = __webpack_require__(237);
 	var UserStore = window.UserStore = __webpack_require__(255);
 	var UserActions = window.UserActions = __webpack_require__(257);
+	var ErrorStore = window.ErrorStore = __webpack_require__(263);
+	var ErrorActions = window.ErrorActions = __webpack_require__(261);
 
 	var LoginForm = __webpack_require__(259);
 	var UserPage = __webpack_require__(260);
+	var SoundscapeIndex = __webpack_require__(264);
+	var Navbar = __webpack_require__(267);
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -70,11 +74,7 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      React.createElement(
-	        'h1',
-	        null,
-	        'SoundScape'
-	      ),
+	      React.createElement(Navbar, null),
 	      this.props.children
 	    );
 	  }
@@ -86,7 +86,7 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
-	    React.createElement(IndexRoute, { component: LoginForm }),
+	    React.createElement(IndexRoute, { component: SoundscapeIndex }),
 	    React.createElement(Route, { path: '/login', component: LoginForm }),
 	    React.createElement(Route, { path: '/signup', component: LoginForm }),
 	    React.createElement(Route, { path: '/users/:userId', component: UserPage })
@@ -25974,12 +25974,14 @@
 	'use strict';
 
 	module.exports = {
-	  login: function login(user, success, _error) {
+	  login: function login(user, _success, _error) {
 	    $.ajax({
 	      url: '/api/session',
 	      type: 'POST',
 	      data: { user: user },
-	      success: success,
+	      success: function success(res) {
+	        _success(res);
+	      },
 	      error: function error(res) {
 	        _error("login", res.responseJSON);
 	      }
@@ -26029,19 +26031,20 @@
 	var SessionConstants = __webpack_require__(236);
 	var SessionApiUtil = __webpack_require__(230);
 	var hashHistory = __webpack_require__(168).hashHistory;
+	var ErrorActions = __webpack_require__(261);
 
-	module.exports = {
+	var SessionActions = {
 	  signup: function signup(formData) {
-	    SessionApiUtil.signup(formData, this.receiveCurrentUser);
+	    SessionApiUtil.signup(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors());
 	  },
 	  login: function login(formData) {
-	    SessionApiUtil.login(formData, this.receiveCurrentUser);
+	    SessionApiUtil.login(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
 	  },
 	  logout: function logout() {
-	    SessionApiUtil.logout(this.removeCurrentUser);
+	    SessionApiUtil.logout(SessionActions.removeCurrentUser);
 	  },
 	  fetchCurrentUser: function fetchCurrentUser() {
-	    SessionApiUtil.fetchCurrentUser(this.receiveCurrentUser);
+	    SessionApiUtil.fetchCurrentUser(SessionActions.receiveCurrentUser);
 	  },
 	  receiveCurrentUser: function receiveCurrentUser(currentUser) {
 	    AppDispatcher.dispatch({
@@ -26055,6 +26058,8 @@
 	    });
 	  }
 	};
+
+	module.exports = SessionActions;
 
 /***/ },
 /* 232 */
@@ -33001,6 +33006,7 @@
 	var SessionActions = __webpack_require__(231);
 	var SessionStore = __webpack_require__(237);
 	var hashHistory = __webpack_require__(168).hashHistory;
+	var ErrorStore = __webpack_require__(263);
 
 	var LoginForm = React.createClass({
 	  displayName: 'LoginForm',
@@ -33009,14 +33015,42 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.sessionListener = SessionStore.addListener(this._redirectIfLoggedIn);
+	    this.errorListener = ErrorStore.addListener(this._displayErrors);
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.sessionListener.remove();
+	    this.errorListener.remove();
+	  },
+	  _displayErrors: function _displayErrors() {
+	    if (!(ErrorStore.form() === "")) {
+	      this.setState({ username: "", password: "" });
+	    }
 	  },
 	  _redirectIfLoggedIn: function _redirectIfLoggedIn() {
 	    if (SessionStore.isUserLoggedIn()) {
 	      hashHistory.push('users/' + SessionStore.currentUser().id);
 	    }
+	  },
+	  fieldErrors: function fieldErrors(field) {
+	    var errors = ErrorStore.formErrors(this.formType());
+
+	    if (!errors[field]) {
+	      return;
+	    }
+
+	    var messages = errors[field].map(function (errorMsg, i) {
+	      return React.createElement(
+	        'li',
+	        { key: i },
+	        errorMsg
+	      );
+	    });
+
+	    return React.createElement(
+	      'ul',
+	      null,
+	      messages
+	    );
 	  },
 	  _handleSubmit: function _handleSubmit(e) {
 	    e.preventDefault();
@@ -33040,6 +33074,10 @@
 	    return function (e) {
 	      return _this.setState(_defineProperty({}, property, e.target.value));
 	    };
+	  },
+	  _guestLogin: function _guestLogin() {
+	    var guest = { username: 'charizard', password: 'password' };
+	    SessionActions.login(guest);
 	  },
 	  render: function render() {
 	    var altForm = void 0;
@@ -33066,11 +33104,13 @@
 	      React.createElement(
 	        'form',
 	        { onSubmit: this._handleSubmit, className: 'login-form' },
+	        this.fieldErrors("base"),
 	        React.createElement(
 	          'label',
 	          null,
 	          'Username:'
 	        ),
+	        this.fieldErrors("username"),
 	        React.createElement('input', { type: 'text', value: this.state.username,
 	          onChange: this._update('username') }),
 	        React.createElement(
@@ -33078,9 +33118,15 @@
 	          null,
 	          'Password:'
 	        ),
+	        this.fieldErrors("password"),
 	        React.createElement('input', { type: 'password', value: this.state.password,
 	          onChange: this._update('password') }),
 	        React.createElement('input', { type: 'submit', value: this.formType() })
+	      ),
+	      React.createElement(
+	        'button',
+	        { onClick: this._guestLogin },
+	        'Guest'
 	      ),
 	      React.createElement(
 	        Link,
@@ -33136,6 +33182,220 @@
 	});
 
 	module.exports = UserPage;
+
+/***/ },
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(232);
+	var ErrorConstants = __webpack_require__(262);
+
+	module.exports = {
+	  setErrors: function setErrors(form, errors) {
+	    AppDispatcher.dispatch({
+	      actionType: ErrorConstants.SET_ERRORS,
+	      form: form,
+	      errors: errors
+	    });
+	  },
+	  clearErrors: function clearErrors() {
+	    AppDispatcher.dispatch({
+	      actionType: ErrorConstants.CLEAR_ERRORS
+	    });
+	  }
+	};
+
+/***/ },
+/* 262 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = {
+	  SET_ERRORS: "SET_ERRORS",
+	  CLEAR_ERRORS: "CLEAR_ERRORS"
+	};
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(232);
+	var Store = __webpack_require__(238).Store;
+	var ErrorConstants = __webpack_require__(262);
+
+	var _errors = {};
+	var _form = "";
+
+	var ErrorStore = new Store(AppDispatcher);
+
+	function setErrors(payload) {
+	  _errors = payload.errors;
+	  _form = payload.form;
+	  ErrorStore.__emitChange();
+	}
+
+	function clearErrors() {
+	  _errors = {};
+	  _form = "";
+	  ErrorStore.__emitChange();
+	}
+
+	ErrorStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case ErrorConstants.SET_ERRORS:
+	      setErrors(payload);
+	      break;
+	    case ErrorConstants.CLEAR_ERRORS:
+	      clearErrors();
+	      break;
+	  }
+	};
+
+	ErrorStore.formErrors = function (form) {
+	  if (form !== _form) {
+	    return {};
+	  }
+
+	  var result = {};
+	  for (var field in _errors) {
+	    result[field] = Array.from(_errors[field]);
+	  }
+
+	  return result;
+	};
+
+	ErrorStore.form = function () {
+	  return _form;
+	};
+
+	module.exports = ErrorStore;
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SoundscapeStore = __webpack_require__(265);
+	var SoundscapeActions = __webpack_require__(266);
+
+	var SoundscapeIndex = React.createClass({
+	  displayName: 'SoundscapeIndex',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'soundscape_index' },
+	      'Index'
+	    );
+	  }
+	});
+
+	module.exports = SoundscapeIndex;
+
+/***/ },
+/* 265 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+/***/ },
+/* 266 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = {};
+
+/***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SessionStore = __webpack_require__(237);
+	var SessionActions = __webpack_require__(231);
+	var hashHistory = __webpack_require__(168).hashHistory;
+
+	var Navbar = React.createClass({
+	  displayName: 'Navbar',
+	  getInitialState: function getInitialState() {
+	    return { logged_in: SessionStore.isUserLoggedIn() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.sessionListener = SessionStore.addListener(this._onChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.sessionListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ logged_in: SessionStore.isUserLoggedIn() });
+	  },
+	  _toSignup: function _toSignup() {
+	    hashHistory.push('/signup');
+	  },
+	  _toLogin: function _toLogin() {
+	    hashHistory.push('login');
+	  },
+	  _handleGuest: function _handleGuest() {
+	    var guest = { username: 'charizard', password: 'password' };
+	    SessionActions.login(guest);
+	  },
+	  render: function render() {
+	    var logged_in = SessionStore.isUserLoggedIn();
+	    var buttons = [];
+	    if (logged_in) {
+	      buttons.push(React.createElement(
+	        'button',
+	        { className: 'nav_button', key: 'logout', onClick: SessionActions.logout },
+	        'Logout'
+	      ));
+	    } else {
+	      buttons.push(React.createElement(
+	        'button',
+	        { className: 'nav_button', key: 'signup', onClick: this._toSignup },
+	        'Sign Up'
+	      ));
+	      buttons.push(React.createElement(
+	        'button',
+	        { className: 'nav_button', key: 'login', onClick: this._toLogin },
+	        'Log In'
+	      ));
+	      buttons.push(React.createElement(
+	        'button',
+	        { className: 'nav_button', key: 'guest', onClick: this._handleGuest },
+	        'Guest'
+	      ));
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'navbar' },
+	      React.createElement(
+	        'div',
+	        { className: 'logo_container' },
+	        React.createElement(
+	          'h2',
+	          { className: 'logo' },
+	          'sound s_c_a_p_e'
+	        )
+	      ),
+	      buttons,
+	      React.createElement(
+	        'div',
+	        { className: 'account_container' },
+	        SessionStore.currentUser().username
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Navbar;
 
 /***/ }
 /******/ ]);
