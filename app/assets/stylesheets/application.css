@@ -97,3 +97,43 @@ body, div, h2 {
   margin: 10px;
   padding: 10px;
 }
+
+.rain {
+  background-image: url('http://webneel.com/wallpaper/sites/default/files/images/04-2013/cute-rain-in-mirror.jpg');
+  background-size: 300px;
+}
+
+.waves {
+  background-image: url('http://www.wallpapersdb.org/wallpapers/beach/golden_beach_and_waves_1920x1200.jpg');
+  background-size: 300px;
+}
+
+.wind {
+  background-image: url('http://www.tantrumkitesurf.com/wp-content/uploads/2012/12/wind.jpg');
+  background-size: 300px;
+}
+
+.city {
+  background-image: url('https://wallpaperscraft.com/image/city_skyscrapers_night_light_road_62141_3840x2160.jpg');
+  background-size: 300px;
+}
+
+.forest {
+  background-image: url('https://static.pexels.com/photos/1826/wood-nature-sunny-forest.jpg');
+  background-size: 300px;
+}
+
+.home {
+  background-image: url('http://s.shld.net/is/image/Sears/s_025CO66554812B-qm-$cq_width_160$-qm-$cq_width_250$');
+  background-size: 200px;
+}
+
+.fire {
+  background-image: url('http://www.win10themes.com/wp-content/uploads/2016/01/Fireplace-Wallpaper-Images.png');
+  background-size: 300px;
+}
+
+.cafe {
+  background-image: url('http://www.atlascafe.net/images/02.jpg');
+  background-size: 300px;
+}

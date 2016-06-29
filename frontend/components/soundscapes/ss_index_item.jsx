@@ -1,3 +1,4 @@
+const classNames = require('classnames');
 const React = require('react');
 const SoundscapeStore = require('../../stores/soundscape_store');
 const SoundscapeActions = require('../../actions/soundscape_actions');
@@ -13,8 +14,9 @@ const SoundscapeIndexItem = React.createClass({
   },
 
   render() {
+    let itemClass = classNames("soundscape_index_item", this.props.soundscape.title)
     return(
-      <div className="soundscape_index_item" onClick={this._displayDetails}>
+      <div className={itemClass} onClick={this._displayDetails}>
         {this.props.soundscape.title}
         {this.state.details ? <SoundscapeDetail soundscape={this.props.soundscape} /> : ""}
       </div>

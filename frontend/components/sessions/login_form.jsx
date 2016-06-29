@@ -67,7 +67,7 @@ const LoginForm = React.createClass({
   },
 
   _guestLogin() {
-    let guest = {username: 'charizard', password: 'password'}
+    let guest = {username: 'Charizard', password: 'password'}
     SessionActions.login(guest);
   },
 
