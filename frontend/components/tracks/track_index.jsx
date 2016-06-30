@@ -40,7 +40,7 @@ const TrackIndex = React.createClass({
       })
     }
     return(
-      <div>
+      <div className="track_index">
         {tracks}
       </div>
     )

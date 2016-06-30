@@ -3,6 +3,7 @@ const SoundscapeStore = require('../../stores/soundscape_store');
 const SoundscapeActions = require('../../actions/soundscape_actions');
 const TrackIndex = require('../tracks/track_index');
 const SoundscapeDetailsIndex = require('./soundscape_details_index');
+const TrackForm = require('../tracks/track_form');
 
 const SoundscapeDetail = React.createClass({
   getInitialState() {
@@ -30,18 +31,26 @@ const SoundscapeDetail = React.createClass({
   render() {
     let trackIndex
     let ssIndex
+    let title
+    let trackForm
     if (this.state.soundscape) {
       ssIndex = <SoundscapeDetailsIndex ssID={this.props.params.ss_id}/>
+      title = <div className="soundscape_detail_title">{this.state.soundscape.title}</div>
       trackIndex = <TrackIndex ssID={this.props.params.ss_id} />
+      trackForm = <TrackForm ssID={this.props.params.ss_id}/>
     } else {
       ssIndex = "Loading..."
       trackIndex = "Loading..."
+      title = "Loading..."
+      trackForm = "Loading..."
     }
 
     return(
       <div className="soundscape_detail">
         {ssIndex}
+        {title}
         {trackIndex}
+        {trackForm}
       </div>
     )
   }

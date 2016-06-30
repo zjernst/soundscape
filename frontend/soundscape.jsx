@@ -15,6 +15,7 @@ const UserActions = window.UserActions = require('./actions/user_actions');
 const ErrorStore = window.ErrorStore = require('./stores/error_store');
 const ErrorActions = window.ErrorActions = require('./actions/error_actions');
 const SoundscapeStore = window.ssStore = require('./stores/soundscape_store');
+const TrackActions = window.TrackActions = require('./actions/track_actions');
 
 const LoginForm = require('./components/sessions/login_form');
 const UserPage = require('./components/users/user_page');
