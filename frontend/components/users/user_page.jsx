@@ -14,6 +14,7 @@ const UserPage = React.createClass({
     return(
       <div>
         <h3>Welcome to your page, {this.state.user.username}!</h3>
+        <audio controls="controls" src="http://res.cloudinary.com/soundscape/video/upload/v1467321148/Allegro_from_Duet_in_C_Major_jvdgmr.mp3" autoplay></audio>
       </div>
     )
   }
