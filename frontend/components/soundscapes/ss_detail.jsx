@@ -20,8 +20,8 @@ const SoundscapeDetail = React.createClass({
     this.ssListener.remove();
   },
 
-  componentWillReceiveProps() {
-    this.setState({soundscape: SoundscapeStore.find(this.props.params.ss_id)})
+  componentWillReceiveProps(newProps) {
+    this.setState({soundscape: SoundscapeStore.find(newProps.params.ss_id)})
   },
 
   _onChange() {
@@ -34,9 +34,10 @@ const SoundscapeDetail = React.createClass({
     let title
     let trackForm
     if (this.state.soundscape) {
+      let tracks = this.state.soundscape.tracks
       ssIndex = <SoundscapeDetailsIndex ssID={this.props.params.ss_id}/>
       title = <div className="soundscape_detail_title">{this.state.soundscape.title}</div>
-      trackIndex = <TrackIndex ssID={this.props.params.ss_id} />
+      trackIndex = <TrackIndex tracks={tracks} />
       trackForm = <TrackForm ssID={this.props.params.ss_id}/>
     } else {
       ssIndex = "Loading..."

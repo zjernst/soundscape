@@ -33643,8 +33643,8 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.ssListener.remove();
 	  },
-	  componentWillReceiveProps: function componentWillReceiveProps() {
-	    this.setState({ soundscape: SoundscapeStore.find(this.props.params.ss_id) });
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    this.setState({ soundscape: SoundscapeStore.find(newProps.params.ss_id) });
 	  },
 	  _onChange: function _onChange() {
 	    this.setState({ soundscape: SoundscapeStore.find(this.props.params.ss_id) });
@@ -33655,13 +33655,14 @@
 	    var title = void 0;
 	    var trackForm = void 0;
 	    if (this.state.soundscape) {
+	      var tracks = this.state.soundscape.tracks;
 	      ssIndex = React.createElement(SoundscapeDetailsIndex, { ssID: this.props.params.ss_id });
 	      title = React.createElement(
 	        'div',
 	        { className: 'soundscape_detail_title' },
 	        this.state.soundscape.title
 	      );
-	      trackIndex = React.createElement(TrackIndex, { ssID: this.props.params.ss_id });
+	      trackIndex = React.createElement(TrackIndex, { tracks: tracks });
 	      trackForm = React.createElement(TrackForm, { ssID: this.props.params.ss_id });
 	    } else {
 	      ssIndex = "Loading...";
@@ -33698,25 +33699,11 @@
 	var TrackIndex = React.createClass({
 	  displayName: 'TrackIndex',
 	  getInitialState: function getInitialState() {
-	    return { ssID: this.props.ssID, tracks: [] };
-	  },
-	  _onChange: function _onChange() {
-	    var ss = SoundscapeStore.find(this.state.ssID);
-	    if (ss) {
-	      this.setState({ tracks: ss.tracks });
-	    }
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.ssListener = SoundscapeStore.addListener(this._onChange);
-	    SoundscapeActions.getSoundscape(this.props.ssID);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.ssListener.remove();
+	    return { tracks: this.props.tracks };
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-	    if (newProps.ssID !== this.state.ssID) {
-	      this.setState({ ssID: newProps.ssID });
-	      SoundscapeActions.getSoundscape(newProps.ssID);
+	    if (newProps.tracks !== this.state.tracks) {
+	      this.setState({ tracks: newProps.tracks });
 	    }
 	  },
 	  render: function render() {
@@ -33809,16 +33796,6 @@
 	  displayName: 'SoundscapeDetailsIndex',
 	  getInitialState: function getInitialState() {
 	    return { index: SoundscapeStore.all() };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.ssListener = SoundscapeStore.addListener(this._onChange);
-	    SoundscapeActions.fetchAllSoundscapes();
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.ssListener.remove();
-	  },
-	  _onChange: function _onChange() {
-	    this.setState({ index: SoundscapeStore.all() });
 	  },
 	  render: function render() {
 	    var ssID = this.props.ssID;

@@ -6,29 +6,12 @@ const hashHistory = require('react-router').hashHistory;
 
 const TrackIndex = React.createClass({
   getInitialState() {
-    return({ssID: this.props.ssID, tracks: []})
-  },
-
-  _onChange() {
-    let ss = SoundscapeStore.find(this.state.ssID);
-    if (ss) {
-      this.setState({tracks: ss.tracks});
-    }
-  },
-
-  componentDidMount() {
-    this.ssListener = SoundscapeStore.addListener(this._onChange);
-    SoundscapeActions.getSoundscape(this.props.ssID);
-  },
-
-  componentWillUnmount() {
-    this.ssListener.remove();
+    return({tracks: this.props.tracks})
   },
 
   componentWillReceiveProps(newProps) {
-    if (newProps.ssID !== this.state.ssID) {
-      this.setState({ssID: newProps.ssID})
-      SoundscapeActions.getSoundscape(newProps.ssID)
+    if (newProps.tracks !== this.state.tracks) {
+      this.setState({tracks: newProps.tracks})
     }
   },
 

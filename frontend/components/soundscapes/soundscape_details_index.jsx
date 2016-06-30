@@ -8,19 +8,6 @@ const SoundscapeDetailsIndex = React.createClass({
     return({index: SoundscapeStore.all()})
   },
 
-  componentDidMount() {
-    this.ssListener = SoundscapeStore.addListener(this._onChange)
-    SoundscapeActions.fetchAllSoundscapes();
-  },
-
-  componentWillUnmount() {
-    this.ssListener.remove();
-  },
-
-  _onChange() {
-    this.setState({index: SoundscapeStore.all()})
-  },
-
   render() {
     let ssID = this.props.ssID
     let indexIcons = this.state.index.map((ss) => {
