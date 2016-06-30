@@ -6,8 +6,7 @@ const SoundscapeDetailsIndex = require('./soundscape_details_index');
 
 const SoundscapeDetail = React.createClass({
   getInitialState() {
-    return({soundscape: SoundscapeStore.find(this.props.params.ss_id),
-            others: SoundscapeStore.allExcept(this.props.params.ss_id)})
+    return({soundscape: SoundscapeStore.find(this.props.params.ss_id)})
   },
 
   componentDidMount() {
@@ -21,21 +20,19 @@ const SoundscapeDetail = React.createClass({
   },
 
   componentWillReceiveProps() {
-    this.setState({soundscape: SoundscapeStore.find(this.props.params.ss_id),
-            others: SoundscapeStore.allExcept(this.props.params.ss_id)})
+    this.setState({soundscape: SoundscapeStore.find(this.props.params.ss_id)})
   },
 
   _onChange() {
-    this.setState({soundscape: SoundscapeStore.find(this.props.params.ss_id),
-                   others: SoundscapeStore.allExcept(this.props.params.ss_id)})
+    this.setState({soundscape: SoundscapeStore.find(this.props.params.ss_id)})
   },
 
   render() {
     let trackIndex
     let ssIndex
     if (this.state.soundscape) {
-      ssIndex = <SoundscapeDetailsIndex index={this.state.others} />
-      trackIndex = <TrackIndex ssID={this.state.soundscape.id} />
+      ssIndex = <SoundscapeDetailsIndex ssID={this.props.params.ss_id}/>
+      trackIndex = <TrackIndex ssID={this.props.params.ss_id} />
     } else {
       ssIndex = "Loading..."
       trackIndex = "Loading..."

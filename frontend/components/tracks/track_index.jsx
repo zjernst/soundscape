@@ -2,16 +2,17 @@ const React = require('react');
 const TrackIndexItem = require('./track_index_item');
 const SoundscapeStore = require('../../stores/soundscape_store');
 const SoundscapeActions = require('../../actions/soundscape_actions');
+const hashHistory = require('react-router').hashHistory;
 
 const TrackIndex = React.createClass({
   getInitialState() {
-    return({tracks: []})
+    return({ssID: this.props.ssID, tracks: []})
   },
 
   _onChange() {
-    let tracks = SoundscapeStore.find(this.props.ssID).tracks;
-    if (tracks) {
-      this.setState({tracks: tracks});
+    let ss = SoundscapeStore.find(this.state.ssID);
+    if (ss) {
+      this.setState({tracks: ss.tracks});
     }
   },
 
@@ -24,16 +25,16 @@ const TrackIndex = React.createClass({
     this.ssListener.remove();
   },
 
-  componentWillReceiveProps() {
-    let tracks = SoundscapeStore.find(this.props.ssID).tracks;
-    if (tracks) {
-      this.setState({tracks: tracks})
+  componentWillReceiveProps(newProps) {
+    if (newProps.ssID !== this.state.ssID) {
+      this.setState({ssID: newProps.ssID})
+      SoundscapeActions.getSoundscape(newProps.ssID)
     }
   },
 
   render() {
     let tracks = "missing"
-    if (this.state.tracks.length > 0) {
+    if (this.state.tracks && this.state.tracks.length > 0) {
       tracks = this.state.tracks.map((track) => {
         return <TrackIndexItem key={track.id} track={track} />
       })
