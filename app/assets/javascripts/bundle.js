@@ -68,7 +68,7 @@
 	var LoginForm = __webpack_require__(269);
 	var UserPage = __webpack_require__(270);
 	var SoundscapeIndex = __webpack_require__(271);
-	var Navbar = __webpack_require__(281);
+	var Navbar = __webpack_require__(282);
 	var SoundscapeDetail = __webpack_require__(274);
 
 	var App = React.createClass({
@@ -33627,8 +33627,8 @@
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
 	var TrackIndex = __webpack_require__(275);
-	var SoundscapeDetailsIndex = __webpack_require__(277);
-	var TrackForm = __webpack_require__(279);
+	var SoundscapeDetailsIndex = __webpack_require__(278);
+	var TrackForm = __webpack_require__(280);
 
 	var SoundscapeDetail = React.createClass({
 	  displayName: 'SoundscapeDetail',
@@ -33744,14 +33744,28 @@
 
 	var React = __webpack_require__(1);
 	var classNames = __webpack_require__(273);
+	var TrackDetailItem = __webpack_require__(277);
 
 	var TrackIndexItem = React.createClass({
 	  displayName: 'TrackIndexItem',
+	  getInitialState: function getInitialState() {
+	    return { details: false };
+	  },
+	  _displayDetails: function _displayDetails() {
+	    this.setState({ details: !this.state.details });
+	  },
 	  render: function render() {
+	    var details = void 0;
+	    if (this.state.details) {
+	      details = React.createElement(TrackDetailItem, { track: this.props.track });
+	    } else {
+	      details = "...";
+	    }
 	    return React.createElement(
 	      'div',
-	      { className: 'track_index_item' },
-	      this.props.track.title
+	      { className: 'track_index_item', onClick: this._displayDetails },
+	      this.props.track.title,
+	      details
 	    );
 	  }
 	});
@@ -33762,12 +33776,34 @@
 /* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var TrackDetailItem = React.createClass({
+	  displayName: "TrackDetailItem",
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "track_detail_item" },
+	      this.props.track.description,
+	      React.createElement("audio", { controls: "controls", src: this.props.track.track_url })
+	    );
+	  }
+	});
+
+	module.exports = TrackDetailItem;
+
+/***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
-	var SoundscapeIcon = __webpack_require__(278);
+	var SoundscapeIcon = __webpack_require__(279);
 
 	var SoundscapeDetailsIndex = React.createClass({
 	  displayName: 'SoundscapeDetailsIndex',
@@ -33800,7 +33836,7 @@
 	module.exports = SoundscapeDetailsIndex;
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33835,7 +33871,7 @@
 	module.exports = SoundscapeIcon;
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33848,7 +33884,7 @@
 	var TrackActions = __webpack_require__(264);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var SessionStore = __webpack_require__(239);
-	var UploadButton = __webpack_require__(280);
+	var UploadButton = __webpack_require__(281);
 
 	var TrackForm = React.createClass({
 	  displayName: 'TrackForm',
@@ -33913,7 +33949,7 @@
 	module.exports = TrackForm;
 
 /***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -33946,7 +33982,7 @@
 	module.exports = UploadButton;
 
 /***/ },
-/* 281 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
