@@ -137,3 +137,11 @@ body, div, h2 {
   background-image: url('http://www.atlascafe.net/images/02.jpg');
   background-size: 300px;
 }
+
+.soundscape_details_index {
+  display: flex;
+}
+
+.soundscape_icon {
+  flex: 1
+}
