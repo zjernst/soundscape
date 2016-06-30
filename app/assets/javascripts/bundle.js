@@ -57,19 +57,19 @@
 
 	var SessionApiUtil = window.SessionApiUtil = __webpack_require__(230);
 	var SessionActions = window.SessionActions = __webpack_require__(231);
-	var SessionStore = window.SessionStore = __webpack_require__(237);
-	var UserStore = window.UserStore = __webpack_require__(255);
-	var UserActions = window.UserActions = __webpack_require__(257);
-	var ErrorStore = window.ErrorStore = __webpack_require__(263);
-	var ErrorActions = window.ErrorActions = __webpack_require__(261);
-	var SoundscapeStore = window.ssStore = __webpack_require__(265);
-	var TrackActions = window.TrackActions = __webpack_require__(278);
+	var SessionStore = window.SessionStore = __webpack_require__(239);
+	var UserStore = window.UserStore = __webpack_require__(257);
+	var UserActions = window.UserActions = __webpack_require__(259);
+	var ErrorStore = window.ErrorStore = __webpack_require__(261);
+	var ErrorActions = window.ErrorActions = __webpack_require__(237);
+	var SoundscapeStore = window.ssStore = __webpack_require__(262);
+	var TrackActions = window.TrackActions = __webpack_require__(264);
 
-	var LoginForm = __webpack_require__(259);
-	var UserPage = __webpack_require__(260);
-	var SoundscapeIndex = __webpack_require__(264);
-	var Navbar = __webpack_require__(267);
-	var SoundscapeDetail = __webpack_require__(271);
+	var LoginForm = __webpack_require__(269);
+	var UserPage = __webpack_require__(270);
+	var SoundscapeIndex = __webpack_require__(271);
+	var Navbar = __webpack_require__(281);
+	var SoundscapeDetail = __webpack_require__(274);
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -26035,7 +26035,7 @@
 	var SessionConstants = __webpack_require__(236);
 	var SessionApiUtil = __webpack_require__(230);
 	var hashHistory = __webpack_require__(168).hashHistory;
-	var ErrorActions = __webpack_require__(261);
+	var ErrorActions = __webpack_require__(237);
 
 	var SessionActions = {
 	  signup: function signup(formData) {
@@ -26400,7 +26400,42 @@
 	'use strict';
 
 	var AppDispatcher = __webpack_require__(232);
-	var Store = __webpack_require__(238).Store;
+	var ErrorConstants = __webpack_require__(238);
+
+	module.exports = {
+	  setErrors: function setErrors(form, errors) {
+	    AppDispatcher.dispatch({
+	      actionType: ErrorConstants.SET_ERRORS,
+	      form: form,
+	      errors: errors
+	    });
+	  },
+	  clearErrors: function clearErrors() {
+	    AppDispatcher.dispatch({
+	      actionType: ErrorConstants.CLEAR_ERRORS
+	    });
+	  }
+	};
+
+/***/ },
+/* 238 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = {
+	  SET_ERRORS: "SET_ERRORS",
+	  CLEAR_ERRORS: "CLEAR_ERRORS"
+	};
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(232);
+	var Store = __webpack_require__(240).Store;
 	var SessionConstants = __webpack_require__(236);
 
 	var SessionStore = new Store(AppDispatcher);
@@ -26439,7 +26474,7 @@
 	module.exports = SessionStore;
 
 /***/ },
-/* 238 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26451,15 +26486,15 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 
-	module.exports.Container = __webpack_require__(239);
-	module.exports.MapStore = __webpack_require__(242);
-	module.exports.Mixin = __webpack_require__(254);
-	module.exports.ReduceStore = __webpack_require__(243);
-	module.exports.Store = __webpack_require__(244);
+	module.exports.Container = __webpack_require__(241);
+	module.exports.MapStore = __webpack_require__(244);
+	module.exports.Mixin = __webpack_require__(256);
+	module.exports.ReduceStore = __webpack_require__(245);
+	module.exports.Store = __webpack_require__(246);
 
 
 /***/ },
-/* 239 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26481,10 +26516,10 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var FluxStoreGroup = __webpack_require__(240);
+	var FluxStoreGroup = __webpack_require__(242);
 
 	var invariant = __webpack_require__(235);
-	var shallowEqual = __webpack_require__(241);
+	var shallowEqual = __webpack_require__(243);
 
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -26642,7 +26677,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 240 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26723,7 +26758,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 241 */
+/* 243 */
 /***/ function(module, exports) {
 
 	/**
@@ -26778,7 +26813,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 242 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26799,8 +26834,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var FluxReduceStore = __webpack_require__(243);
-	var Immutable = __webpack_require__(253);
+	var FluxReduceStore = __webpack_require__(245);
+	var Immutable = __webpack_require__(255);
 
 	var invariant = __webpack_require__(235);
 
@@ -26928,7 +26963,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 243 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26949,9 +26984,9 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var FluxStore = __webpack_require__(244);
+	var FluxStore = __webpack_require__(246);
 
-	var abstractMethod = __webpack_require__(252);
+	var abstractMethod = __webpack_require__(254);
 	var invariant = __webpack_require__(235);
 
 	var FluxReduceStore = (function (_FluxStore) {
@@ -27035,7 +27070,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 244 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27054,7 +27089,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var _require = __webpack_require__(245);
+	var _require = __webpack_require__(247);
 
 	var EventEmitter = _require.EventEmitter;
 
@@ -27218,7 +27253,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 245 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27231,14 +27266,14 @@
 	 */
 
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(246)
+	  EventEmitter: __webpack_require__(248)
 	};
 
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 246 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27257,11 +27292,11 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var EmitterSubscription = __webpack_require__(247);
-	var EventSubscriptionVendor = __webpack_require__(249);
+	var EmitterSubscription = __webpack_require__(249);
+	var EventSubscriptionVendor = __webpack_require__(251);
 
-	var emptyFunction = __webpack_require__(251);
-	var invariant = __webpack_require__(250);
+	var emptyFunction = __webpack_require__(253);
+	var invariant = __webpack_require__(252);
 
 	/**
 	 * @class BaseEventEmitter
@@ -27435,7 +27470,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 247 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27456,7 +27491,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var EventSubscription = __webpack_require__(248);
+	var EventSubscription = __webpack_require__(250);
 
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -27488,7 +27523,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 248 */
+/* 250 */
 /***/ function(module, exports) {
 
 	/**
@@ -27542,7 +27577,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 249 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27561,7 +27596,7 @@
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-	var invariant = __webpack_require__(250);
+	var invariant = __webpack_require__(252);
 
 	/**
 	 * EventSubscriptionVendor stores a set of EventSubscriptions that are
@@ -27651,7 +27686,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 250 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27706,7 +27741,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 251 */
+/* 253 */
 /***/ function(module, exports) {
 
 	/**
@@ -27748,7 +27783,7 @@
 	module.exports = emptyFunction;
 
 /***/ },
-/* 252 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27775,7 +27810,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 253 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -32759,7 +32794,7 @@
 	}));
 
 /***/ },
-/* 254 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -32776,7 +32811,7 @@
 
 	'use strict';
 
-	var FluxStoreGroup = __webpack_require__(240);
+	var FluxStoreGroup = __webpack_require__(242);
 
 	var invariant = __webpack_require__(235);
 
@@ -32882,14 +32917,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 255 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var AppDispatcher = __webpack_require__(232);
-	var Store = __webpack_require__(238).Store;
-	var UserConstants = __webpack_require__(256);
+	var Store = __webpack_require__(240).Store;
+	var UserConstants = __webpack_require__(258);
 
 	var _users = {};
 
@@ -32931,7 +32966,7 @@
 	module.exports = UserStore;
 
 /***/ },
-/* 256 */
+/* 258 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32942,14 +32977,14 @@
 	};
 
 /***/ },
-/* 257 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var UserConstants = __webpack_require__(256);
+	var UserConstants = __webpack_require__(258);
 	var Dispatcher = __webpack_require__(232);
-	var UserApiUtil = __webpack_require__(258);
+	var UserApiUtil = __webpack_require__(260);
 
 	module.exports = {
 	  fetchUser: function fetchUser(id) {
@@ -32973,7 +33008,7 @@
 	};
 
 /***/ },
-/* 258 */
+/* 260 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32998,7 +33033,277 @@
 	};
 
 /***/ },
-/* 259 */
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(232);
+	var Store = __webpack_require__(240).Store;
+	var ErrorConstants = __webpack_require__(238);
+
+	var _errors = {};
+	var _form = "";
+
+	var ErrorStore = new Store(AppDispatcher);
+
+	function setErrors(payload) {
+	  _errors = payload.errors;
+	  _form = payload.form;
+	  ErrorStore.__emitChange();
+	}
+
+	function clearErrors() {
+	  _errors = {};
+	  _form = "";
+	  ErrorStore.__emitChange();
+	}
+
+	ErrorStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case ErrorConstants.SET_ERRORS:
+	      setErrors(payload);
+	      break;
+	    case ErrorConstants.CLEAR_ERRORS:
+	      clearErrors();
+	      break;
+	  }
+	};
+
+	ErrorStore.formErrors = function (form) {
+	  if (form !== _form) {
+	    return {};
+	  }
+
+	  var result = {};
+	  for (var field in _errors) {
+	    result[field] = Array.from(_errors[field]);
+	  }
+
+	  return result;
+	};
+
+	ErrorStore.form = function () {
+	  return _form;
+	};
+
+	module.exports = ErrorStore;
+
+/***/ },
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var SoundscapeConstants = __webpack_require__(263);
+	var AppDispatcher = __webpack_require__(232);
+	var Store = __webpack_require__(240).Store;
+
+	var _soundscapes = {};
+
+	var SoundscapeStore = new Store(AppDispatcher);
+
+	SoundscapeStore.all = function () {
+	  var soundscapes = [];
+	  var keys = Object.keys(_soundscapes);
+	  for (var i = 0; i < keys.length; i++) {
+	    soundscapes.push(_soundscapes[keys[i]]);
+	  }
+	  return soundscapes;
+	};
+
+	SoundscapeStore.find = function (id) {
+	  return _soundscapes[id];
+	};
+
+	SoundscapeStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case SoundscapeConstants.ALL_SOUNDSCAPES_RECEIVED:
+	      resetSoundscapes(payload.soundscapes);
+	      SoundscapeStore.__emitChange();
+	      break;
+	    case SoundscapeConstants.SOUNDSCAPE_RECEIVED:
+	      addSoundscape(payload.soundscape);
+	      SoundscapeStore.__emitChange();
+	      break;
+	  }
+	};
+
+	SoundscapeStore.keys = function () {
+	  return Object.keys(_soundscapes);
+	};
+
+	SoundscapeStore.allExcept = function (id) {
+	  var soundscapes = [];
+	  var keys = Object.keys(_soundscapes);
+	  for (var i = 0; i < keys.length; i++) {
+	    if (id !== keys[i]) {
+	      soundscapes.push(_soundscapes[keys[i]]);
+	    }
+	  }
+	  return soundscapes;
+	};
+
+	function addSoundscape(soundscape) {
+	  _soundscapes[soundscape.id] = soundscape;
+	};
+
+	function resetSoundscapes(soundscapes) {
+	  _soundscapes = {};
+	  soundscapes.forEach(function (soundscape) {
+	    _soundscapes[soundscape.id] = soundscape;
+	  });
+	};
+
+	module.exports = SoundscapeStore;
+
+/***/ },
+/* 263 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  ALL_SOUNDSCAPES_RECEIVED: 'ALL_SOUNDSCAPES_RECEIVED',
+	  SOUNDSCAPE_RECEIVED: 'SOUNDSCAPE_RECEIVED'
+	};
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var TrackApiUtil = __webpack_require__(265);
+	var TrackConstants = __webpack_require__(266);
+	var SoundscapeApiUtil = __webpack_require__(267);
+	var SoundscapeActions = __webpack_require__(268);
+	var SoundscapeConstants = __webpack_require__(263);
+	var Dispatcher = __webpack_require__(232);
+
+	var TrackActions = {
+	  createTrack: function createTrack(track) {
+	    TrackApiUtil.createTrack(track, SoundscapeActions.getSoundscape);
+	  }
+	};
+
+	module.exports = TrackActions;
+
+/***/ },
+/* 265 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  fetchAllTracks: function fetchAllTracks(_success) {
+	    $.ajax({
+	      url: 'api/tracks',
+	      success: function success(res) {
+	        _success(res);
+	      }
+	    });
+	  },
+	  getTrack: function getTrack(id, _success2) {
+	    $.ajax({
+	      url: 'api/tracks/' + id,
+	      success: function success(res) {
+	        _success2(res);
+	      }
+	    });
+	  },
+	  createTrack: function createTrack(track, _success3) {
+	    $.ajax({
+	      url: 'api/tracks',
+	      type: 'POST',
+	      dataType: 'json',
+	      data: { track: track },
+	      success: function success(res) {
+	        _success3(res.soundscape_id);
+	      }
+	    });
+	  },
+	  updateTrack: function updateTrack(track, _success4) {
+	    $.ajax({
+	      url: 'api/tracks/' + track.id,
+	      type: 'PATCH',
+	      dataType: 'json',
+	      data: { track: track },
+	      success: function success(res) {
+	        _success4(res);
+	      }
+	    });
+	  }
+	};
+
+/***/ },
+/* 266 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = {};
+
+/***/ },
+/* 267 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  fetchAllSoundscapes: function fetchAllSoundscapes(_success) {
+	    $.ajax({
+	      url: 'api/soundscapes',
+	      success: function success(res) {
+	        _success(res);
+	      }
+	    });
+	  },
+	  getSoundscape: function getSoundscape(id, _success2) {
+	    $.ajax({
+	      url: 'api/soundscapes/' + id,
+	      success: function success(res) {
+	        _success2(res);
+	      }
+	    });
+	  }
+	};
+
+/***/ },
+/* 268 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var SoundscapeApiUtil = __webpack_require__(267);
+	var Dispatcher = __webpack_require__(232);
+	var SoundscapeConstants = __webpack_require__(263);
+
+	var SoundscapeActions = {
+	  fetchAllSoundscapes: function fetchAllSoundscapes() {
+	    SoundscapeApiUtil.fetchAllSoundscapes(SoundscapeActions.receiveAllSoundscapes);
+	  },
+	  getSoundscape: function getSoundscape(id) {
+	    SoundscapeApiUtil.getSoundscape(id, SoundscapeActions.receiveSingleSoundscape);
+	  },
+	  receiveAllSoundscapes: function receiveAllSoundscapes(soundscapes) {
+	    Dispatcher.dispatch({
+	      actionType: SoundscapeConstants.ALL_SOUNDSCAPES_RECEIVED,
+	      soundscapes: soundscapes
+	    });
+	  },
+	  receiveSingleSoundscape: function receiveSingleSoundscape(soundscape) {
+	    Dispatcher.dispatch({
+	      actionType: SoundscapeConstants.SOUNDSCAPE_RECEIVED,
+	      soundscape: soundscape
+	    });
+	  }
+	};
+
+	module.exports = SoundscapeActions;
+
+/***/ },
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33008,9 +33313,9 @@
 	var React = __webpack_require__(1);
 	var Link = __webpack_require__(168).Link;
 	var SessionActions = __webpack_require__(231);
-	var SessionStore = __webpack_require__(237);
+	var SessionStore = __webpack_require__(239);
 	var hashHistory = __webpack_require__(168).hashHistory;
-	var ErrorStore = __webpack_require__(263);
+	var ErrorStore = __webpack_require__(261);
 
 	var LoginForm = React.createClass({
 	  displayName: 'LoginForm',
@@ -33144,16 +33449,16 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 260 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var UserActions = __webpack_require__(257);
+	var UserActions = __webpack_require__(259);
 	var SessionActions = __webpack_require__(231);
-	var SessionStore = __webpack_require__(237);
-	var UserStore = __webpack_require__(255);
+	var SessionStore = __webpack_require__(239);
+	var UserStore = __webpack_require__(257);
 	var hashHistory = __webpack_require__(168).hashHistory;
 
 	var UserPage = React.createClass({
@@ -33179,107 +33484,15 @@
 	module.exports = UserPage;
 
 /***/ },
-/* 261 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var AppDispatcher = __webpack_require__(232);
-	var ErrorConstants = __webpack_require__(262);
-
-	module.exports = {
-	  setErrors: function setErrors(form, errors) {
-	    AppDispatcher.dispatch({
-	      actionType: ErrorConstants.SET_ERRORS,
-	      form: form,
-	      errors: errors
-	    });
-	  },
-	  clearErrors: function clearErrors() {
-	    AppDispatcher.dispatch({
-	      actionType: ErrorConstants.CLEAR_ERRORS
-	    });
-	  }
-	};
-
-/***/ },
-/* 262 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	module.exports = {
-	  SET_ERRORS: "SET_ERRORS",
-	  CLEAR_ERRORS: "CLEAR_ERRORS"
-	};
-
-/***/ },
-/* 263 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var AppDispatcher = __webpack_require__(232);
-	var Store = __webpack_require__(238).Store;
-	var ErrorConstants = __webpack_require__(262);
-
-	var _errors = {};
-	var _form = "";
-
-	var ErrorStore = new Store(AppDispatcher);
-
-	function setErrors(payload) {
-	  _errors = payload.errors;
-	  _form = payload.form;
-	  ErrorStore.__emitChange();
-	}
-
-	function clearErrors() {
-	  _errors = {};
-	  _form = "";
-	  ErrorStore.__emitChange();
-	}
-
-	ErrorStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case ErrorConstants.SET_ERRORS:
-	      setErrors(payload);
-	      break;
-	    case ErrorConstants.CLEAR_ERRORS:
-	      clearErrors();
-	      break;
-	  }
-	};
-
-	ErrorStore.formErrors = function (form) {
-	  if (form !== _form) {
-	    return {};
-	  }
-
-	  var result = {};
-	  for (var field in _errors) {
-	    result[field] = Array.from(_errors[field]);
-	  }
-
-	  return result;
-	};
-
-	ErrorStore.form = function () {
-	  return _form;
-	};
-
-	module.exports = ErrorStore;
-
-/***/ },
-/* 264 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var SoundscapeStore = __webpack_require__(265);
-	var SoundscapeActions = __webpack_require__(266);
-	var SoundscapeIndexItem = __webpack_require__(270);
+	var SoundscapeStore = __webpack_require__(262);
+	var SoundscapeActions = __webpack_require__(268);
+	var SoundscapeIndexItem = __webpack_require__(272);
 
 	var SoundscapeIndex = React.createClass({
 	  displayName: 'SoundscapeIndex',
@@ -33314,114 +33527,431 @@
 	module.exports = SoundscapeIndex;
 
 /***/ },
-/* 265 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var SoundscapeConstants = __webpack_require__(268);
-	var AppDispatcher = __webpack_require__(232);
-	var Store = __webpack_require__(238).Store;
+	var classNames = __webpack_require__(273);
+	var React = __webpack_require__(1);
+	var SoundscapeStore = __webpack_require__(262);
+	var SoundscapeActions = __webpack_require__(268);
+	var SoundscapeDetail = __webpack_require__(274);
+	var hashHistory = __webpack_require__(168).hashHistory;
 
-	var _soundscapes = {};
-
-	var SoundscapeStore = new Store(AppDispatcher);
-
-	SoundscapeStore.all = function () {
-	  var soundscapes = [];
-	  var keys = Object.keys(_soundscapes);
-	  for (var i = 0; i < keys.length; i++) {
-	    soundscapes.push(_soundscapes[keys[i]]);
+	var SoundscapeIndexItem = React.createClass({
+	  displayName: 'SoundscapeIndexItem',
+	  getInitialState: function getInitialState() {
+	    return { details: false };
+	  },
+	  _displayDetails: function _displayDetails() {
+	    this.setState({ details: !this.state.details });
+	    var id = this.props.soundscape.id;
+	    hashHistory.push('/soundscape/' + id);
+	  },
+	  render: function render() {
+	    var itemClass = classNames("soundscape_index_item", this.props.soundscape.title);
+	    return React.createElement(
+	      'div',
+	      { className: itemClass, onClick: this._displayDetails },
+	      this.props.soundscape.title,
+	      this.state.details ? React.createElement(SoundscapeDetail, { soundscape: this.props.soundscape }) : ""
+	    );
 	  }
-	  return soundscapes;
-	};
+	});
 
-	SoundscapeStore.find = function (id) {
-	  return _soundscapes[id];
-	};
-
-	SoundscapeStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case SoundscapeConstants.ALL_SOUNDSCAPES_RECEIVED:
-	      resetSoundscapes(payload.soundscapes);
-	      SoundscapeStore.__emitChange();
-	      break;
-	    case SoundscapeConstants.SOUNDSCAPE_RECEIVED:
-	      addSoundscape(payload.soundscape);
-	      SoundscapeStore.__emitChange();
-	      break;
-	  }
-	};
-
-	SoundscapeStore.keys = function () {
-	  return Object.keys(_soundscapes);
-	};
-
-	SoundscapeStore.allExcept = function (id) {
-	  var soundscapes = [];
-	  var keys = Object.keys(_soundscapes);
-	  for (var i = 0; i < keys.length; i++) {
-	    if (id !== keys[i]) {
-	      soundscapes.push(_soundscapes[keys[i]]);
-	    }
-	  }
-	  return soundscapes;
-	};
-
-	function addSoundscape(soundscape) {
-	  _soundscapes[soundscape.id] = soundscape;
-	};
-
-	function resetSoundscapes(soundscapes) {
-	  _soundscapes = {};
-	  soundscapes.forEach(function (soundscape) {
-	    _soundscapes[soundscape.id] = soundscape;
-	  });
-	};
-
-	module.exports = SoundscapeStore;
+	module.exports = SoundscapeIndexItem;
 
 /***/ },
-/* 266 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
 
-	var SoundscapeApiUtil = __webpack_require__(269);
-	var Dispatcher = __webpack_require__(232);
-	var SoundscapeConstants = __webpack_require__(268);
+	(function () {
+		'use strict';
 
-	var SoundscapeActions = {
-	  fetchAllSoundscapes: function fetchAllSoundscapes() {
-	    SoundscapeApiUtil.fetchAllSoundscapes(SoundscapeActions.receiveAllSoundscapes);
-	  },
-	  getSoundscape: function getSoundscape(id) {
-	    SoundscapeApiUtil.getSoundscape(id, SoundscapeActions.receiveSingleSoundscape);
-	  },
-	  receiveAllSoundscapes: function receiveAllSoundscapes(soundscapes) {
-	    Dispatcher.dispatch({
-	      actionType: SoundscapeConstants.ALL_SOUNDSCAPES_RECEIVED,
-	      soundscapes: soundscapes
-	    });
-	  },
-	  receiveSingleSoundscape: function receiveSingleSoundscape(soundscape) {
-	    Dispatcher.dispatch({
-	      actionType: SoundscapeConstants.SOUNDSCAPE_RECEIVED,
-	      soundscape: soundscape
-	    });
-	  }
-	};
+		var hasOwn = {}.hasOwnProperty;
 
-	module.exports = SoundscapeActions;
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
 
 /***/ },
-/* 267 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var SessionStore = __webpack_require__(237);
+	var SoundscapeStore = __webpack_require__(262);
+	var SoundscapeActions = __webpack_require__(268);
+	var TrackIndex = __webpack_require__(275);
+	var SoundscapeDetailsIndex = __webpack_require__(277);
+	var TrackForm = __webpack_require__(279);
+
+	var SoundscapeDetail = React.createClass({
+	  displayName: 'SoundscapeDetail',
+	  getInitialState: function getInitialState() {
+	    return { soundscape: SoundscapeStore.find(this.props.params.ss_id) };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.ssListener = SoundscapeStore.addListener(this._onChange);
+	    SoundscapeActions.fetchAllSoundscapes();
+	    SoundscapeActions.getSoundscape(this.props.params.ss_id);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.ssListener.remove();
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps() {
+	    this.setState({ soundscape: SoundscapeStore.find(this.props.params.ss_id) });
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ soundscape: SoundscapeStore.find(this.props.params.ss_id) });
+	  },
+	  render: function render() {
+	    var trackIndex = void 0;
+	    var ssIndex = void 0;
+	    var title = void 0;
+	    var trackForm = void 0;
+	    if (this.state.soundscape) {
+	      ssIndex = React.createElement(SoundscapeDetailsIndex, { ssID: this.props.params.ss_id });
+	      title = React.createElement(
+	        'div',
+	        { className: 'soundscape_detail_title' },
+	        this.state.soundscape.title
+	      );
+	      trackIndex = React.createElement(TrackIndex, { ssID: this.props.params.ss_id });
+	      trackForm = React.createElement(TrackForm, { ssID: this.props.params.ss_id });
+	    } else {
+	      ssIndex = "Loading...";
+	      trackIndex = "Loading...";
+	      title = "Loading...";
+	      trackForm = "Loading...";
+	    }
+
+	    return React.createElement(
+	      'div',
+	      { className: 'soundscape_detail' },
+	      ssIndex,
+	      title,
+	      trackIndex,
+	      trackForm
+	    );
+	  }
+	});
+
+	module.exports = SoundscapeDetail;
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var TrackIndexItem = __webpack_require__(276);
+	var SoundscapeStore = __webpack_require__(262);
+	var SoundscapeActions = __webpack_require__(268);
+	var hashHistory = __webpack_require__(168).hashHistory;
+
+	var TrackIndex = React.createClass({
+	  displayName: 'TrackIndex',
+	  getInitialState: function getInitialState() {
+	    return { ssID: this.props.ssID, tracks: [] };
+	  },
+	  _onChange: function _onChange() {
+	    var ss = SoundscapeStore.find(this.state.ssID);
+	    if (ss) {
+	      this.setState({ tracks: ss.tracks });
+	    }
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.ssListener = SoundscapeStore.addListener(this._onChange);
+	    SoundscapeActions.getSoundscape(this.props.ssID);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.ssListener.remove();
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    if (newProps.ssID !== this.state.ssID) {
+	      this.setState({ ssID: newProps.ssID });
+	      SoundscapeActions.getSoundscape(newProps.ssID);
+	    }
+	  },
+	  render: function render() {
+	    var tracks = "missing";
+	    if (this.state.tracks && this.state.tracks.length > 0) {
+	      tracks = this.state.tracks.map(function (track) {
+	        return React.createElement(TrackIndexItem, { key: track.id, track: track });
+	      });
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'track_index' },
+	      tracks
+	    );
+	  }
+	});
+
+	module.exports = TrackIndex;
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var classNames = __webpack_require__(273);
+
+	var TrackIndexItem = React.createClass({
+	  displayName: 'TrackIndexItem',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'track_index_item' },
+	      this.props.track.title
+	    );
+	  }
+	});
+
+	module.exports = TrackIndexItem;
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SoundscapeStore = __webpack_require__(262);
+	var SoundscapeActions = __webpack_require__(268);
+	var SoundscapeIcon = __webpack_require__(278);
+
+	var SoundscapeDetailsIndex = React.createClass({
+	  displayName: 'SoundscapeDetailsIndex',
+	  getInitialState: function getInitialState() {
+	    return { index: SoundscapeStore.all() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.ssListener = SoundscapeStore.addListener(this._onChange);
+	    SoundscapeActions.fetchAllSoundscapes();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.ssListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ index: SoundscapeStore.all() });
+	  },
+	  render: function render() {
+	    var ssID = this.props.ssID;
+	    var indexIcons = this.state.index.map(function (ss) {
+	      return React.createElement(SoundscapeIcon, { key: ss.id, selected: ssID, soundscape: ss });
+	    });
+	    return React.createElement(
+	      'div',
+	      { className: 'soundscape_details_index' },
+	      indexIcons
+	    );
+	  }
+	});
+
+	module.exports = SoundscapeDetailsIndex;
+
+/***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SoundscapeStore = __webpack_require__(262);
+	var SoundscapeActions = __webpack_require__(268);
+	var SoundscapeIndexItem = __webpack_require__(272);
+	var hashHistory = __webpack_require__(168).hashHistory;
+	var classNames = __webpack_require__(273);
+
+	var SoundscapeIcon = React.createClass({
+	  displayName: 'SoundscapeIcon',
+	  _redirect: function _redirect() {
+	    var id = this.props.soundscape.id;
+	    hashHistory.push('/soundscape/' + id);
+	  },
+	  render: function render() {
+	    var selected = "";
+	    if (this.props.selected == this.props.soundscape.id) {
+	      selected = "selected";
+	    }
+	    var iconClass = classNames('soundscape_icon', selected);
+	    return React.createElement(
+	      'div',
+	      { className: iconClass, onClick: this._redirect },
+	      React.createElement('img', { src: this.props.soundscape.image_url, height: '80', width: '80' })
+	    );
+	  }
+	});
+
+	module.exports = SoundscapeIcon;
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	var React = __webpack_require__(1);
+	var SoundscapeStore = __webpack_require__(262);
+	var SoundscapeActions = __webpack_require__(268);
+	var TrackActions = __webpack_require__(264);
+	var hashHistory = __webpack_require__(168).hashHistory;
+	var SessionStore = __webpack_require__(239);
+	var UploadButton = __webpack_require__(280);
+
+	var TrackForm = React.createClass({
+	  displayName: 'TrackForm',
+	  getInitialState: function getInitialState() {
+	    return { title: "", description: "", track_url: "sample.mp3", disabled: true };
+	  },
+	  _update: function _update(property) {
+	    var _this = this;
+
+	    return function (e) {
+	      return _this.setState(_defineProperty({}, property, e.target.value));
+	    };
+	  },
+	  _uploadTrack: function _uploadTrack(track) {
+	    this.setState({ track_url: track.url });
+	    this.setState({ disabled: false });
+	  },
+	  _handleSubmit: function _handleSubmit(e) {
+	    e.preventDefault();
+	    if (SessionStore.isUserLoggedIn()) {
+	      var track = { title: this.state.title, description: this.state.description,
+	        track_url: this.state.track_url, artist_id: SessionStore.currentUser().id,
+	        soundscape_id: this.props.ssID };
+	      TrackActions.createTrack(track);
+	      this.setState({ title: '', description: '' });
+	    } else {
+	      hashHistory.push('/login');
+	    }
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'track_form_container' },
+	      React.createElement(
+	        'form',
+	        { onSubmit: this._handleSubmit },
+	        React.createElement(
+	          'label',
+	          { className: 'track_title_label' },
+	          'Title'
+	        ),
+	        React.createElement('input', { type: 'text',
+	          value: this.state.title,
+	          onChange: this._update('title'),
+	          className: 'track_field' }),
+	        React.createElement(
+	          'label',
+	          { className: 'track_description_label' },
+	          'Description'
+	        ),
+	        React.createElement('textarea', {
+	          value: this.state.description,
+	          onChange: this._update('description'),
+	          className: 'track_field' }),
+	        React.createElement('input', { type: 'submit', disabled: this.state.disabled })
+	      ),
+	      React.createElement(UploadButton, { uploadTrack: this._uploadTrack })
+	    );
+	  }
+	});
+
+	module.exports = TrackForm;
+
+/***/ },
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var UploadButton = React.createClass({
+	  displayName: "UploadButton",
+	  _upload: function _upload(e) {
+	    e.preventDefault();
+	    cloudinary.openUploadWidget(cloudinary_options, function (error, results) {
+	      if (!error) {
+	        this.props.uploadTrack(results[0]);
+	      }
+	    }.bind(this));
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "upload-form" },
+	      React.createElement(
+	        "button",
+	        { onClick: this._upload },
+	        "Upload new track!"
+	      )
+	    );
+	  }
+	});
+
+	module.exports = UploadButton;
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SessionStore = __webpack_require__(239);
 	var SessionActions = __webpack_require__(231);
 	var hashHistory = __webpack_require__(168).hashHistory;
 
@@ -33504,498 +34034,6 @@
 	});
 
 	module.exports = Navbar;
-
-/***/ },
-/* 268 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = {
-	  ALL_SOUNDSCAPES_RECEIVED: 'ALL_SOUNDSCAPES_RECEIVED',
-	  SOUNDSCAPE_RECEIVED: 'SOUNDSCAPE_RECEIVED'
-	};
-
-/***/ },
-/* 269 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = {
-	  fetchAllSoundscapes: function fetchAllSoundscapes(_success) {
-	    $.ajax({
-	      url: 'api/soundscapes',
-	      success: function success(res) {
-	        _success(res);
-	      }
-	    });
-	  },
-	  getSoundscape: function getSoundscape(id, _success2) {
-	    $.ajax({
-	      url: 'api/soundscapes/' + id,
-	      success: function success(res) {
-	        _success2(res);
-	      }
-	    });
-	  }
-	};
-
-/***/ },
-/* 270 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var classNames = __webpack_require__(272);
-	var React = __webpack_require__(1);
-	var SoundscapeStore = __webpack_require__(265);
-	var SoundscapeActions = __webpack_require__(266);
-	var SoundscapeDetail = __webpack_require__(271);
-	var hashHistory = __webpack_require__(168).hashHistory;
-
-	var SoundscapeIndexItem = React.createClass({
-	  displayName: 'SoundscapeIndexItem',
-	  getInitialState: function getInitialState() {
-	    return { details: false };
-	  },
-	  _displayDetails: function _displayDetails() {
-	    this.setState({ details: !this.state.details });
-	    var id = this.props.soundscape.id;
-	    hashHistory.push('/soundscape/' + id);
-	  },
-	  render: function render() {
-	    var itemClass = classNames("soundscape_index_item", this.props.soundscape.title);
-	    return React.createElement(
-	      'div',
-	      { className: itemClass, onClick: this._displayDetails },
-	      this.props.soundscape.title,
-	      this.state.details ? React.createElement(SoundscapeDetail, { soundscape: this.props.soundscape }) : ""
-	    );
-	  }
-	});
-
-	module.exports = SoundscapeIndexItem;
-
-/***/ },
-/* 271 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var SoundscapeStore = __webpack_require__(265);
-	var SoundscapeActions = __webpack_require__(266);
-	var TrackIndex = __webpack_require__(273);
-	var SoundscapeDetailsIndex = __webpack_require__(277);
-	var TrackForm = __webpack_require__(281);
-
-	var SoundscapeDetail = React.createClass({
-	  displayName: 'SoundscapeDetail',
-	  getInitialState: function getInitialState() {
-	    return { soundscape: SoundscapeStore.find(this.props.params.ss_id) };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.ssListener = SoundscapeStore.addListener(this._onChange);
-	    SoundscapeActions.fetchAllSoundscapes();
-	    SoundscapeActions.getSoundscape(this.props.params.ss_id);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.ssListener.remove();
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps() {
-	    this.setState({ soundscape: SoundscapeStore.find(this.props.params.ss_id) });
-	  },
-	  _onChange: function _onChange() {
-	    this.setState({ soundscape: SoundscapeStore.find(this.props.params.ss_id) });
-	  },
-	  render: function render() {
-	    var trackIndex = void 0;
-	    var ssIndex = void 0;
-	    var title = void 0;
-	    var trackForm = void 0;
-	    if (this.state.soundscape) {
-	      ssIndex = React.createElement(SoundscapeDetailsIndex, { ssID: this.props.params.ss_id });
-	      title = React.createElement(
-	        'div',
-	        { className: 'soundscape_detail_title' },
-	        this.state.soundscape.title
-	      );
-	      trackIndex = React.createElement(TrackIndex, { ssID: this.props.params.ss_id });
-	      trackForm = React.createElement(TrackForm, { ssID: this.props.params.ss_id });
-	    } else {
-	      ssIndex = "Loading...";
-	      trackIndex = "Loading...";
-	      title = "Loading...";
-	      trackForm = "Loading...";
-	    }
-
-	    return React.createElement(
-	      'div',
-	      { className: 'soundscape_detail' },
-	      ssIndex,
-	      title,
-	      trackIndex,
-	      trackForm
-	    );
-	  }
-	});
-
-	module.exports = SoundscapeDetail;
-
-/***/ },
-/* 272 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-
-	(function () {
-		'use strict';
-
-		var hasOwn = {}.hasOwnProperty;
-
-		function classNames () {
-			var classes = [];
-
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-
-				var argType = typeof arg;
-
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-
-			return classes.join(' ');
-		}
-
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
-
-/***/ },
-/* 273 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var TrackIndexItem = __webpack_require__(274);
-	var SoundscapeStore = __webpack_require__(265);
-	var SoundscapeActions = __webpack_require__(266);
-	var hashHistory = __webpack_require__(168).hashHistory;
-
-	var TrackIndex = React.createClass({
-	  displayName: 'TrackIndex',
-	  getInitialState: function getInitialState() {
-	    return { ssID: this.props.ssID, tracks: [] };
-	  },
-	  _onChange: function _onChange() {
-	    var ss = SoundscapeStore.find(this.state.ssID);
-	    if (ss) {
-	      this.setState({ tracks: ss.tracks });
-	    }
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.ssListener = SoundscapeStore.addListener(this._onChange);
-	    SoundscapeActions.getSoundscape(this.props.ssID);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.ssListener.remove();
-	  },
-	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-	    if (newProps.ssID !== this.state.ssID) {
-	      this.setState({ ssID: newProps.ssID });
-	      SoundscapeActions.getSoundscape(newProps.ssID);
-	    }
-	  },
-	  render: function render() {
-	    var tracks = "missing";
-	    if (this.state.tracks && this.state.tracks.length > 0) {
-	      tracks = this.state.tracks.map(function (track) {
-	        return React.createElement(TrackIndexItem, { key: track.id, track: track });
-	      });
-	    }
-	    return React.createElement(
-	      'div',
-	      { className: 'track_index' },
-	      tracks
-	    );
-	  }
-	});
-
-	module.exports = TrackIndex;
-
-/***/ },
-/* 274 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var classNames = __webpack_require__(272);
-
-	var TrackIndexItem = React.createClass({
-	  displayName: 'TrackIndexItem',
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'track_index_item' },
-	      this.props.track.title
-	    );
-	  }
-	});
-
-	module.exports = TrackIndexItem;
-
-/***/ },
-/* 275 */,
-/* 276 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var SoundscapeStore = __webpack_require__(265);
-	var SoundscapeActions = __webpack_require__(266);
-	var SoundscapeIndexItem = __webpack_require__(270);
-	var hashHistory = __webpack_require__(168).hashHistory;
-	var classNames = __webpack_require__(272);
-
-	var SoundscapeIcon = React.createClass({
-	  displayName: 'SoundscapeIcon',
-	  _redirect: function _redirect() {
-	    var id = this.props.soundscape.id;
-	    hashHistory.push('/soundscape/' + id);
-	  },
-	  render: function render() {
-	    var selected = "";
-	    if (this.props.selected == this.props.soundscape.id) {
-	      selected = "selected";
-	    }
-	    var iconClass = classNames('soundscape_icon', selected);
-	    return React.createElement(
-	      'div',
-	      { className: iconClass, onClick: this._redirect },
-	      React.createElement('img', { src: this.props.soundscape.image_url, height: '80', width: '80' })
-	    );
-	  }
-	});
-
-	module.exports = SoundscapeIcon;
-
-/***/ },
-/* 277 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var SoundscapeStore = __webpack_require__(265);
-	var SoundscapeActions = __webpack_require__(266);
-	var SoundscapeIcon = __webpack_require__(276);
-
-	var SoundscapeDetailsIndex = React.createClass({
-	  displayName: 'SoundscapeDetailsIndex',
-	  getInitialState: function getInitialState() {
-	    return { index: SoundscapeStore.all() };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.ssListener = SoundscapeStore.addListener(this._onChange);
-	    SoundscapeActions.fetchAllSoundscapes();
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.ssListener.remove();
-	  },
-	  _onChange: function _onChange() {
-	    this.setState({ index: SoundscapeStore.all() });
-	  },
-	  render: function render() {
-	    var ssID = this.props.ssID;
-	    var indexIcons = this.state.index.map(function (ss) {
-	      return React.createElement(SoundscapeIcon, { key: ss.id, selected: ssID, soundscape: ss });
-	    });
-	    return React.createElement(
-	      'div',
-	      { className: 'soundscape_details_index' },
-	      indexIcons
-	    );
-	  }
-	});
-
-	module.exports = SoundscapeDetailsIndex;
-
-/***/ },
-/* 278 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var TrackApiUtil = __webpack_require__(279);
-	var TrackConstants = __webpack_require__(280);
-	var SoundscapeApiUtil = __webpack_require__(269);
-	var SoundscapeActions = __webpack_require__(266);
-	var SoundscapeConstants = __webpack_require__(268);
-	var Dispatcher = __webpack_require__(232);
-
-	var TrackActions = {
-	  createTrack: function createTrack(track) {
-	    TrackApiUtil.createTrack(track, SoundscapeActions.getSoundscape);
-	  }
-	};
-
-	module.exports = TrackActions;
-
-/***/ },
-/* 279 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = {
-	  fetchAllTracks: function fetchAllTracks(_success) {
-	    $.ajax({
-	      url: 'api/tracks',
-	      success: function success(res) {
-	        _success(res);
-	      }
-	    });
-	  },
-	  getTrack: function getTrack(id, _success2) {
-	    $.ajax({
-	      url: 'api/tracks/' + id,
-	      success: function success(res) {
-	        _success2(res);
-	      }
-	    });
-	  },
-	  createTrack: function createTrack(track, _success3) {
-	    $.ajax({
-	      url: 'api/tracks',
-	      type: 'POST',
-	      dataType: 'json',
-	      data: { track: track },
-	      success: function success(res) {
-	        _success3(res.soundscape_id);
-	      }
-	    });
-	  },
-	  updateTrack: function updateTrack(track, _success4) {
-	    $.ajax({
-	      url: 'api/tracks/' + track.id,
-	      type: 'PATCH',
-	      dataType: 'json',
-	      data: { track: track },
-	      success: function success(res) {
-	        _success4(res);
-	      }
-	    });
-	  }
-	};
-
-/***/ },
-/* 280 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	module.exports = {};
-
-/***/ },
-/* 281 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-	var React = __webpack_require__(1);
-	var SoundscapeStore = __webpack_require__(265);
-	var SoundscapeActions = __webpack_require__(266);
-	var TrackActions = __webpack_require__(278);
-	var hashHistory = __webpack_require__(168).hashHistory;
-	var SessionStore = __webpack_require__(237);
-
-	var TrackForm = React.createClass({
-	  displayName: 'TrackForm',
-	  getInitialState: function getInitialState() {
-	    return { title: "", description: "" };
-	  },
-	  _update: function _update(property) {
-	    var _this = this;
-
-	    return function (e) {
-	      return _this.setState(_defineProperty({}, property, e.target.value));
-	    };
-	  },
-	  _handleSubmit: function _handleSubmit(e) {
-	    e.preventDefault();
-	    if (SessionStore.isUserLoggedIn()) {
-	      var track = { title: this.state.title, description: this.state.description,
-	        track_url: 'sample.mp3', artist_id: SessionStore.currentUser().id,
-	        soundscape_id: this.props.ssID };
-	      TrackActions.createTrack(track);
-	      this.setState({ title: '', description: '' });
-	    } else {
-	      hashHistory.push('/login');
-	    }
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'track_form_container' },
-	      React.createElement(
-	        'form',
-	        { onSubmit: this._handleSubmit },
-	        React.createElement(
-	          'label',
-	          { className: 'track_title_label' },
-	          'Title'
-	        ),
-	        React.createElement('input', { type: 'text',
-	          value: this.state.title,
-	          onChange: this._update('title'),
-	          className: 'track_field' }),
-	        React.createElement(
-	          'label',
-	          { className: 'track_description_label' },
-	          'Description'
-	        ),
-	        React.createElement('textarea', {
-	          value: this.state.description,
-	          onChange: this._update('description'),
-	          className: 'track_field' }),
-	        React.createElement('input', { type: 'submit' })
-	      )
-	    );
-	  }
-	});
-
-	module.exports = TrackForm;
 
 /***/ }
 /******/ ]);
