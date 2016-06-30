@@ -33,6 +33,21 @@ SoundscapeStore.__onDispatch = function(payload) {
   }
 };
 
+SoundscapeStore.keys = function() {
+  return Object.keys(_soundscapes);
+};
+
+SoundscapeStore.allExcept = function(id) {
+  let soundscapes = [];
+  let keys = Object.keys(_soundscapes);
+  for (var i = 0; i < keys.length; i++) {
+    if (id !== keys[i]) {
+      soundscapes.push(_soundscapes[keys[i]]);
+    }
+  }
+  return soundscapes
+};
+
 function addSoundscape(soundscape) {
   _soundscapes[soundscape.id] = soundscape;
 };

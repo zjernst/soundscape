@@ -3,6 +3,7 @@ const React = require('react');
 const SoundscapeStore = require('../../stores/soundscape_store');
 const SoundscapeActions = require('../../actions/soundscape_actions');
 const SoundscapeDetail = require('./ss_detail');
+const hashHistory = require('react-router').hashHistory;
 
 const SoundscapeIndexItem = React.createClass({
   getInitialState() {
@@ -11,6 +12,8 @@ const SoundscapeIndexItem = React.createClass({
 
   _displayDetails() {
     this.setState({details: !this.state.details})
+    let id = this.props.soundscape.id;
+    hashHistory.push(`/soundscape/${id}`)
   },
 
   render() {
