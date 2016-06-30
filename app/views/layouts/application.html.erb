@@ -6,7 +6,14 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 
-  <% if current_user %>
+  <script type="text/javascript">
+    window.cloudinary_options = {
+      cloud_name: '<%= ENV['CLOUD_NAME'] %>',
+      upload_preset: '<%= ENV['UPLOAD_PRESET'] %>'
+    };
+  </script>
+
+<% if current_user %>
   <script type="text/javascript">
     window.currentUser = <%= current_user.to_json.html_safe %>
   </script>

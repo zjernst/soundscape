@@ -39,6 +39,10 @@ body, div, h2 {
   outline: 0;
 }
 
+body {
+  background-image: url('http://res.cloudinary.com/soundscape/image/upload/v1467305571/foggy_forest_qmxcjc.jpg')
+}
+
 .logo {
   margin-left: 10px;
 }
@@ -81,9 +85,10 @@ body, div, h2 {
 }
 
 .soundscape_index {
-  margin: 20px;
+  margin: 60px;
   padding: 10px;
   background: teal;
+  background-color: rgba(20, 80, 150, 0.4);
   display: flex;
   flex-wrap: wrap;
 }
@@ -138,11 +143,41 @@ body, div, h2 {
   background-size: 300px;
 }
 
+.soundscape_detail {
+  background-color: rgba(20, 80, 150, 0.4);
+  margin: 60px;
+  height: 500px;
+}
+
 .soundscape_details_index {
+  background-color: lightblue;
+  padding: 10px;
   display: flex;
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 40px;
+}
+
+.soundscape_detail_title {
+  text-align: center;
+  padding: 5px;
+  background: gray;
+  font-size: 26px;
+}
+
+.track_index {
+  display: block;
+  margin: 60px;
+  margin-top: 0px;
+  background: lightgray;
+  min-height: 300px;
+  text-align: center;
+}
+
+.track_index_item {
+  display: block;
+  margin: 5px;
+  padding: 5px;
 }
 
 .soundscape_icon {
