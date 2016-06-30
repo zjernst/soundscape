@@ -140,8 +140,15 @@ body, div, h2 {
 
 .soundscape_details_index {
   display: flex;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 40px;
 }
 
 .soundscape_icon {
   flex: 1
+}
+
+.selected {
+  opacity: 0.5;
 }
