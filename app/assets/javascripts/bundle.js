@@ -64,12 +64,14 @@
 	var ErrorActions = window.ErrorActions = __webpack_require__(237);
 	var SoundscapeStore = window.ssStore = __webpack_require__(262);
 	var TrackActions = window.TrackActions = __webpack_require__(264);
+	var TrackStore = window.TrackStore = __webpack_require__(547);
 
 	var LoginForm = __webpack_require__(269);
 	var UserPage = __webpack_require__(270);
 	var SoundscapeIndex = __webpack_require__(271);
 	var Navbar = __webpack_require__(282);
 	var SoundscapeDetail = __webpack_require__(274);
+	var Player = __webpack_require__(546);
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -78,7 +80,8 @@
 	      'div',
 	      null,
 	      React.createElement(Navbar, null),
-	      this.props.children
+	      this.props.children,
+	      React.createElement(Player, null)
 	    );
 	  }
 	});
@@ -33184,6 +33187,15 @@
 	var TrackActions = {
 	  createTrack: function createTrack(track) {
 	    TrackApiUtil.createTrack(track, SoundscapeActions.getSoundscape);
+	  },
+	  getTrack: function getTrack(id) {
+	    TrackApiUtil.getTrack(id, TrackActions.receiveTrack);
+	  },
+	  receiveTrack: function receiveTrack(track) {
+	    Dispatcher.dispatch({
+	      actionType: TrackConstants.TRACK_RECEIVED,
+	      track: track
+	    });
 	  }
 	};
 
@@ -33240,9 +33252,11 @@
 /* 266 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
-	module.exports = {};
+	module.exports = {
+	  TRACK_RECEIVED: 'TRACK_RECEIVED'
+	};
 
 /***/ },
 /* 267 */
@@ -33778,25 +33792,29 @@
 /* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(1);
+	var TrackActions = __webpack_require__(264);
 
 	var TrackDetailItem = React.createClass({
-	  displayName: "TrackDetailItem",
+	  displayName: 'TrackDetailItem',
+	  componentDidMount: function componentDidMount() {
+	    TrackActions.getTrack(this.props.track.id);
+	  },
 	  render: function render() {
 	    return React.createElement(
-	      "div",
-	      { className: "track_detail_item" },
+	      'div',
+	      { className: 'track_detail_item' },
 	      React.createElement(
-	        "div",
-	        { className: "track_description" },
+	        'div',
+	        { className: 'track_description' },
 	        this.props.track.description
 	      ),
 	      React.createElement(
-	        "div",
-	        { className: "track_audio_item" },
-	        React.createElement("audio", { controls: "controls", src: this.props.track.track_url })
+	        'div',
+	        { className: 'track_audio_item' },
+	        React.createElement('audio', { controls: 'controls', src: this.props.track.track_url })
 	      )
 	    );
 	  }
@@ -53330,6 +53348,124 @@
 	});
 
 	module.exports = WelcomeCarousel;
+
+/***/ },
+/* 546 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var TrackStore = __webpack_require__(547);
+	var TrackActions = __webpack_require__(264);
+	var Nav = __webpack_require__(283).Nav;
+	var NavItem = __webpack_require__(283).NavItem;
+	var Glyphicon = __webpack_require__(283).Glyphicon;
+
+	var Player = React.createClass({
+	  displayName: 'Player',
+	  getInitialState: function getInitialState() {
+	    return { tracks: [] };
+	  },
+	  _play: function _play() {
+	    var song = document.getElementById('player');
+	    if (song) {
+	      song.play();
+	    }
+	  },
+	  _pause: function _pause() {
+	    var song = document.getElementById('player');
+	    if (song) {
+	      song.pause();
+	    }
+	  },
+	  _next: function _next() {
+	    var front = this.state.tracks.unshift();
+	    this.state.tracks.push(front);
+	    debugger;
+	  },
+	  _back: function _back() {
+	    this.state.tracks.unshift(this.state.tracks.pop());
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ tracks: TrackStore.all() });
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.trackListener = TrackStore.addListener(this._onChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.trackListener.remove();
+	  },
+	  render: function render() {
+	    var song = void 0;
+	    if (this.state.tracks.length > 0) {
+	      song = React.createElement('audio', { id: 'player', src: this.state.tracks[0].track_url });
+	    } else {
+	      song = React.createElement('div', null);
+	    };
+
+	    var player = React.createElement(
+	      Nav,
+	      { className: 'music_player' },
+	      React.createElement(
+	        NavItem,
+	        { className: 'music_play_item', onClick: this._play },
+	        React.createElement(Glyphicon, { glyph: 'play' })
+	      ),
+	      React.createElement(
+	        NavItem,
+	        { className: 'music_play_item', onClick: this._pause },
+	        React.createElement(Glyphicon, { glyph: 'pause' })
+	      ),
+	      React.createElement(
+	        NavItem,
+	        { className: 'music_play_item', onClick: this._next },
+	        React.createElement(Glyphicon, { glyph: 'forward' })
+	      ),
+	      React.createElement(
+	        NavItem,
+	        { className: 'music_play_item', onClick: this._back },
+	        React.createElement(Glyphicon, { glyph: 'backward' })
+	      ),
+	      song
+	    );
+	    return player;
+	  }
+	});
+
+	module.exports = Player;
+
+/***/ },
+/* 547 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var TrackConstants = __webpack_require__(266);
+	var AppDispatcher = __webpack_require__(232);
+	var Store = __webpack_require__(240).Store;
+
+	var _tracks = [];
+	var TrackStore = new Store(AppDispatcher);
+
+	TrackStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case TrackConstants.TRACK_RECEIVED:
+	      addTrack(payload.track);
+	      TrackStore.__emitChange();
+	      break;
+	  }
+	};
+
+	TrackStore.all = function () {
+	  return _tracks;
+	};
+
+	function addTrack(track) {
+	  _tracks.push(track);
+	};
+
+	module.exports = TrackStore;
 
 /***/ }
 /******/ ]);

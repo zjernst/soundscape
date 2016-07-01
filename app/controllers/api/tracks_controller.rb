@@ -12,6 +12,10 @@ class Api::TracksController < ApplicationController
     end
   end
 
+  def show
+    @track = Track.find(params[:id])
+  end
+
   def track_params
     params.require(:track).permit(:title, :track_url, :artist_id,
       :soundscape_id, :description, :rating, :location)
