@@ -8,6 +8,17 @@ const Dispatcher = require('../dispatcher/dispatcher');
 const TrackActions = {
   createTrack(track) {
     TrackApiUtil.createTrack(track, SoundscapeActions.getSoundscape)
+  },
+
+  getTrack(id) {
+    TrackApiUtil.getTrack(id, TrackActions.receiveTrack)
+  },
+
+  receiveTrack(track) {
+    Dispatcher.dispatch({
+      actionType: TrackConstants.TRACK_RECEIVED,
+      track: track
+    })
   }
 }
 

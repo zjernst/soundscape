@@ -1,6 +1,11 @@
 const React = require('react');
+const TrackActions = require('../../actions/track_actions');
 
 const TrackDetailItem = React.createClass({
+  componentDidMount() {
+    TrackActions.getTrack(this.props.track.id)
+  },
+
   render() {
     return(
       <div className="track_detail_item">

@@ -1,1 +1,3 @@
-module.exports = {}
+module.exports = {
+  TRACK_RECEIVED: 'TRACK_RECEIVED'
+}
