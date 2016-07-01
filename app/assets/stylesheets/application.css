@@ -37,6 +37,7 @@ body, div, h2, ul, li {
   padding: 0;
   border: 0;
   outline: 0;
+  text-align: inherit;
 }
 
 body {
@@ -257,7 +258,24 @@ body {
   margin: 10px;
 }
 
-.music
+.music_player {
+  background-color: rgba(0, 0, 10, .7);
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
 
 .music_play_item {
+  flex: 1;
+  text-align: center;
+}
+
+.glyphicon {
+  margin: 0 auto;
+}
+/*color: #d0dde5;*/
+
+.track_collapse {
+  float: right;
 }

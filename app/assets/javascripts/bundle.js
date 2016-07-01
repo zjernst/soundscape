@@ -33196,6 +33196,12 @@
 	      actionType: TrackConstants.TRACK_RECEIVED,
 	      track: track
 	    });
+	  },
+	  updateTracks: function updateTracks(tracks) {
+	    Dispatcher.dispatch({
+	      actionType: TrackConstants.UPDATE_TRACKS,
+	      tracks: tracks
+	    });
 	  }
 	};
 
@@ -33255,7 +33261,8 @@
 	'use strict';
 
 	module.exports = {
-	  TRACK_RECEIVED: 'TRACK_RECEIVED'
+	  TRACK_RECEIVED: 'TRACK_RECEIVED',
+	  UPDATE_TRACKS: 'UPDATE_TRACKS'
 	};
 
 /***/ },
@@ -33764,21 +33771,28 @@
 	    return { details: false };
 	  },
 	  _displayDetails: function _displayDetails() {
-	    this.setState({ details: !this.state.details });
+	    this.setState({ details: true });
+	  },
+	  _hideDetails: function _hideDetails() {
+	    this.setState({ details: false });
 	  },
 	  render: function render() {
 	    var details = void 0;
 	    if (this.state.details) {
-	      details = React.createElement(TrackDetailItem, { track: this.props.track });
+	      details = React.createElement(TrackDetailItem, { track: this.props.track, hideDetails: this._hideDetails });
 	    } else {
-	      details = " ...";
+	      details = React.createElement(
+	        'div',
+	        { onClick: this._displayDetails },
+	        '...'
+	      );
 	    }
 	    return React.createElement(
 	      'div',
-	      { className: 'track_index_item', onClick: this._displayDetails },
+	      { className: 'track_index_item' },
 	      React.createElement(
 	        'div',
-	        { className: 'track_index_title' },
+	        { className: 'track_index_title', onClick: this._displayDetails },
 	        this.props.track.title
 	      ),
 	      details
@@ -33796,10 +33810,15 @@
 
 	var React = __webpack_require__(1);
 	var TrackActions = __webpack_require__(264);
+	var Glyphicon = __webpack_require__(283).Glyphicon;
+	var TrackEditForm = __webpack_require__(280);
 
 	var TrackDetailItem = React.createClass({
 	  displayName: 'TrackDetailItem',
-	  componentDidMount: function componentDidMount() {
+	  getInitialState: function getInitialState() {
+	    return { editForm: false };
+	  },
+	  _addTrack: function _addTrack() {
 	    TrackActions.getTrack(this.props.track.id);
 	  },
 	  render: function render() {
@@ -33815,7 +33834,10 @@
 	        'div',
 	        { className: 'track_audio_item' },
 	        React.createElement('audio', { controls: 'controls', src: this.props.track.track_url })
-	      )
+	      ),
+	      React.createElement(Glyphicon, { glyph: 'plus', onClick: this._addTrack }),
+	      React.createElement(Glyphicon, { glyph: 'edit' }),
+	      React.createElement(Glyphicon, { glyph: 'collapse-up', className: 'track_collapse', onClick: this.props.hideDetails })
 	    );
 	  }
 	});
@@ -53365,27 +53387,41 @@
 	var Player = React.createClass({
 	  displayName: 'Player',
 	  getInitialState: function getInitialState() {
-	    return { tracks: [] };
+	    return { tracks: [], playing: false };
 	  },
 	  _play: function _play() {
 	    var song = document.getElementById('player');
 	    if (song) {
 	      song.play();
+	      this.setState({ playing: true });
 	    }
 	  },
 	  _pause: function _pause() {
 	    var song = document.getElementById('player');
 	    if (song) {
 	      song.pause();
+	      this.setState({ playing: false });
 	    }
 	  },
 	  _next: function _next() {
-	    var front = this.state.tracks.unshift();
-	    this.state.tracks.push(front);
-	    debugger;
+	    var front = this.state.tracks.shift();
+	    var newOrder = this.state.tracks;
+	    newOrder.push(front);
+	    this.setState({ tracks: newOrder });
+	    if (this.state.playing) {
+	      this.keepPlaying = true;
+	    }
+	    TrackActions.updateTracks(this.state.tracks);
 	  },
 	  _back: function _back() {
-	    this.state.tracks.unshift(this.state.tracks.pop());
+	    var back = this.state.tracks.pop();
+	    var newOrder = this.state.tracks;
+	    newOrder.unshift(back);
+	    this.setState({ tracks: newOrder });
+	    if (this.state.playing) {
+	      this.keepPlaying = true;
+	    }
+	    TrackActions.updateTracks(this.state.tracks);
 	  },
 	  _onChange: function _onChange() {
 	    this.setState({ tracks: TrackStore.all() });
@@ -53396,10 +53432,20 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.trackListener.remove();
 	  },
+	  componentDidUpdate: function componentDidUpdate() {
+	    if (this.keepPlaying) {
+	      this._play();
+	      this.keepPlaying = false;
+	    }
+	  },
+	  _onSongEnd: function _onSongEnd() {
+	    this._next();
+	  },
 	  render: function render() {
 	    var song = void 0;
 	    if (this.state.tracks.length > 0) {
-	      song = React.createElement('audio', { id: 'player', src: this.state.tracks[0].track_url });
+	      song = React.createElement('audio', { id: 'player', src: this.state.tracks[0].track_url,
+	        onEnded: this._onSongEnd });
 	    } else {
 	      song = React.createElement('div', null);
 	    };
@@ -53419,13 +53465,13 @@
 	      ),
 	      React.createElement(
 	        NavItem,
-	        { className: 'music_play_item', onClick: this._next },
-	        React.createElement(Glyphicon, { glyph: 'forward' })
+	        { className: 'music_play_item', onClick: this._back },
+	        React.createElement(Glyphicon, { glyph: 'backward' })
 	      ),
 	      React.createElement(
 	        NavItem,
-	        { className: 'music_play_item', onClick: this._back },
-	        React.createElement(Glyphicon, { glyph: 'backward' })
+	        { className: 'music_play_item', onClick: this._next },
+	        React.createElement(Glyphicon, { glyph: 'forward' })
 	      ),
 	      song
 	    );
@@ -53454,11 +53500,20 @@
 	      addTrack(payload.track);
 	      TrackStore.__emitChange();
 	      break;
+
+	    case TrackConstants.UPDATE_TRACKS:
+	      resetTracks(payload.tracks);
+	      TrackStore.__emitChange();
+	      break;
 	  }
 	};
 
 	TrackStore.all = function () {
-	  return _tracks;
+	  return _tracks.slice();
+	};
+
+	function resetTracks(tracks) {
+	  _tracks = tracks;
 	};
 
 	function addTrack(track) {

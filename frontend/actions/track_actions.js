@@ -19,6 +19,13 @@ const TrackActions = {
       actionType: TrackConstants.TRACK_RECEIVED,
       track: track
     })
+  },
+
+  updateTracks(tracks) {
+    Dispatcher.dispatch({
+      actionType: TrackConstants.UPDATE_TRACKS,
+      tracks: tracks
+    })
   }
 }
 
