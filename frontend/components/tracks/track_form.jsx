@@ -6,9 +6,12 @@ const hashHistory = require('react-router').hashHistory;
 const SessionStore = require('../../stores/session_store');
 const UploadButton = require('../upload_button');
 
+const Modal = require('react-bootstrap').Modal;
+const Form = require('react-bootstrap').Form;
+
 const TrackForm = React.createClass({
   getInitialState() {
-    return({title: "", description: "", track_url: "sample.mp3", disabled: true})
+    return({title: "", description: "", track_url: "sample.mp3", disabled: true, showModal: true})
   },
 
   _update(property) {
@@ -33,24 +36,36 @@ const TrackForm = React.createClass({
     }
   },
 
+  close() {
+    this.setState({showModal: false});
+    this.props.toggleButton();
+  },
+
+  open() {
+    this.setState({showModal: true})
+  },
+
   render() {
     return(
-      <div className="track_form_container">
-        <form onSubmit={this._handleSubmit}>
-          <label className="track_title_label">Title</label>
-          <input type="text"
-                 value={this.state.title}
-                 onChange={this._update('title')}
-                 className="track_field" />
-          <label className="track_description_label">Description</label>
-          <textarea
-                 value={this.state.description}
-                 onChange={this._update('description')}
-                 className="track_field" />
-          <input type="submit" disabled={this.state.disabled} />
-        </form>
-        <UploadButton uploadTrack={this._uploadTrack}/>
-      </div>
+      <Modal show={this.state.showModal} onHide={this.close}>
+      <Modal.Header>Enter Track Information</Modal.Header>
+        <div className="track_form_container">
+          <Form horizontal onSubmit={this._handleSubmit}>
+              <label className="track_title_label">Title</label>
+              <input type="text"
+                     value={this.state.title}
+                     onChange={this._update('title')}
+                     className="track_field" />
+              <label className="track_description_label">Description</label>
+              <textarea
+                     value={this.state.description}
+                     onChange={this._update('description')}
+                     className="track_field" />
+            <UploadButton uploadTrack={this._uploadTrack}/>
+            <input type="submit" disabled={this.state.disabled} />
+          </Form>
+        </div>
+      </Modal>
     )
   }
 });
