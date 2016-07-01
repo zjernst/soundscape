@@ -7,7 +7,7 @@ const TrackForm = require('../tracks/track_form');
 
 const SoundscapeDetail = React.createClass({
   getInitialState() {
-    return({soundscape: SoundscapeStore.find(this.props.params.ss_id)})
+    return({soundscape: SoundscapeStore.find(this.props.params.ss_id), showForm: false})
   },
 
   componentDidMount() {
@@ -28,6 +28,10 @@ const SoundscapeDetail = React.createClass({
     this.setState({soundscape: SoundscapeStore.find(this.props.params.ss_id)})
   },
 
+  _toggleForm() {
+    this.setState({showForm: !this.state.showForm})
+  },
+
   render() {
     let trackIndex
     let ssIndex
@@ -38,12 +42,16 @@ const SoundscapeDetail = React.createClass({
       ssIndex = <SoundscapeDetailsIndex ssID={this.props.params.ss_id}/>
       title = <div className="soundscape_detail_title">{this.state.soundscape.title}</div>
       trackIndex = <TrackIndex tracks={tracks} />
-      trackForm = <TrackForm ssID={this.props.params.ss_id}/>
     } else {
       ssIndex = "Loading..."
       trackIndex = "Loading..."
       title = "Loading..."
-      trackForm = "Loading..."
+    }
+
+    if (this.state.showForm) {
+      trackForm = <TrackForm ssID={this.props.params.ss_id} toggleButton={this._toggleForm}/>
+    } else {
+      trackForm = <button onClick={this._toggleForm}>Add Track</button>
     }
 
     return(
