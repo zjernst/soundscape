@@ -2,6 +2,7 @@ const React = require('react');
 const SoundscapeStore = require('../../stores/soundscape_store');
 const SoundscapeActions = require('../../actions/soundscape_actions');
 const SoundscapeIndexItem = require('./ss_index_item');
+const WelcomeCarousel = require('../welcome_carousel');
 
 const SoundscapeIndex = React.createClass({
   getInitialState() {

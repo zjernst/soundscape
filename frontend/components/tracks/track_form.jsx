@@ -7,7 +7,9 @@ const SessionStore = require('../../stores/session_store');
 const UploadButton = require('../upload_button');
 
 const Modal = require('react-bootstrap').Modal;
-const Form = require('react-bootstrap').Form;
+const FormControl = require('react-bootstrap').FormControl;
+const ControlLabel = require('react-bootstrap').ControlLabel;
+const FormGroup = require('react-bootstrap').FormGroup;
 
 const TrackForm = React.createClass({
   getInitialState() {
@@ -50,20 +52,25 @@ const TrackForm = React.createClass({
       <Modal show={this.state.showModal} onHide={this.close}>
       <Modal.Header>Enter Track Information</Modal.Header>
         <div className="track_form_container">
-          <Form horizontal onSubmit={this._handleSubmit}>
-              <label className="track_title_label">Title</label>
-              <input type="text"
+          <form className="track_form" onSubmit={this._handleSubmit}>
+            <FormGroup>
+              <ControlLabel className="track_title_label">Title</ControlLabel>
+              <FormControl type="text"
                      value={this.state.title}
                      onChange={this._update('title')}
                      className="track_field" />
-              <label className="track_description_label">Description</label>
-              <textarea
+             </FormGroup>
+             <FormGroup>
+              <ControlLabel className="track_description_label">Description</ControlLabel>
+              <FormControl
+                     componentClass="textarea"
                      value={this.state.description}
                      onChange={this._update('description')}
                      className="track_field" />
+             </FormGroup>
             <UploadButton uploadTrack={this._uploadTrack}/>
-            <input type="submit" disabled={this.state.disabled} />
-          </Form>
+            <input type="submit" className="button" disabled={this.state.disabled} />
+          </form>
         </div>
       </Modal>
     )

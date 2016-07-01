@@ -20,7 +20,9 @@ const TrackIndexItem = React.createClass({
     }
     return(
       <div className='track_index_item' onClick={this._displayDetails}>
-        {this.props.track.title}
+        <div className='track_index_title'>
+          {this.props.track.title}
+        </div>
         {details}
       </div>
     )
