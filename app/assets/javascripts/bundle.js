@@ -33494,6 +33494,7 @@
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
 	var SoundscapeIndexItem = __webpack_require__(272);
+	var WelcomeCarousel = __webpack_require__(545);
 
 	var SoundscapeIndex = React.createClass({
 	  displayName: 'SoundscapeIndex',
@@ -33555,7 +33556,6 @@
 	    return React.createElement(
 	      'div',
 	      { className: itemClass, onClick: this._displayDetails },
-	      this.props.soundscape.title,
 	      this.state.details ? React.createElement(SoundscapeDetail, { soundscape: this.props.soundscape }) : ""
 	    );
 	  }
@@ -33762,7 +33762,11 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'track_index_item', onClick: this._displayDetails },
-	      this.props.track.title,
+	      React.createElement(
+	        'div',
+	        { className: 'track_index_title' },
+	        this.props.track.title
+	      ),
 	      details
 	    );
 	  }
@@ -33784,8 +33788,16 @@
 	    return React.createElement(
 	      "div",
 	      { className: "track_detail_item" },
-	      this.props.track.description,
-	      React.createElement("audio", { controls: "controls", src: this.props.track.track_url })
+	      React.createElement(
+	        "div",
+	        { className: "track_description" },
+	        this.props.track.description
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "track_audio_item" },
+	        React.createElement("audio", { controls: "controls", src: this.props.track.track_url })
+	      )
 	    );
 	  }
 	});
@@ -33835,6 +33847,7 @@
 	var SoundscapeIndexItem = __webpack_require__(272);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var classNames = __webpack_require__(273);
+	var Image = __webpack_require__(283).Image;
 
 	var SoundscapeIcon = React.createClass({
 	  displayName: 'SoundscapeIcon',
@@ -33875,7 +33888,9 @@
 	var UploadButton = __webpack_require__(281);
 
 	var Modal = __webpack_require__(283).Modal;
-	var Form = __webpack_require__(283).Form;
+	var FormControl = __webpack_require__(283).FormControl;
+	var ControlLabel = __webpack_require__(283).ControlLabel;
+	var FormGroup = __webpack_require__(283).FormGroup;
 
 	var TrackForm = React.createClass({
 	  displayName: 'TrackForm',
@@ -33925,28 +33940,37 @@
 	        'div',
 	        { className: 'track_form_container' },
 	        React.createElement(
-	          Form,
-	          { horizontal: true, onSubmit: this._handleSubmit },
+	          'form',
+	          { className: 'track_form', onSubmit: this._handleSubmit },
 	          React.createElement(
-	            'label',
-	            { className: 'track_title_label' },
-	            'Title'
+	            FormGroup,
+	            null,
+	            React.createElement(
+	              ControlLabel,
+	              { className: 'track_title_label' },
+	              'Title'
+	            ),
+	            React.createElement(FormControl, { type: 'text',
+	              value: this.state.title,
+	              onChange: this._update('title'),
+	              className: 'track_field' })
 	          ),
-	          React.createElement('input', { type: 'text',
-	            value: this.state.title,
-	            onChange: this._update('title'),
-	            className: 'track_field' }),
 	          React.createElement(
-	            'label',
-	            { className: 'track_description_label' },
-	            'Description'
+	            FormGroup,
+	            null,
+	            React.createElement(
+	              ControlLabel,
+	              { className: 'track_description_label' },
+	              'Description'
+	            ),
+	            React.createElement(FormControl, {
+	              componentClass: 'textarea',
+	              value: this.state.description,
+	              onChange: this._update('description'),
+	              className: 'track_field' })
 	          ),
-	          React.createElement('textarea', {
-	            value: this.state.description,
-	            onChange: this._update('description'),
-	            className: 'track_field' }),
 	          React.createElement(UploadButton, { uploadTrack: this._uploadTrack }),
-	          React.createElement('input', { type: 'submit', disabled: this.state.disabled })
+	          React.createElement('input', { type: 'submit', className: 'button', disabled: this.state.disabled })
 	        )
 	      )
 	    );
@@ -53188,6 +53212,124 @@
 	var _ValidComponentChildren3 = _interopRequireDefault(_ValidComponentChildren2);
 
 	exports.ValidComponentChildren = _ValidComponentChildren3['default'];
+
+/***/ },
+/* 545 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Carousel = __webpack_require__(283).Carousel;
+	// const Carousel.Item = require('react-bootstrap').Carousel.Item;
+	// const Carousel.Caption = require('react-bootstrap').Carousel.Caption;
+
+	var WelcomeCarousel = React.createClass({
+	  displayName: 'WelcomeCarousel',
+	  render: function render() {
+	    return React.createElement(
+	      Carousel,
+	      null,
+	      React.createElement(
+	        Carousel.Item,
+	        null,
+	        React.createElement('img', { width: 900, height: 300, alt: '900x300', src: 'https://res.cloudinary.com/soundscape/image/upload/v1467348974/green_forest_hpxu7g.jpg' }),
+	        React.createElement(
+	          Carousel.Caption,
+	          null,
+	          React.createElement(
+	            'h3',
+	            null,
+	            'First slide label'
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            'Nulla vitae elit libero, a pharetra augue mollis interdum.'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        Carousel.Item,
+	        null,
+	        React.createElement('img', { width: 900, height: 300, alt: '900x300', src: 'https://res.cloudinary.com/soundscape/image/upload/v1467348986/coffeeshop_gesg1f.jpg' }),
+	        React.createElement(
+	          Carousel.Caption,
+	          null,
+	          React.createElement(
+	            'h3',
+	            null,
+	            'Second slide label'
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            'Nulla vitae elit libero, a pharetra augue mollis interdum.'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        Carousel.Item,
+	        null,
+	        React.createElement('img', { width: 900, height: 300, alt: '900x300', src: 'https://res.cloudinary.com/soundscape/image/upload/v1467349002/beachwaves_qgvy7z.jpg' }),
+	        React.createElement(
+	          Carousel.Caption,
+	          null,
+	          React.createElement(
+	            'h3',
+	            null,
+	            'Third slide label'
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            'Nulla vitae elit libero, a pharetra augue mollis interdum.'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        Carousel.Item,
+	        null,
+	        React.createElement('img', { width: 900, height: 300, alt: '900x300', src: 'https://res.cloudinary.com/soundscape/image/upload/v1467348995/greered_forest_k3p645.jpg' }),
+	        React.createElement(
+	          Carousel.Caption,
+	          null,
+	          React.createElement(
+	            'h3',
+	            null,
+	            'Fourth slide label'
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            'Nulla vitae elit libero, a pharetra augue mollis interdum.'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        Carousel.Item,
+	        null,
+	        React.createElement('img', { width: 900, height: 300, alt: '900x300', src: 'https://res.cloudinary.com/soundscape/image/upload/v1467348911/city_ef8ajv.jpg' }),
+	        React.createElement(
+	          Carousel.Caption,
+	          null,
+	          React.createElement(
+	            'h3',
+	            null,
+	            'Fifth slide label'
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            'Nulla vitae elit libero, a pharetra augue mollis interdum.'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = WelcomeCarousel;
 
 /***/ }
 /******/ ]);

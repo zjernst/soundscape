@@ -44,11 +44,12 @@ body {
 }
 
 .logo {
-  margin-left: 10px;
+
 }
 
 .logo_container {
-  width: 250px;
+  margin-left: 60px;
+  height: 30px;
   float: left;
 }
 
@@ -86,14 +87,17 @@ body {
 
 .soundscape_index {
   margin: 60px;
+  margin-top: 0px;
   padding: 10px;
   background: teal;
-  background-color: rgba(20, 80, 150, 0.4);
+  background-color: rgba(20, 100, 150, 0.4);
   display: flex;
   flex-wrap: wrap;
 }
 
 .soundscape_index_item {
+  border-radius: 15px;
+  border: 5px solid whitesmoke;
   display: block;
   flex: 0, 0, 25em;
   width: 150px;
@@ -101,6 +105,11 @@ body {
   background-color: rgba(250, 240, 230, 0.3);
   margin: 10px;
   padding: 10px;
+}
+
+.soundscape_index_item:hover {
+  cursor: pointer;
+  background-color: rgba(250, 250, 250, 0.8);
 }
 
 .rain {
@@ -126,7 +135,7 @@ body {
 }
 
 .city {
-  background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_225/v1467311166/logo_3_kaby3y.png');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_crop,h_213/v1467311166/logo_3_kaby3y.png');
   background-size: 170px;
   background-position: center;
   background-repeat: no-repeat;
@@ -165,22 +174,23 @@ body {
 }
 
 .soundscape_detail {
-  background-color: rgba(20, 80, 150, 0.4);
+  background-color: rgba(20, 100, 150, 0.2);
   margin: 60px;
-  height: 500px;
+  margin-top: 0px;
+  min-height: 500px;
 }
 
 .soundscape_details_index {
   padding: 10px;
   display: flex;
+  flex-wrap: wrap;
   margin-left: 20px;
   margin-right: 20px;
-  margin-top: 40px;
 }
 
 .soundscape_detail_title {
   text-align: center;
-  padding: 5px;
+  padding: 3px;
   background: gray;
   font-size: 26px;
 }
@@ -191,19 +201,58 @@ body {
   margin-top: 0px;
   background: lightgray;
   min-height: 300px;
-  text-align: center;
 }
 
 .track_index_item {
   display: block;
   margin: 5px;
+  margin-left: 10px;
+  background: whitesmoke;
   padding: 5px;
 }
 
+.track_index_title {
+  background: lightblue;
+  font-weight: bold;
+  font-size: 18px;
+  margin: 3px;
+  padding: 3px;
+  padding-left: 10px;
+}
+
+.track_detail_item {
+  padding-left: 10px;
+  margin: 5px;
+}
+
+.track_description {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .soundscape_icon {
-  flex: 1
+  flex: 1;
+  display: block;
+  margin: 0 auto;
+  border-radius: 15px;
+  border: 3px solid whitesmoke;
+  margin:3px;
+}
+
+.soundscape_icon:hover{
+  cursor: pointer;
+  background-color: rgba(250, 250, 250, 0.8);
 }
 
 .selected {
   opacity: 0.5;
+}
+
+.button {
+  margin-top: 10px;
+}
+
+.track_form_container {
+  padding: 10px;
+  margin: 10px;
 }

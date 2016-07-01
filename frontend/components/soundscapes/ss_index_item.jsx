@@ -20,7 +20,6 @@ const SoundscapeIndexItem = React.createClass({
     let itemClass = classNames("soundscape_index_item", this.props.soundscape.title)
     return(
       <div className={itemClass} onClick={this._displayDetails}>
-        {this.props.soundscape.title}
         {this.state.details ? <SoundscapeDetail soundscape={this.props.soundscape} /> : ""}
       </div>
     )
