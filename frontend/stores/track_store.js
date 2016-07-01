@@ -11,11 +11,20 @@ TrackStore.__onDispatch = function(payload) {
       addTrack(payload.track);
       TrackStore.__emitChange();
       break;
+
+    case TrackConstants.UPDATE_TRACKS:
+      resetTracks(payload.tracks);
+      TrackStore.__emitChange();
+      break;
   }
 }
 
 TrackStore.all = function() {
-  return _tracks
+  return _tracks.slice();
+};
+
+function resetTracks(tracks) {
+  _tracks = tracks;
 };
 
 function addTrack(track) {

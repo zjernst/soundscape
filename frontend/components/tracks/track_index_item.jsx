@@ -8,19 +8,23 @@ const TrackIndexItem = React.createClass({
   },
 
   _displayDetails() {
-    this.setState({details: !this.state.details})
+    this.setState({details: true})
+  },
+
+  _hideDetails() {
+    this.setState({details: false})
   },
 
   render() {
     let details
     if (this.state.details) {
-      details = <TrackDetailItem track={this.props.track}/>
+      details = <TrackDetailItem track={this.props.track} hideDetails={this._hideDetails}/>
     } else {
-      details = " ..."
+      details = <div onClick={this._displayDetails}>...</div>
     }
     return(
-      <div className='track_index_item' onClick={this._displayDetails}>
-        <div className='track_index_title'>
+      <div className='track_index_item'>
+        <div className='track_index_title' onClick={this._displayDetails}>
           {this.props.track.title}
         </div>
         {details}
