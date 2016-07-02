@@ -8,12 +8,28 @@ const UploadButton = require('../upload_button');
 
 const Modal = require('react-bootstrap').Modal;
 const FormControl = require('react-bootstrap').FormControl;
+const Checkbox = require('react-bootstrap').Checkbox;
 const ControlLabel = require('react-bootstrap').ControlLabel;
 const FormGroup = require('react-bootstrap').FormGroup;
+const TagStore = require('../../stores/tag_store');
+const TagActions = require('../../actions/tag_actions');
 
 const TrackForm = React.createClass({
   getInitialState() {
-    return({title: "", description: "", track_url: "sample.mp3", disabled: true, showModal: true})
+    return({title: "", description: "", track_url: "sample.mp3", allTags: [], disabled: true, showModal: true})
+  },
+
+  componentDidMount() {
+    this.tagListener = TagStore.addListener(this._allTags);
+    TagActions.fetchAllTags();
+  },
+
+  componentWillUnmount() {
+    this.tagListener.remove();
+  },
+
+  _allTags() {
+    this.setState({allTags: TagStore.all()})
   },
 
   _update(property) {
@@ -48,6 +64,9 @@ const TrackForm = React.createClass({
   },
 
   render() {
+    let tags = this.state.allTags.map((tag) => {
+      return <Checkbox key={tag.id}>{tag.name}</Checkbox>
+    })
     return(
       <Modal show={this.state.showModal} onHide={this.close}>
       <Modal.Header>Enter Track Information</Modal.Header>
@@ -67,6 +86,9 @@ const TrackForm = React.createClass({
                      value={this.state.description}
                      onChange={this._update('description')}
                      className="track_field" />
+             </FormGroup>
+             <FormGroup>
+             {tags}
              </FormGroup>
             <UploadButton uploadTrack={this._uploadTrack}/>
             <input type="submit" className="button" disabled={this.state.disabled} />

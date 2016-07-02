@@ -33825,6 +33825,10 @@
 	    TrackActions.getTrack(this.props.track.id);
 	  },
 	  render: function render() {
+	    var tags = this.props.track.tags.map(function (tag) {
+	      return tag.name;
+	    });
+
 	    return React.createElement(
 	      'div',
 	      { className: 'track_detail_item' },
@@ -33856,6 +33860,7 @@
 	          { className: 'track_detail_option_item' },
 	          React.createElement(Glyphicon, { glyph: 'collapse-up', className: 'track_collapse', onClick: this.props.hideDetails })
 	        ),
+	        tags,
 	        React.createElement(
 	          Button,
 	          { bsStyle: 'default', href: this.props.track.track_url, download: this.props.track.title },
@@ -33955,13 +33960,26 @@
 
 	var Modal = __webpack_require__(283).Modal;
 	var FormControl = __webpack_require__(283).FormControl;
+	var Checkbox = __webpack_require__(283).Checkbox;
 	var ControlLabel = __webpack_require__(283).ControlLabel;
 	var FormGroup = __webpack_require__(283).FormGroup;
+	var TagStore = __webpack_require__(548);
+	var TagActions = __webpack_require__(550);
 
 	var TrackForm = React.createClass({
 	  displayName: 'TrackForm',
 	  getInitialState: function getInitialState() {
-	    return { title: "", description: "", track_url: "sample.mp3", disabled: true, showModal: true };
+	    return { title: "", description: "", track_url: "sample.mp3", allTags: [], disabled: true, showModal: true };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.tagListener = TagStore.addListener(this._allTags);
+	    TagActions.fetchAllTags();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.tagListener.remove();
+	  },
+	  _allTags: function _allTags() {
+	    this.setState({ allTags: TagStore.all() });
 	  },
 	  _update: function _update(property) {
 	    var _this = this;
@@ -33994,6 +34012,13 @@
 	    this.setState({ showModal: true });
 	  },
 	  render: function render() {
+	    var tags = this.state.allTags.map(function (tag) {
+	      return React.createElement(
+	        Checkbox,
+	        { key: tag.id },
+	        tag.name
+	      );
+	    });
 	    return React.createElement(
 	      Modal,
 	      { show: this.state.showModal, onHide: this.close },
@@ -34034,6 +34059,11 @@
 	              value: this.state.description,
 	              onChange: this._update('description'),
 	              className: 'track_field' })
+	          ),
+	          React.createElement(
+	            FormGroup,
+	            null,
+	            tags
 	          ),
 	          React.createElement(UploadButton, { uploadTrack: this._uploadTrack }),
 	          React.createElement('input', { type: 'submit', className: 'button', disabled: this.state.disabled })
@@ -53571,6 +53601,149 @@
 	};
 
 	module.exports = TrackStore;
+
+/***/ },
+/* 548 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var TagConstants = __webpack_require__(549);
+	var AppDispatcher = __webpack_require__(232);
+	var Store = __webpack_require__(240).Store;
+
+	var _tags = {};
+
+	var TagStore = new Store(AppDispatcher);
+
+	TagStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case TagConstants.TAGS_RECEIVED:
+	      resetTags(payload.tags);
+	      TagStore.__emitChange();
+	      break;
+	    case TagConstants.SINGLE_TAG_RECEIVED:
+	      addTag(payload.tag);
+	      TagStore.__emitChange();
+	      break;
+	  }
+	};
+
+	TagStore.all = function () {
+	  var tags = [];
+	  var keys = Object.keys(_tags);
+	  for (var i = 0; i < keys.length; i++) {
+	    tags.push(_tags[keys[i]]);
+	  }
+	  return tags;
+	};
+
+	function resetTags(tags) {
+	  _tags = {};
+	  tags.forEach(function (tag) {
+	    _tags[tag.id] = tag;
+	  });
+	};
+
+	function addTag(tag) {
+	  _tags[tag.id] = tag;
+	};
+
+	module.exports = TagStore;
+
+/***/ },
+/* 549 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  TAGS_RECEIVED: 'TAGS_RECEIVED',
+	  SINGLE_TAG_RECEIVED: 'SINGLE_TAG_RECEIVED'
+	};
+
+/***/ },
+/* 550 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var TagApiUtil = __webpack_require__(551);
+	var Dispatcher = __webpack_require__(232);
+	var TagConstants = __webpack_require__(549);
+
+	var TagActions = {
+	  createTag: function createTag(tag) {
+	    TagApiUtil.createTag(tag, TagActions.receiveSingleTag);
+	  },
+	  fetchAllTags: function fetchAllTags() {
+	    TagApiUtil.fetchAllTags(TagActions.receiveAllTags);
+	  },
+	  getTag: function getTag(id) {
+	    TagApiUtil.getTag(id, TagActions.receiveSingleTag);
+	  },
+	  receiveAllTags: function receiveAllTags(tags) {
+	    Dispatcher.dispatch({
+	      actionType: TagConstants.TAGS_RECEIVED,
+	      tags: tags
+	    });
+	  },
+	  receiveSingleTag: function receiveSingleTag(tag) {
+	    Dispatcher.dispatch({
+	      actionType: TagConstants.SINGLE_TAG_RECEIVED,
+	      tag: tag
+	    });
+	  }
+	};
+
+	module.exports = TagActions;
+
+/***/ },
+/* 551 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  fetchAllTags: function fetchAllTags(_success) {
+	    $.ajax({
+	      url: 'api/tags',
+	      success: function success(res) {
+	        _success(res);
+	      }
+	    });
+	  },
+	  getTag: function getTag(id, _success2) {
+	    $.ajax({
+	      url: 'api/tags/' + id,
+	      success: function success(res) {
+	        _success2(res);
+	      }
+	    });
+	  },
+	  createTag: function createTag(tag, _success3) {
+	    $.ajax({
+	      url: 'api/tags',
+	      type: 'POST',
+	      dataType: 'json',
+	      data: { tag: tag },
+	      success: function success(res) {
+	        _success3(res);
+	      }
+	    });
+	  },
+	  updateTag: function updateTag(tag, _success4) {
+	    $.ajax({
+	      url: 'api/tags/' + tag.id,
+	      type: 'PATCH',
+	      dataType: 'json',
+	      data: { tag: tag },
+	      success: function success(res) {
+	        _success4(res);
+	      }
+	    });
+	  }
+	};
 
 /***/ }
 /******/ ]);
