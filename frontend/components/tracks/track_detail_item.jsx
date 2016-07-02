@@ -16,6 +16,10 @@ const TrackDetailItem = React.createClass({
   },
 
   render() {
+    let tags = this.props.track.tags.map( (tag) => {
+      return tag.name
+    })
+
     return(
       <div className="track_detail_item">
         <div className="track_description">
@@ -34,6 +38,7 @@ const TrackDetailItem = React.createClass({
           <NavItem className="track_detail_option_item">
             <Glyphicon glyph="collapse-up" className="track_collapse" onClick={this.props.hideDetails} />
           </NavItem>
+          {tags}
           <Button bsStyle="default" href={this.props.track.track_url} download={this.props.track.title}>Download</Button>
         </Nav>
       </div>

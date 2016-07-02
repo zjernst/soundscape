@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :users
     resources :tracks
     resources :soundscapes
+    resources :tags
     resource :session, only: [:create, :destroy, :show]
   end
 end
