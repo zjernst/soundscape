@@ -7,7 +7,7 @@ const Glyphicon = require('react-bootstrap').Glyphicon;
 
 const Player = React.createClass({
   getInitialState() {
-    return({tracks: [], playing: false})
+    return({tracks: [], playing: false, percentPlayed: 0})
   },
 
   _play() {
@@ -69,13 +69,31 @@ const Player = React.createClass({
 
   _onSongEnd() {
     this._next()
+
+  },
+
+  _onTimeUpdate(e) {
+    e.preventDefault();
+    let song = document.getElementById('player')
+
+    let duration = song.duration
+    let timePlayed = song.currentTime
+    this.setState({percentPlayed: (timePlayed/duration) * 100})
+  },
+
+  _seek(e) {
+    e.preventDefault();
+    let song = document.getElementById('player')
+    let targetTime = (e.target.value / 100) * song.duration;
+    song.currentTime = targetTime;
   },
 
   render() {
     let song
     if (this.state.tracks.length > 0) {
       song = <audio id='player' src={this.state.tracks[0].track_url}
-              onEnded={this._onSongEnd} />
+              onEnded={this._onSongEnd}
+              onTimeUpdate={this._onTimeUpdate} />
     } else {
       song = <div />
     };
@@ -83,8 +101,18 @@ const Player = React.createClass({
     let player = (<Nav className="music_player">
                     <NavItem className="music_play_item" onClick={this._play}><Glyphicon glyph="play"/></NavItem>
                     <NavItem className="music_play_item" onClick={this._pause}><Glyphicon glyph="pause"/></NavItem>
-                    <NavItem className="music_play_item" onClick={this._back}><Glyphicon glyph="backward"/></NavItem>
-                    <NavItem className="music_play_item" onClick={this._next}><Glyphicon glyph="forward"/></NavItem>
+
+                      <input
+                        className="progress_bar"
+                        type="range"
+                        value={this.state.percentPlayed}
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        onInput={this.seek}
+                      />
+                      <NavItem className="music_play_item" onClick={this._back}><Glyphicon glyph="backward"/></NavItem>
+                      <NavItem className="music_play_item" onClick={this._next}><Glyphicon glyph="forward"/></NavItem>
                     {song}
                   </Nav>)
     return player

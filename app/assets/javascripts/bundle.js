@@ -33812,6 +33812,9 @@
 	var TrackActions = __webpack_require__(264);
 	var Glyphicon = __webpack_require__(283).Glyphicon;
 	var TrackEditForm = __webpack_require__(280);
+	var Button = __webpack_require__(283).Button;
+	var Nav = __webpack_require__(283).Nav;
+	var NavItem = __webpack_require__(283).NavItem;
 
 	var TrackDetailItem = React.createClass({
 	  displayName: 'TrackDetailItem',
@@ -33835,12 +33838,35 @@
 	        { className: 'track_audio_item' },
 	        React.createElement('audio', { controls: 'controls', src: this.props.track.track_url })
 	      ),
-	      React.createElement(Glyphicon, { glyph: 'plus', onClick: this._addTrack }),
-	      React.createElement(Glyphicon, { glyph: 'edit' }),
-	      React.createElement(Glyphicon, { glyph: 'collapse-up', className: 'track_collapse', onClick: this.props.hideDetails })
+	      React.createElement(
+	        Nav,
+	        { className: 'track_detail_options' },
+	        React.createElement(
+	          NavItem,
+	          { className: 'track_detail_option_item' },
+	          React.createElement(Glyphicon, { glyph: 'plus', onClick: this._addTrack })
+	        ),
+	        React.createElement(
+	          NavItem,
+	          { className: 'track_detail_option_item' },
+	          React.createElement(Glyphicon, { glyph: 'edit' })
+	        ),
+	        React.createElement(
+	          NavItem,
+	          { className: 'track_detail_option_item' },
+	          React.createElement(Glyphicon, { glyph: 'collapse-up', className: 'track_collapse', onClick: this.props.hideDetails })
+	        ),
+	        React.createElement(
+	          Button,
+	          { bsStyle: 'default', href: this.props.track.track_url, download: this.props.track.title },
+	          'Download'
+	        )
+	      )
 	    );
 	  }
 	});
+	// <NavItem className="track_detail_option_item">
+	// </NavItem>
 
 	module.exports = TrackDetailItem;
 
@@ -53387,7 +53413,7 @@
 	var Player = React.createClass({
 	  displayName: 'Player',
 	  getInitialState: function getInitialState() {
-	    return { tracks: [], playing: false };
+	    return { tracks: [], playing: false, percentPlayed: 0 };
 	  },
 	  _play: function _play() {
 	    var song = document.getElementById('player');
@@ -53441,11 +53467,26 @@
 	  _onSongEnd: function _onSongEnd() {
 	    this._next();
 	  },
+	  _onTimeUpdate: function _onTimeUpdate(e) {
+	    e.preventDefault();
+	    var song = document.getElementById('player');
+
+	    var duration = song.duration;
+	    var timePlayed = song.currentTime;
+	    this.setState({ percentPlayed: timePlayed / duration * 100 });
+	  },
+	  _seek: function _seek(e) {
+	    e.preventDefault();
+	    var song = document.getElementById('player');
+	    var targetTime = e.target.value / 100 * song.duration;
+	    song.currentTime = targetTime;
+	  },
 	  render: function render() {
 	    var song = void 0;
 	    if (this.state.tracks.length > 0) {
 	      song = React.createElement('audio', { id: 'player', src: this.state.tracks[0].track_url,
-	        onEnded: this._onSongEnd });
+	        onEnded: this._onSongEnd,
+	        onTimeUpdate: this._onTimeUpdate });
 	    } else {
 	      song = React.createElement('div', null);
 	    };
@@ -53463,6 +53504,15 @@
 	        { className: 'music_play_item', onClick: this._pause },
 	        React.createElement(Glyphicon, { glyph: 'pause' })
 	      ),
+	      React.createElement('input', {
+	        className: 'progress_bar',
+	        type: 'range',
+	        value: this.state.percentPlayed,
+	        min: '0',
+	        max: '100',
+	        step: '0.01',
+	        onInput: this.seek
+	      }),
 	      React.createElement(
 	        NavItem,
 	        { className: 'music_play_item', onClick: this._back },

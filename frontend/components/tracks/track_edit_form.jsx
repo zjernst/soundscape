@@ -13,7 +13,8 @@ const FormGroup = require('react-bootstrap').FormGroup;
 
 const TrackForm = React.createClass({
   getInitialState() {
-    return({title: "", description: "", track_url: "sample.mp3", disabled: true, showModal: true})
+    return({title: this.props.track.title, description: this.props.track.description,
+      track_url: this.props.track.track_url, showModal: true})
   },
 
   _update(property) {
