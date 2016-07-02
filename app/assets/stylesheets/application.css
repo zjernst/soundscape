@@ -279,3 +279,11 @@ body {
 .track_collapse {
   float: right;
 }
+
+.track_detail_options {
+  display: flex;
+}
+
+.track_detail_option_item {
+  flex: 1;
+}
