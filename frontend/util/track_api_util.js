@@ -29,6 +29,16 @@ module.exports = {
     });
   },
 
+  deleteTrack(id, success) {
+    $.ajax({
+      url: `api/tracks/${id}`,
+      type: 'DELETE',
+      success(res) {
+        success(res.soundscape_id);
+      }
+    })
+  },
+
   updateTrack(track, success) {
     $.ajax({
       url: `api/tracks/${track.id}`,
@@ -36,7 +46,7 @@ module.exports = {
       dataType: 'json',
       data: {track: track},
       success(res) {
-        success(res);
+        success(res.soundscape_id);
       }
     });
   }
