@@ -6,7 +6,7 @@ json.extract!(
 if show_tracks
   json.tracks do
     json.array!(soundscape.tracks) do |track|
-      json.partial! 'api/tracks/track', track: track
+      json.partial! 'api/tracks/track', track: track, show_tags: true
     end
   end
 end

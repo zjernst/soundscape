@@ -1,0 +1,5 @@
+module.exports = {
+  ALL_TRACKS: 'ALL_TRACKS',
+  TAG_FILTER: 'TAG_FILTER',
+  FILTER_BY_TAGS: 'FILTER_BY_TAGS'
+};

@@ -90,8 +90,8 @@ body {
   margin: 60px;
   margin-top: 0px;
   padding: 10px;
-  background: teal;
-  background-color: rgba(20, 100, 150, 0.4);
+  background: #b7cad1;
+  /*background-color: rgba(20, 100, 150, .3);*/
   display: flex;
   flex-wrap: wrap;
 }
@@ -243,6 +243,11 @@ body {
 .soundscape_icon:hover{
   cursor: pointer;
   background-color: rgba(250, 250, 250, 0.8);
+}
+
+.tag_index {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .selected {

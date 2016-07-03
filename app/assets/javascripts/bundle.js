@@ -65,6 +65,7 @@
 	var SoundscapeStore = window.ssStore = __webpack_require__(262);
 	var TrackActions = window.TrackActions = __webpack_require__(264);
 	var TrackStore = window.TrackStore = __webpack_require__(547);
+	var FilterStore = window.FilterStore = __webpack_require__(553);
 
 	var LoginForm = __webpack_require__(269);
 	var UserPage = __webpack_require__(270);
@@ -33191,6 +33192,12 @@
 	  getTrack: function getTrack(id) {
 	    TrackApiUtil.getTrack(id, TrackActions.receiveTrack);
 	  },
+	  deleteTrack: function deleteTrack(id) {
+	    TrackApiUtil.deleteTrack(id, SoundscapeActions.getSoundscape);
+	  },
+	  editTrack: function editTrack(track) {
+	    TrackApiUtil.updateTrack(track, SoundscapeActions.getSoundscape);
+	  },
 	  receiveTrack: function receiveTrack(track) {
 	    Dispatcher.dispatch({
 	      actionType: TrackConstants.TRACK_RECEIVED,
@@ -33241,14 +33248,23 @@
 	      }
 	    });
 	  },
-	  updateTrack: function updateTrack(track, _success4) {
+	  deleteTrack: function deleteTrack(id, _success4) {
+	    $.ajax({
+	      url: 'api/tracks/' + id,
+	      type: 'DELETE',
+	      success: function success(res) {
+	        _success4(res.soundscape_id);
+	      }
+	    });
+	  },
+	  updateTrack: function updateTrack(track, _success5) {
 	    $.ajax({
 	      url: 'api/tracks/' + track.id,
 	      type: 'PATCH',
 	      dataType: 'json',
 	      data: { track: track },
 	      success: function success(res) {
-	        _success4(res);
+	        _success5(res.soundscape_id);
 	      }
 	    });
 	  }
@@ -33516,6 +33532,7 @@
 	var SoundscapeActions = __webpack_require__(268);
 	var SoundscapeIndexItem = __webpack_require__(272);
 	var WelcomeCarousel = __webpack_require__(545);
+	var Filter = __webpack_require__(552);
 
 	var SoundscapeIndex = React.createClass({
 	  displayName: 'SoundscapeIndex',
@@ -33542,7 +33559,8 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'soundscape_index' },
-	      soundscapes
+	      soundscapes,
+	      React.createElement(Filter, null)
 	    );
 	  }
 	});
@@ -33811,10 +33829,11 @@
 	var React = __webpack_require__(1);
 	var TrackActions = __webpack_require__(264);
 	var Glyphicon = __webpack_require__(283).Glyphicon;
-	var TrackEditForm = __webpack_require__(280);
+	var TrackForm = __webpack_require__(280);
 	var Button = __webpack_require__(283).Button;
 	var Nav = __webpack_require__(283).Nav;
 	var NavItem = __webpack_require__(283).NavItem;
+	var Label = __webpack_require__(283).Label;
 
 	var TrackDetailItem = React.createClass({
 	  displayName: 'TrackDetailItem',
@@ -33824,10 +33843,30 @@
 	  _addTrack: function _addTrack() {
 	    TrackActions.getTrack(this.props.track.id);
 	  },
+	  _delete: function _delete(e) {
+	    e.preventDefault();
+	    TrackActions.deleteTrack(this.props.track.id);
+	  },
+	  _toggleForm: function _toggleForm() {
+
+	    this.setState({ editForm: !this.state.editForm });
+	  },
 	  render: function render() {
 	    var tags = this.props.track.tags.map(function (tag) {
-	      return tag.name;
+	      return React.createElement(
+	        Label,
+	        { className: 'tag', key: tag.id },
+	        tag.name
+	      );
 	    });
+
+	    var editForm = void 0;
+	    if (this.state.editForm) {
+
+	      editForm = React.createElement(TrackForm, { toggleButton: this._toggleForm,
+	        track: this.props.track,
+	        edit: 'true' });
+	    }
 
 	    return React.createElement(
 	      'div',
@@ -33847,24 +33886,35 @@
 	        { className: 'track_detail_options' },
 	        React.createElement(
 	          NavItem,
-	          { className: 'track_detail_option_item' },
-	          React.createElement(Glyphicon, { glyph: 'plus', onClick: this._addTrack })
+	          { className: 'track_detail_option_item', onClick: this._addTrack },
+	          React.createElement(Glyphicon, { glyph: 'plus' }),
+	          ' Add to Playlist'
 	        ),
 	        React.createElement(
 	          NavItem,
-	          { className: 'track_detail_option_item' },
-	          React.createElement(Glyphicon, { glyph: 'edit' })
+	          { className: 'track_detail_option_item', onClick: this._toggleForm },
+	          React.createElement(Glyphicon, { glyph: 'edit' }),
+	          editForm
 	        ),
-	        React.createElement(
+	        this.props.track.artist_id === SessionStore.currentUser().id ? React.createElement(
 	          NavItem,
 	          { className: 'track_detail_option_item' },
-	          React.createElement(Glyphicon, { glyph: 'collapse-up', className: 'track_collapse', onClick: this.props.hideDetails })
+	          React.createElement(Glyphicon, { glyph: 'trash', onClick: this._delete })
+	        ) : "",
+	        React.createElement(
+	          NavItem,
+	          null,
+	          tags
 	        ),
-	        tags,
 	        React.createElement(
 	          Button,
 	          { bsStyle: 'default', href: this.props.track.track_url, download: this.props.track.title },
 	          'Download'
+	        ),
+	        React.createElement(
+	          NavItem,
+	          { className: 'track_detail_option_item', onClick: this.props.hideDetails },
+	          React.createElement(Glyphicon, { glyph: 'collapse-up', className: 'track_collapse' })
 	        )
 	      )
 	    );
@@ -33969,7 +34019,25 @@
 	var TrackForm = React.createClass({
 	  displayName: 'TrackForm',
 	  getInitialState: function getInitialState() {
-	    return { title: "", description: "", track_url: "sample.mp3", allTags: [], disabled: true, showModal: true };
+	    if (this.props.edit) {
+	      return { title: this.props.track.title,
+	        description: this.props.track.description,
+	        track_url: this.props.track.track_url,
+	        allTags: [],
+	        tags: this.props.track.tags.map(function (tag) {
+	          return tag.id;
+	        }),
+	        disabled: false,
+	        showModal: true };
+	    } else {
+	      return { title: "",
+	        description: "",
+	        track_url: "sample.mp3",
+	        allTags: [],
+	        tags: [],
+	        disabled: true,
+	        showModal: true };
+	    }
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.tagListener = TagStore.addListener(this._allTags);
@@ -33994,15 +34062,27 @@
 	  },
 	  _handleSubmit: function _handleSubmit(e) {
 	    e.preventDefault();
-	    if (SessionStore.isUserLoggedIn()) {
-	      var track = { title: this.state.title, description: this.state.description,
-	        track_url: this.state.track_url, artist_id: SessionStore.currentUser().id,
-	        soundscape_id: this.props.ssID };
-	      TrackActions.createTrack(track);
+	    if (this.props.edit) {
+	      var track = { id: this.props.track.id,
+	        title: this.state.title,
+	        description: this.state.description,
+	        track_url: this.state.track_url,
+	        artist_id: this.props.track.artist_id,
+	        soundscape_id: this.props.track.soundscape_id,
+	        tags_added: this.state.tags };
+	      TrackActions.editTrack(track);
 	      this.setState({ title: '', description: '' });
 	    } else {
-	      hashHistory.push('/login');
+	      var _track = { title: this.state.title,
+	        description: this.state.description,
+	        track_url: this.state.track_url,
+	        artist_id: SessionStore.currentUser().id,
+	        soundscape_id: this.props.ssID,
+	        tags_added: this.state.tags };
+	      TrackActions.createTrack(_track);
+	      this.setState({ title: '', description: '' });
 	    }
+	    this.close();
 	  },
 	  close: function close() {
 	    this.setState({ showModal: false });
@@ -34011,11 +34091,26 @@
 	  open: function open() {
 	    this.setState({ showModal: true });
 	  },
+	  _handleCheckbox: function _handleCheckbox(e) {
+	    var val = parseInt(e.target.value);
+	    if (this.state.tags.includes(val)) {
+	      var idx = this.state.tags.indexOf(val);
+	      this.state.tags.splice(idx, 1);
+	    } else {
+	      this.state.tags.push(val);
+	    }
+	  },
 	  render: function render() {
+	    var _this2 = this;
+
 	    var tags = this.state.allTags.map(function (tag) {
+	      var checked = _this2.state.tags.includes(tag.id);
 	      return React.createElement(
 	        Checkbox,
-	        { key: tag.id },
+	        { onClick: _this2._handleCheckbox,
+	          key: tag.id,
+	          defaultChecked: checked,
+	          value: tag.id },
 	        tag.name
 	      );
 	    });
@@ -53744,6 +53839,288 @@
 	    });
 	  }
 	};
+
+/***/ },
+/* 552 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var TagStore = __webpack_require__(548);
+	var FilterStore = __webpack_require__(553);
+	var SoundscapeStore = __webpack_require__(262);
+	var FilterActions = __webpack_require__(555);
+	var TrackIndex = __webpack_require__(275);
+	var TagActions = __webpack_require__(550);
+	var TagIndex = __webpack_require__(556);
+
+	var Filter = React.createClass({
+	  displayName: 'Filter',
+	  getInitialState: function getInitialState() {
+	    return { results: [], tags: [] };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.filterListener = FilterStore.addListener(this._onChange);
+	    this.tagListener = TagStore.addListener(this._onChange);
+	    FilterActions.fetchAllTracks();
+	    TagActions.fetchAllTags();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.filterListener.remove();
+	    this.tagListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ results: FilterStore.filtered(), tags: TagStore.all() });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'filter_container' },
+	      React.createElement(
+	        'div',
+	        { className: 'tag_index_container' },
+	        React.createElement(TagIndex, { tags: this.state.tags })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'filter_track_index' },
+	        React.createElement(TrackIndex, { tracks: this.state.results })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Filter;
+
+/***/ },
+/* 553 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var FilterConstants = __webpack_require__(554);
+	var AppDispatcher = __webpack_require__(232);
+	var Store = __webpack_require__(240).Store;
+
+	var _filteredTracks = [];
+	var _filters = [];
+	var FilterStore = new Store(AppDispatcher);
+
+	FilterStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case FilterConstants.ALL_TRACKS:
+	      resetTracks(payload.tracks);
+	      FilterStore.__emitChange();
+	      break;
+	    case FilterConstants.TAG_FILTER:
+	      filterByTag(payload.tag_id);
+	      FilterStore.__emitChange();
+	      break;
+	    case FilterConstants.FILTER_BY_TAGS:
+	      updateFilters(payload.tag_ids);
+	      FilterStore.__emitChange();
+	  }
+	};
+
+	FilterStore.all = function () {
+	  return _filteredTracks.slice();
+	};
+
+	FilterStore.filtered = function () {
+	  var tracks = [];
+	  _filteredTracks.forEach(function (track) {
+	    var track_tags = track.tags.map(function (tag) {
+	      return tag.id;
+	    });
+	    var adding = true;
+	    _filters.forEach(function (tag) {
+	      if (!track_tags.includes(tag)) {
+	        adding = false;
+	      }
+	    });
+	    if (adding) {
+	      tracks.push(track);
+	    }
+	  });
+	  return tracks;
+	};
+
+	FilterStore.filters = function () {
+	  return _filters.slice();
+	};
+
+	function updateFilters(tag_ids) {
+	  _filters = tag_ids;
+	};
+
+	function filterByTag(tag_id) {
+	  var tracks = [];
+	  _filteredTracks.forEach(function (track) {
+	    var tag_ids = track.tags.map(function (tag) {
+	      return tag.id;
+	    });
+	    if (tag_ids.includes(tag_id)) {
+	      tracks.push(track);
+	    }
+	  });
+	  _filteredTracks = tracks;
+	};
+
+	function resetTracks(tracks) {
+	  _filteredTracks = tracks;
+	};
+
+	module.exports = FilterStore;
+
+/***/ },
+/* 554 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  ALL_TRACKS: 'ALL_TRACKS',
+	  TAG_FILTER: 'TAG_FILTER',
+	  FILTER_BY_TAGS: 'FILTER_BY_TAGS'
+	};
+
+/***/ },
+/* 555 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var FilterConstants = __webpack_require__(554);
+	var Dispatcher = __webpack_require__(232);
+	var TrackApiUtil = __webpack_require__(265);
+
+	var FilterActions = {
+	  fetchAllTracks: function fetchAllTracks() {
+	    TrackApiUtil.fetchAllTracks(FilterActions.receiveAllTracks);
+	  },
+	  receiveAllTracks: function receiveAllTracks(tracks) {
+	    Dispatcher.dispatch({
+	      actionType: FilterConstants.ALL_TRACKS,
+	      tracks: tracks
+	    });
+	  },
+	  tagFilter: function tagFilter(tag) {
+	    Dispatcher.dispatch({
+	      actionType: FilterConstants.TAG_FILTER,
+	      tag_id: tag
+	    });
+	  },
+	  updateResults: function updateResults(tag_ids) {
+	    Dispatcher.dispatch({
+	      actionType: FilterConstants.FILTER_BY_TAGS,
+	      tag_ids: tag_ids
+	    });
+	  }
+
+	  // updateResults(tag_ids) {
+	  //   TrackApiUtil.fetchAllTracks(FilterActions.receiveAllTracks);
+	  //
+	  //   tag_ids.forEach((id) => {
+	  //     FilterActions.tagFilter(id)
+	  //   })
+	  // }
+
+	};
+
+	module.exports = FilterActions;
+
+/***/ },
+/* 556 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var TagIndexItem = __webpack_require__(557);
+	var FilterActions = __webpack_require__(555);
+
+	var TagIndex = React.createClass({
+	  displayName: 'TagIndex',
+	  getInitialState: function getInitialState() {
+	    return { tagsApplied: [] };
+	  },
+	  _applyTag: function _applyTag(tag_id) {
+	    if (this.state.tagsApplied.includes(tag_id)) {
+	      var idx = this.state.tagsApplied.indexOf(tag_id);
+	      this.state.tagsApplied.splice(idx, 1);
+	    } else {
+	      var tags = this.state.tagsApplied;
+	      tags.push(tag_id);
+	      this.setState({ tagsApplied: tags });
+	    }
+	    this._updateResults();
+	  },
+	  _updateResults: function _updateResults() {
+	    FilterActions.updateResults(this.state.tagsApplied);
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var tags = this.props.tags.map(function (tag) {
+	      return React.createElement(TagIndexItem, { tag: tag,
+	        key: tag.id,
+	        applyTag: _this._applyTag });
+	    });
+	    return React.createElement(
+	      'div',
+	      { className: 'tag_index' },
+	      tags
+	    );
+	  }
+	});
+
+	module.exports = TagIndex;
+
+/***/ },
+/* 557 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Label = __webpack_require__(283).Label;
+	var FilterActions = __webpack_require__(555);
+	var classNames = __webpack_require__(273);
+
+	var TagIndexItem = React.createClass({
+	  displayName: 'TagIndexItem',
+	  getInitialState: function getInitialState() {
+	    return { seleted: false };
+	  },
+	  _tagFilter: function _tagFilter() {
+	    this.props.applyTag(this.props.tag.id);
+	    this.setState({ selected: !this.state.selected });
+	  },
+	  render: function render() {
+	    var tagClass = void 0;
+	    if (this.state.selected) {
+	      tagClass = classNames("tag_index_item", "selected");
+	    } else {
+	      tagClass = "tag_index_item";
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: tagClass, onClick: this._tagFilter },
+	      React.createElement(
+	        'h3',
+	        null,
+	        React.createElement(
+	          Label,
+	          null,
+	          this.props.tag.name
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = TagIndexItem;
 
 /***/ }
 /******/ ]);

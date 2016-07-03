@@ -16,7 +16,23 @@ const TagActions = require('../../actions/tag_actions');
 
 const TrackForm = React.createClass({
   getInitialState() {
-    return({title: "", description: "", track_url: "sample.mp3", allTags: [], disabled: true, showModal: true})
+    if (this.props.edit) {
+      return({title: this.props.track.title,
+              description: this.props.track.description,
+              track_url: this.props.track.track_url,
+              allTags: [],
+              tags: this.props.track.tags.map((tag) => tag.id),
+              disabled: false,
+              showModal: true})
+    } else {
+      return({title: "",
+              description: "",
+              track_url: "sample.mp3",
+              allTags: [],
+              tags: [],
+              disabled: true,
+              showModal: true})
+    }
   },
 
   componentDidMount() {
@@ -43,15 +59,27 @@ const TrackForm = React.createClass({
 
   _handleSubmit(e) {
     e.preventDefault();
-    if (SessionStore.isUserLoggedIn()) {
-      let track = {title: this.state.title, description: this.state.description,
-                   track_url: this.state.track_url, artist_id: SessionStore.currentUser().id,
-                   soundscape_id: this.props.ssID}
-      TrackActions.createTrack(track);
+    if (this.props.edit) {
+      let track = {id: this.props.track.id,
+                   title: this.state.title,
+                   description: this.state.description,
+                   track_url: this.state.track_url,
+                   artist_id: this.props.track.artist_id,
+                   soundscape_id: this.props.track.soundscape_id,
+                   tags_added: this.state.tags}
+      TrackActions.editTrack(track);
       this.setState({title: '', description: ''});
     } else {
-      hashHistory.push('/login');
+      let track = {title: this.state.title,
+                   description: this.state.description,
+                   track_url: this.state.track_url,
+                   artist_id: SessionStore.currentUser().id,
+                   soundscape_id: this.props.ssID,
+                   tags_added: this.state.tags}
+      TrackActions.createTrack(track);
+      this.setState({title: '', description: ''});
     }
+    this.close();
   },
 
   close() {
@@ -63,9 +91,23 @@ const TrackForm = React.createClass({
     this.setState({showModal: true})
   },
 
+  _handleCheckbox(e) {
+    let val = parseInt(e.target.value)
+    if (this.state.tags.includes(val)) {
+      let idx = this.state.tags.indexOf(val);
+      this.state.tags.splice(idx, 1);
+    } else {
+      this.state.tags.push(val)
+    }
+  },
+
   render() {
     let tags = this.state.allTags.map((tag) => {
-      return <Checkbox key={tag.id}>{tag.name}</Checkbox>
+      let checked = this.state.tags.includes(tag.id)
+      return <Checkbox onClick={this._handleCheckbox}
+                       key={tag.id}
+                       defaultChecked={checked}
+                       value={tag.id}>{tag.name}</Checkbox>
     })
     return(
       <Modal show={this.state.showModal} onHide={this.close}>

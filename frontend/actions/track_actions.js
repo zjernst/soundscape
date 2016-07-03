@@ -14,6 +14,14 @@ const TrackActions = {
     TrackApiUtil.getTrack(id, TrackActions.receiveTrack)
   },
 
+  deleteTrack(id) {
+    TrackApiUtil.deleteTrack(id, SoundscapeActions.getSoundscape)
+  },
+
+  editTrack(track) {
+    TrackApiUtil.updateTrack(track, SoundscapeActions.getSoundscape)
+  },
+
   receiveTrack(track) {
     Dispatcher.dispatch({
       actionType: TrackConstants.TRACK_RECEIVED,
