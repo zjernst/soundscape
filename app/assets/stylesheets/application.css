@@ -324,9 +324,9 @@ body.cafe {
 }
 
 .playlist_sidebar {
-  position: absolute;
+  position: fixed;
   right: 0;
-  top: 50%;
+  bottom: 20%;
   display: flex;
   min-height: 500px;
   min-width: 30px;
