@@ -3,7 +3,7 @@ const SoundscapeStore = require('../../stores/soundscape_store');
 const SoundscapeActions = require('../../actions/soundscape_actions');
 const SoundscapeIndexItem = require('./ss_index_item');
 const WelcomeCarousel = require('../welcome_carousel');
-const Filter = require('../filter');
+const FilteredList = require('../filtered_list');
 
 const SoundscapeIndex = React.createClass({
   getInitialState() {
@@ -31,12 +31,17 @@ const SoundscapeIndex = React.createClass({
     });
 
     return(
-      <div className="soundscape_index">
-        {soundscapes}
-        <Filter />
+      <div className="frontpage">
+        <div className="soundscape_index">
+          {soundscapes}
+          <FilteredList />
+        </div>
       </div>
     )
   }
 });
 
+// <div className="carousel_container">
+//   <WelcomeCarousel />
+// </div>
 module.exports = SoundscapeIndex;

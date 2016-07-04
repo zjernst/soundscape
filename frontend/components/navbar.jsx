@@ -66,3 +66,19 @@ const Navbar = React.createClass({
 })
 
 module.exports = Navbar;
+
+// <Navbar>
+//   <Navbar.Header>
+//     <Navbar.Brand>
+//       <h2 className="logo" onClick={this._gotoIndex}>sound s_c_a_p_e</h2>
+//     </Navbar.Brand>
+//   </Navbar.Header>
+//   <Nav pullRight>
+//     {buttons}
+//   </Nav>
+//     <Nav pullRight>
+//       <div className="account_container" onClick={this._gotoUserpage}>
+//         {SessionStore.currentUser().username}
+//       </div>
+//     </Nav>
+// </Navbar>
