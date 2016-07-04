@@ -3,8 +3,8 @@ const Dispatcher = require('../dispatcher/dispatcher');
 const TrackApiUtil = require('../util/track_api_util');
 
 const FilterActions = {
-  fetchAllTracks() {
-    TrackApiUtil.fetchAllTracks(FilterActions.receiveAllTracks)
+  fetchAllTracks(filters) {
+    TrackApiUtil.fetchAllTracks(filters, FilterActions.receiveAllTracks)
   },
 
   receiveAllTracks(tracks) {

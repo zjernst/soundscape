@@ -3,6 +3,7 @@ const TrackIndexItem = require('./track_index_item');
 const SoundscapeStore = require('../../stores/soundscape_store');
 const SoundscapeActions = require('../../actions/soundscape_actions');
 const hashHistory = require('react-router').hashHistory;
+const classNames = require('classnames');
 
 const TrackIndex = React.createClass({
   getInitialState() {
@@ -22,8 +23,9 @@ const TrackIndex = React.createClass({
         return <TrackIndexItem key={track.id} track={track} />
       })
     }
+    let indexClass = classNames("track_index", this.props.parent);
     return(
-      <div className="track_index">
+      <div className={indexClass}>
         {tracks}
       </div>
     )

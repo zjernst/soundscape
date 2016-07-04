@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   validates :username, :password_digest, :session_token, presence: true
   attr_reader :password
   validates :password, length: {minimum: 6, allow_nil: true}
-
+  has_many :tracks, class_name: "Track", foreign_key: :artist_id
   after_initialize :ensure_session_token
 
   def password=(password)

@@ -18,14 +18,21 @@ const SoundscapeDetail = React.createClass({
 
   componentWillUnmount() {
     this.ssListener.remove();
+    $('body').removeClass(this.state.soundscape.title)
   },
 
   componentWillReceiveProps(newProps) {
+    $('body').removeClass(this.state.soundscape.title).addClass(
+      SoundscapeStore.find(newProps.params.ss_id).title
+    )
     this.setState({soundscape: SoundscapeStore.find(newProps.params.ss_id)})
   },
 
   _onChange() {
     this.setState({soundscape: SoundscapeStore.find(this.props.params.ss_id)})
+    if (!$('body').hasClass(this.state.soundscape.title)) {
+      $('body').addClass(this.state.soundscape.title)
+    }
   },
 
   _toggleForm() {

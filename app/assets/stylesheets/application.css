@@ -32,7 +32,7 @@
  }
  */
 
-body, div, h2, ul, li {
+body, header, nav, div, h2, ul, li {
   margin: 0;
   padding: 0;
   border: 0;
@@ -41,7 +41,45 @@ body, div, h2, ul, li {
 }
 
 body {
-  background-image: url('http://res.cloudinary.com/soundscape/image/upload/v1467305571/foggy_forest_qmxcjc.jpg')
+  background-color: white;
+  background-image: url('http://res.cloudinary.com/soundscape/image/upload/v1467305571/foggy_forest_qmxcjc.jpg');
+}
+
+body.rain {
+  background-image: url('http://webneel.com/wallpaper/sites/default/files/images/04-2013/cute-rain-in-mirror.jpg');
+}
+
+body.waves {
+  background-image: url('http://www.wallpapersdb.org/wallpapers/beach/golden_beach_and_waves_1920x1200.jpg');
+}
+
+body.wind {
+  background-image: url('http://www.tantrumkitesurf.com/wp-content/uploads/2012/12/wind.jpg');
+}
+
+body.city {
+  background-image: url('https://wallpaperscraft.com/image/city_skyscrapers_night_light_road_62141_3840x2160.jpg');
+  background-size: 2000px;
+}
+
+body.forest {
+  background-image: url('https://static.pexels.com/photos/1826/wood-nature-sunny-forest.jpg');
+}
+
+body.home {
+  background-image: url('http://s.shld.net/is/image/Sears/s_025CO66554812B-qm-$cq_width_160$-qm-$cq_width_250$');
+}
+
+body.fire {
+  background-image: url('http://www.win10themes.com/wp-content/uploads/2016/01/Fireplace-Wallpaper-Images.png');
+}
+
+body.cafe {
+  background-image: url('http://www.atlascafe.net/images/02.jpg');
+}
+
+.fullpage {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .logo {
@@ -57,6 +95,7 @@ body {
 .navbar {
   height: 30px;
   background: lightblue;
+  margin-bottom: 0;
 }
 
 .logo:hover {
@@ -87,8 +126,10 @@ body {
 }
 
 .soundscape_index {
-  margin: 60px;
+  margin-left: 130px;
+  margin-right: 130px;
   margin-top: 0px;
+  margin-bottom: 200px;
   padding: 10px;
   background: #b7cad1;
   /*background-color: rgba(20, 100, 150, .3);*/
@@ -113,21 +154,21 @@ body {
   background-color: rgba(250, 250, 250, 0.8);
 }
 
-.rain {
+.soundscape_index_item.rain {
   background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_310,w_330/v1467311173/logo_sqngrs.png');
   background-size: 160px;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.waves {
+.soundscape_index_item.waves {
   background-image: url('http://res.cloudinary.com/soundscape/image/upload/v1467310749/waves_logo.png');
   background-position: center;
   background-size: 200px;
 
 }
 
-.wind {
+.soundscape_index_item.wind {
   background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_250/v1467311170/logo_1_t2yfgn.png');
   background-size: 150px;
   background-repeat: no-repeat;
@@ -135,7 +176,7 @@ body {
 
 }
 
-.city {
+.soundscape_index_item.city {
   background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_crop,h_213/v1467311166/logo_3_kaby3y.png');
   background-size: 170px;
   background-position: center;
@@ -143,7 +184,7 @@ body {
 
 }
 
-.forest {
+.soundscape_index_item.forest {
   background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_360/v1467311162/logo_4_axnjxa.png');
   background-size: 140px;
   background-repeat: no-repeat;
@@ -151,14 +192,14 @@ body {
 
 }
 
-.home {
+.soundscape_index_item.home {
   background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_310/v1467311155/logo_6_bqqnfp.png');
   background-size: 150px;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.fire {
+.soundscape_index_item.fire {
   background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_370/v1467311158/logo_5_kptop2.png');
   background-size: 120px;
   background-repeat: no-repeat;
@@ -166,7 +207,7 @@ body {
 
 }
 
-.cafe {
+.soundscape_index_item.cafe {
   background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_310,w_350/v1467311151/logo_8_qqdcng.png');
   background-size: 150px;
   background-repeat: no-repeat;
@@ -175,9 +216,11 @@ body {
 }
 
 .soundscape_detail {
-  background-color: rgba(20, 100, 150, 0.2);
-  margin: 60px;
+  background-color: #b7cad1;
+  margin-left: 130px;
+  margin-right: 130px;
   margin-top: 0px;
+  margin-bottom: 200px;
   min-height: 500px;
 }
 
@@ -279,6 +322,18 @@ body {
 .glyphicon {
   margin: 0 auto;
 }
+
+.playlist_sidebar {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: flex;
+  min-height: 500px;
+  min-width: 30px;
+  background-color: lightgray;
+  display: flex;
+  flex-direction: column;
+}
 /*color: #d0dde5;*/
 
 .track_collapse {
@@ -291,4 +346,8 @@ body {
 
 .track_detail_option_item {
   flex: 1;
+}
+
+.user {
+  width: 500px;
 }

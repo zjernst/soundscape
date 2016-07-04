@@ -1,7 +1,8 @@
 module.exports = {
-  fetchAllTracks(success) {
+  fetchAllTracks(filters, success) {
     $.ajax({
       url: 'api/tracks',
+      data: filters,
       success: function(res) {
         success(res)
       }

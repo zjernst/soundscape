@@ -20,7 +20,8 @@ const TagIndex = React.createClass({
   },
 
   _updateResults() {
-    FilterActions.updateResults(this.state.tagsApplied)
+    FilterActions.updateResults(this.state.tagsApplied);
+    FilterActions.fetchAllTracks({tags: this.state.tagsApplied});
   },
 
   render() {
