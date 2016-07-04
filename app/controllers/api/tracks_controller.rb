@@ -1,6 +1,9 @@
 class Api::TracksController < ApplicationController
   def index
     @tracks = Track.all
+    if params[:tags]
+      @tracks = Track.has_tag(params[:tags])
+    end
   end
 
   def create

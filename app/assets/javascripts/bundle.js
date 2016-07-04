@@ -73,6 +73,7 @@
 	var Navbar = __webpack_require__(282);
 	var SoundscapeDetail = __webpack_require__(274);
 	var Player = __webpack_require__(546);
+	var PlaylistSidebar = __webpack_require__(558);
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -82,6 +83,7 @@
 	      null,
 	      React.createElement(Navbar, null),
 	      this.props.children,
+	      React.createElement(PlaylistSidebar, null),
 	      React.createElement(Player, null)
 	    );
 	  }
@@ -32954,6 +32956,10 @@
 	  return users;
 	};
 
+	UserStore.find = function (id) {
+	  return Object.assign({}, _users[id]);
+	};
+
 	UserStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
 	    case UserConstants.RECEIVE_ALL_USERS:
@@ -33221,9 +33227,10 @@
 	'use strict';
 
 	module.exports = {
-	  fetchAllTracks: function fetchAllTracks(_success) {
+	  fetchAllTracks: function fetchAllTracks(filters, _success) {
 	    $.ajax({
 	      url: 'api/tracks',
+	      data: filters,
 	      success: function success(res) {
 	        _success(res);
 	      }
@@ -33495,26 +33502,48 @@
 	var UserActions = __webpack_require__(259);
 	var SessionActions = __webpack_require__(231);
 	var SessionStore = __webpack_require__(239);
+	var FilterActions = __webpack_require__(555);
+	var TrackIndex = __webpack_require__(275);
 	var UserStore = __webpack_require__(257);
 	var hashHistory = __webpack_require__(168).hashHistory;
 
 	var UserPage = React.createClass({
 	  displayName: 'UserPage',
 	  getInitialState: function getInitialState() {
-	    return { user: SessionStore.currentUser() };
+	    return { user: UserStore.find(this.props.params.userId) };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.userListener = UserStore.addListener(this._onChange);
+	    UserActions.fetchAllUsers();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.userListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ user: UserStore.find(this.props.params.userId) });
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    this.setState({ user: UserStore.find(newProps.params.userId) });
 	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'user_page' },
 	      React.createElement(
 	        'h3',
-	        null,
-	        'Welcome to your page, ',
-	        this.state.user.username,
-	        '!'
+	        { className: 'username' },
+	        this.state.user.username
 	      ),
-	      React.createElement('audio', { controls: 'controls', src: 'http://res.cloudinary.com/soundscape/video/upload/v1467321148/Allegro_from_Duet_in_C_Major_jvdgmr.mp3', autoplay: true })
+	      React.createElement(
+	        'div',
+	        { className: 'users_uploaded_tracks' },
+	        React.createElement(
+	          'h4',
+	          null,
+	          'Tracks Uploaded'
+	        ),
+	        React.createElement(TrackIndex, { tracks: this.state.user.tracks, parent: 'user' })
+	      )
 	    );
 	  }
 	});
@@ -33681,12 +33710,17 @@
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.ssListener.remove();
+	    $('body').removeClass(this.state.soundscape.title);
 	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    $('body').removeClass(this.state.soundscape.title).addClass(SoundscapeStore.find(newProps.params.ss_id).title);
 	    this.setState({ soundscape: SoundscapeStore.find(newProps.params.ss_id) });
 	  },
 	  _onChange: function _onChange() {
 	    this.setState({ soundscape: SoundscapeStore.find(this.props.params.ss_id) });
+	    if (!$('body').hasClass(this.state.soundscape.title)) {
+	      $('body').addClass(this.state.soundscape.title);
+	    }
 	  },
 	  _toggleForm: function _toggleForm() {
 	    this.setState({ showForm: !this.state.showForm });
@@ -33745,6 +33779,7 @@
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
 	var hashHistory = __webpack_require__(168).hashHistory;
+	var classNames = __webpack_require__(273);
 
 	var TrackIndex = React.createClass({
 	  displayName: 'TrackIndex',
@@ -33763,9 +33798,10 @@
 	        return React.createElement(TrackIndexItem, { key: track.id, track: track });
 	      });
 	    }
+	    var indexClass = classNames("track_index", this.props.parent);
 	    return React.createElement(
 	      'div',
-	      { className: 'track_index' },
+	      { className: indexClass },
 	      tracks
 	    );
 	  }
@@ -53996,8 +54032,8 @@
 	var TrackApiUtil = __webpack_require__(265);
 
 	var FilterActions = {
-	  fetchAllTracks: function fetchAllTracks() {
-	    TrackApiUtil.fetchAllTracks(FilterActions.receiveAllTracks);
+	  fetchAllTracks: function fetchAllTracks(filters) {
+	    TrackApiUtil.fetchAllTracks(filters, FilterActions.receiveAllTracks);
 	  },
 	  receiveAllTracks: function receiveAllTracks(tracks) {
 	    Dispatcher.dispatch({
@@ -54058,6 +54094,7 @@
 	  },
 	  _updateResults: function _updateResults() {
 	    FilterActions.updateResults(this.state.tagsApplied);
+	    FilterActions.fetchAllTracks({ tags: this.state.tagsApplied });
 	  },
 	  render: function render() {
 	    var _this = this;
@@ -54121,6 +54158,56 @@
 	});
 
 	module.exports = TagIndexItem;
+
+/***/ },
+/* 558 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var TrackStore = __webpack_require__(547);
+	var TrackActions = __webpack_require__(264);
+	var PlaylistItem = __webpack_require__(559);
+
+	var PlaylistSidebar = React.createClass({
+	  displayName: 'PlaylistSidebar',
+	  getInitialState: function getInitialState() {
+	    return { tracks: TrackStore.all() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.trackListener = TrackStore.addListener(this._onChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.trackListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ tracks: TrackStore.all() });
+	  },
+	  render: function render() {
+	    var tracks = this.state.tracks.map(function (track) {
+	      return React.createElement(
+	        'li',
+	        { className: 'playlist_track', key: track.id },
+	        '♠ ',
+	        track.title
+	      );
+	    });
+	    return React.createElement(
+	      'div',
+	      { className: 'playlist_sidebar' },
+	      tracks
+	    );
+	  }
+	});
+
+	module.exports = PlaylistSidebar;
+
+/***/ },
+/* 559 */
+/***/ function(module, exports) {
+
+	"use strict";
 
 /***/ }
 /******/ ]);

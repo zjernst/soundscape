@@ -33,11 +33,11 @@ Track.create({title: 'Ocean Waves', track_url: 'https://res.cloudinary.com/sound
 Track.create({title: 'Seagulls and Waves', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467331331/eba0rbvycgrf00d21dwm.mp3',
   description: "Early morning with gentle waves rolling onto a sandy beach. Very active seagulls!", soundscape_id: 2, artist_id: 3})
 Track.create({title: 'Calmwaves / Sandbeach', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467350407/191296__klankbeeld__calmwaves-sandbeach-03-eq-130430-03_ie21qa.mp3',
-  description: "Another recording of waves washing into a sandy beach.", soundscape_id: 2, artist_id: 4})
+  description: "Another recording of waves washing into a sandy beach.", soundscape_id: 2, artist_id: 2})
 Track.create({title: 'Muted Pattering Waves', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467350437/185225__northern-monkey__gentle-sea-wash_nqtxic.mp3',
   description: "Splish, splash! Gentle pattering of a sea wash I recorded.", soundscape_id: 2, artist_id: 2})
 Track.create({title: 'Windy Wood', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467350512/204325__dwareing__windy-wood-2_huc3dd.mp3',
-  description: "Strong winds blowing through a wooded area. Strong but gentle track.", soundscape_id: 3, artist_id: 4})
+  description: "Strong winds blowing through a wooded area. Strong but gentle track.", soundscape_id: 3, artist_id: 2})
 Track.create({title: 'around town', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467321148/Allegro_from_Duet_in_C_Major_jvdgmr.mp3', soundscape_id: 4, artist_id: 1})
 Track.create({title: 'Forest Stream', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467350452/132049__kolezan__water-stream-5_kkilf2.mp3',
   description: "Recording of a meandering stream in a forest. Short track, but very peaceful!", soundscape_id: 5, artist_id: 5})
@@ -47,7 +47,35 @@ Track.create({title: 'River Through the Woods', track_url: 'https://res.cloudina
   description: "River running through the Whispering Woods. Chirping birds faint in the background if you really listen!", soundscape_id: 5, artist_id: 3})
 Track.create({title: 'home sweet home', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467321148/Allegro_from_Duet_in_C_Major_jvdgmr.mp3', soundscape_id: 6, artist_id: 1})
 Track.create({title: 'flickering flame', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467321148/Allegro_from_Duet_in_C_Major_jvdgmr.mp3', soundscape_id: 7, artist_id: 1})
-Track.create({title: 'coffee', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467321148/Allegro_from_Duet_in_C_Major_jvdgmr.mp3', soundscape_id: 8, artist_id: 3})
+Track.create({title: 'Active Coffee', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467594693/coffee/216138__somersethypnotherapy__ambient-coffee-shop-sounds.mp3',
+  description: 'Busy afternoon in a German coffee shop. Lots of bustle and activity.', soundscape_id: 8, artist_id: 3})
+Track.create({title: 'Busy Shop w/ Music in Background', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467594687/coffee/178544__muse384__coffee-shop.mp3',
+  description: 'Busy coffee show with Beach House playing in the background. Busy track.', soundscape_id: 8, artist_id: 6})
+Track.create({title: 'Coffee Shop Murmurings pt: 1', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467594659/coffee/233280__jarredgibb__ambience-coffee-shop-1.mp3',
+  description: 'Lovely day in a British coffee shop. Quieter track, but lots of laughing and chattering. Part 1/3', soundscape_id: 8, artist_id: 6})
+Track.create({title: 'Coffee Shop Murmurings pt: 2', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467594639/coffee/233283__jarredgibb__ambience-coffee-shop-4.mp3',
+  description: 'Continuation of my first recording. Part 2/3', soundscape_id: 8, artist_id: 6})
+Track.create({title: 'Coffee Shop Murmurings pt: 3', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467594637/coffee/233285__jarredgibb__ambience-coffee-shop-5.mp3',
+  description: 'Final installment of my coffee shop trilogy. Hope you enjoyed! Part 3/3', soundscape_id: 8, artist_id: 6})
+Track.create({title: 'Bustle', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467594667/coffee/264347__soundslikewillem__german-coffee-shop-atmosphere.mp3',
+  description: 'Active track of my favorite coffee shop! This is my first post so I hope you enjoy!!', soundscape_id: 8, artist_id: 5})
+Track.create({title: 'Chatter over Coffee', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467594668/coffee/31526__sagetyrtle__restaurant3.mp3',
+  description: 'Lots of quiet chattering. Slower day, so most of it is discernible if you listen closely. Accompanied by tip-type of keyboads', soundscape_id: 8, artist_id: 2})
+
+Track.create({title: 'Forest at Dawn', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467584530/FelixBlumePack/328292__felix-blume__forest-at-dawn-birds-cricket-squirrel-insects-chachalaca-parrot-colibri-woodpecker-in-the-sian-ka-an-biosphere-reserve.mp3',
+  description: "Birds, crickets, squirrels, insects, parrot, and woodpecker in Sian Ka An.", soundscape_id: 5, artist_id: 4})
+Track.create({title: 'Wetland at Night', track_url: 'http://res.cloudinary.com/soundscape/video/upload/v1467584389/FelixBlumePack/328291__felix-blume__wetland-at-night-frogs-and-crickets-in-the-sian-ka-an-biosphere-reserve.mp3',
+  description: "Frogs, crickets and other wildlife recorded at the Sian Ka An Biosphere Reserve.", soundscape_id: 5, artist_id: 4})
+Track.create({title: 'Forest at Night', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467584462/FelixBlumePack/328293__felix-blume__forest-at-night-crickets-cicadas-and-insects-in-the-sian-ka-an-biosphere-reserve.mp3',
+  description: "Crickets, cicadas, and insects. Chirping and humming on the nigth.", soundscape_id: 5, artist_id: 4})
+Track.create({title: 'Light Windy Morning', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467584429/FelixBlumePack/328295__felix-blume__forest-at-dawn-with-a-light-wind-in-the-trees-grey-hawk-jay-colibri-birds-crickets-and-insects-in-the-sian-ka-an-biosphere-reserve.mp3',
+  description: "Lots of birds in this one! Light wind rolls through an early morning in the forest.", soundscape_id: 5, artist_id: 4})
+Track.create({title: 'Sound of the Laguna', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467584276/FelixBlumePack/328299__felix-blume__aquatic-sound-of-the-laguna-from-the-dock-of-playon-in-the-sian-ka-an-biosphere-reserve.mp3',
+  description: "Aquatic sound of the laguna from the dock of Playton in the Sian Ka An biosphere", soundscape_id: 5, artist_id: 4})
+Track.create({title: 'Squacking Birds', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467584536/FelixBlumePack/328304__felix-blume__chachalas-birds-screaming-at-dawn-in-the-forest-in-the-sian-ka-an-biosphere-reserve.mp3',
+  description: "Chachalas birds screaming at dawn in the forest.", soundscape_id: 5, artist_id: 4})
+Track.create({title: 'Aquatic Sound of the Sea', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467584201/FelixBlumePack/328306__felix-blume__aquatic-sound-of-the-sea-from-the-boat-close-to-punta-allen-recife-in-the-sian-ka-an-biosphere-reserve.mp3',
+  description: "Aquatic sound of the sea from the boat close to Punta Allen Recife in the Sian Ka An Biosphere", soundscape_id: 2, artist_id: 4})
 
 Tag.create({name: 'calm'})
 Tag.create({name: 'water'})
@@ -61,3 +89,10 @@ Tag.create({name: 'thunder'})
 Tag.create({name: 'roaring'})
 Tag.create({name: 'busy'})
 Tag.create({name: 'nature'})
+Tag.create({name: 'wildlife'})
+Tag.create({name: 'birds'})
+Tag.create({name: 'night'})
+Tag.create({name: 'day'})
+Tag.create({name: 'rumbling'})
+Tag.create({name: 'sharp'})
+Tag.create({name: 'round'})

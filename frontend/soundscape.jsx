@@ -17,7 +17,7 @@ const ErrorActions = window.ErrorActions = require('./actions/error_actions');
 const SoundscapeStore = window.ssStore = require('./stores/soundscape_store');
 const TrackActions = window.TrackActions = require('./actions/track_actions');
 const TrackStore = window.TrackStore = require('./stores/track_store');
-const FilterStore = window.FilterStore = require('./stores/filter_store');
+const FilterStore = window.FilterStore = require('./stores/filter_store')
 
 const LoginForm = require('./components/sessions/login_form');
 const UserPage = require('./components/users/user_page');
@@ -25,6 +25,7 @@ const SoundscapeIndex = require('./components/soundscapes/ss_index');
 const Navbar = require('./components/navbar');
 const SoundscapeDetail = require('./components/soundscapes/ss_detail');
 const Player = require('./components/player');
+const PlaylistSidebar = require('./components/playlist_sidebar');
 
 const App = React.createClass({
   render() {
@@ -32,6 +33,7 @@ const App = React.createClass({
       <div>
         <Navbar />
         {this.props.children}
+        <PlaylistSidebar />
         <Player />
       </div>
     )
