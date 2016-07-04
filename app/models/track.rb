@@ -12,7 +12,4 @@ class Track < ActiveRecord::Base
     return tracks_with_tags
   end
 
-  def self.has_all_tags(tag_ids)
-    tag_ids.each do |tag|
-  end
 end
