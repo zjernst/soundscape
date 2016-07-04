@@ -11,4 +11,8 @@ class Track < ActiveRecord::Base
     tracks_with_tags = tagging_join.where(tags: {id: tag_id})
     return tracks_with_tags
   end
+
+  def self.has_all_tags(tag_ids)
+    tag_ids.each do |tag|
+  end
 end
