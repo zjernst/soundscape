@@ -33510,7 +33510,7 @@
 	var UserPage = React.createClass({
 	  displayName: 'UserPage',
 	  getInitialState: function getInitialState() {
-	    return { user: UserStore.find(this.props.params.userId) };
+	    return { user: "" };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.userListener = UserStore.addListener(this._onChange);
@@ -33526,6 +33526,10 @@
 	    this.setState({ user: UserStore.find(newProps.params.userId) });
 	  },
 	  render: function render() {
+	    var num_tracks = void 0;
+	    if (this.state.user) {
+	      num_tracks = this.state.user.tracks.length;
+	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'user_page' },
@@ -33536,13 +33540,32 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'users_uploaded_tracks' },
+	        { className: 'userpage_content_container' },
 	        React.createElement(
-	          'h4',
-	          null,
-	          'Tracks Uploaded'
+	          'div',
+	          { className: 'user_info_container' },
+	          React.createElement(
+	            'div',
+	            { className: 'prof_pic_container' },
+	            React.createElement('img', { src: this.state.user.profile_pic })
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'user_stats_container' },
+	            'Number of tracks uploaded: ',
+	            num_tracks
+	          )
 	        ),
-	        React.createElement(TrackIndex, { tracks: this.state.user.tracks, parent: 'user' })
+	        React.createElement(
+	          'div',
+	          { className: 'users_uploaded_tracks' },
+	          React.createElement(
+	            'h4',
+	            null,
+	            'Tracks Uploaded'
+	          ),
+	          React.createElement(TrackIndex, { tracks: this.state.user.tracks, parent: 'user' })
+	        )
 	      )
 	    );
 	  }
@@ -33561,7 +33584,7 @@
 	var SoundscapeActions = __webpack_require__(268);
 	var SoundscapeIndexItem = __webpack_require__(272);
 	var WelcomeCarousel = __webpack_require__(545);
-	var Filter = __webpack_require__(552);
+	var FilteredList = __webpack_require__(560);
 
 	var SoundscapeIndex = React.createClass({
 	  displayName: 'SoundscapeIndex',
@@ -33587,13 +33610,20 @@
 
 	    return React.createElement(
 	      'div',
-	      { className: 'soundscape_index' },
-	      soundscapes,
-	      React.createElement(Filter, null)
+	      { className: 'frontpage' },
+	      React.createElement(
+	        'div',
+	        { className: 'soundscape_index' },
+	        soundscapes,
+	        React.createElement(FilteredList, null)
+	      )
 	    );
 	  }
 	});
 
+	// <div className="carousel_container">
+	//   <WelcomeCarousel />
+	// </div>
 	module.exports = SoundscapeIndex;
 
 /***/ },
@@ -34329,6 +34359,22 @@
 	});
 
 	module.exports = Navbar;
+
+	// <Navbar>
+	//   <Navbar.Header>
+	//     <Navbar.Brand>
+	//       <h2 className="logo" onClick={this._gotoIndex}>sound s_c_a_p_e</h2>
+	//     </Navbar.Brand>
+	//   </Navbar.Header>
+	//   <Nav pullRight>
+	//     {buttons}
+	//   </Nav>
+	//     <Nav pullRight>
+	//       <div className="account_container" onClick={this._gotoUserpage}>
+	//         {SessionStore.currentUser().username}
+	//       </div>
+	//     </Nav>
+	// </Navbar>
 
 /***/ },
 /* 283 */
@@ -53882,46 +53928,71 @@
 
 	'use strict';
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	var React = __webpack_require__(1);
 	var TagStore = __webpack_require__(548);
 	var FilterStore = __webpack_require__(553);
 	var SoundscapeStore = __webpack_require__(262);
+	var SoundscapeActions = __webpack_require__(268);
 	var FilterActions = __webpack_require__(555);
 	var TrackIndex = __webpack_require__(275);
 	var TagActions = __webpack_require__(550);
 	var TagIndex = __webpack_require__(556);
+	var SoundscapesFilterIndex = __webpack_require__(561);
 
 	var Filter = React.createClass({
 	  displayName: 'Filter',
 	  getInitialState: function getInitialState() {
-	    return { results: [], tags: [] };
+	    return { allTags: [], tags: [], allSoundscapes: [], soundscapes: [] };
 	  },
 	  componentDidMount: function componentDidMount() {
-	    this.filterListener = FilterStore.addListener(this._onChange);
-	    this.tagListener = TagStore.addListener(this._onChange);
-	    FilterActions.fetchAllTracks();
+	    this.tagListener = TagStore.addListener(this._onTagChange);
+	    this.ssStoreListener = SoundscapeStore.addListener(this._onSSChange);
 	    TagActions.fetchAllTags();
+	    SoundscapeActions.fetchAllSoundscapes();
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
-	    this.filterListener.remove();
 	    this.tagListener.remove();
+	    this.ssStoreListener.remove();
 	  },
-	  _onChange: function _onChange() {
-	    this.setState({ results: FilterStore.filtered(), tags: TagStore.all() });
+	  _onTagChange: function _onTagChange() {
+	    this.setState({ allTags: TagStore.all() });
 	  },
+	  _onSSChange: function _onSSChange() {
+	    this.setState({ allSoundscapes: SoundscapeStore.all() });
+	  },
+	  _updateFilters: function _updateFilters(filter, content) {
+	    this.setState(_defineProperty({}, filter, content));
+	  },
+	  componentWillUpdate: function componentWillUpdate(newProps, newState) {
+	    if (newState !== this.state) {
+	      var filters = { tags: newState.tags, soundscapes: newState.soundscapes };
+	      FilterActions.fetchAllTracks(filters);
+	    }
+	  },
+
+
+	  // _updateResults() {
+	  //   let filters = {tags: this.state.tags}
+	  //   FilterActions.fetchAllTracks(filters)
+	  // },
+
 	  render: function render() {
 	    return React.createElement(
 	      'div',
 	      { className: 'filter_container' },
 	      React.createElement(
 	        'div',
-	        { className: 'tag_index_container' },
-	        React.createElement(TagIndex, { tags: this.state.tags })
+	        { className: 'ss_filter_container' },
+	        React.createElement(SoundscapesFilterIndex, { updateFilters: this._updateFilters,
+	          allSoundscapes: this.state.allSoundscapes })
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'filter_track_index' },
-	        React.createElement(TrackIndex, { tracks: this.state.results })
+	        { className: 'tag_index_container' },
+	        React.createElement(TagIndex, { updateFilters: this._updateFilters,
+	          allTags: this.state.allTags })
 	      )
 	    );
 	  }
@@ -54090,16 +54161,19 @@
 	      tags.push(tag_id);
 	      this.setState({ tagsApplied: tags });
 	    }
-	    this._updateResults();
+	    this.props.updateFilters("tags", this.state.tagsApplied);
 	  },
-	  _updateResults: function _updateResults() {
-	    FilterActions.updateResults(this.state.tagsApplied);
-	    FilterActions.fetchAllTracks({ tags: this.state.tagsApplied });
-	  },
+
+
+	  // _updateResults() {
+	  //   FilterActions.updateResults(this.state.tagsApplied);
+	  //   FilterActions.fetchAllTracks({tags: this.state.tagsApplied});
+	  // },
+
 	  render: function render() {
 	    var _this = this;
 
-	    var tags = this.props.tags.map(function (tag) {
+	    var tags = this.props.allTags.map(function (tag) {
 	      return React.createElement(TagIndexItem, { tag: tag,
 	        key: tag.id,
 	        applyTag: _this._applyTag });
@@ -54145,11 +54219,11 @@
 	      'div',
 	      { className: tagClass, onClick: this._tagFilter },
 	      React.createElement(
-	        'h3',
-	        null,
+	        'h4',
+	        { className: 'tag_item_text' },
 	        React.createElement(
 	          Label,
-	          null,
+	          { className: 'tag_label' },
 	          this.props.tag.name
 	        )
 	      )
@@ -54208,6 +54282,140 @@
 /***/ function(module, exports) {
 
 	"use strict";
+
+/***/ },
+/* 560 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var TagStore = __webpack_require__(548);
+	var FilterStore = __webpack_require__(553);
+	var SoundscapeStore = __webpack_require__(262);
+	var FilterActions = __webpack_require__(555);
+	var TrackIndex = __webpack_require__(275);
+	var Filter = __webpack_require__(552);
+
+	var FilteredList = React.createClass({
+	  displayName: 'FilteredList',
+	  getInitialState: function getInitialState() {
+	    return { results: [], tags: [] };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.filterListener = FilterStore.addListener(this._onChange);
+	    FilterActions.fetchAllTracks();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.filterListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ results: FilterStore.all() });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'filter_container' },
+	      React.createElement(Filter, null),
+	      React.createElement(
+	        'div',
+	        { className: 'filter_track_index' },
+	        React.createElement(TrackIndex, { tracks: this.state.results })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = FilteredList;
+
+/***/ },
+/* 561 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SoundscapeFilterItem = __webpack_require__(562);
+	var FilterActions = __webpack_require__(555);
+
+	var SoundscapeFilterIndex = React.createClass({
+	  displayName: 'SoundscapeFilterIndex',
+	  getInitialState: function getInitialState() {
+	    return { soundscapesApplied: [] };
+	  },
+	  _applySoundscape: function _applySoundscape(soundscape_id) {
+	    if (this.state.soundscapesApplied.includes(soundscape_id)) {
+	      var idx = this.state.soundscapesApplied.indexOf(soundscape_id);
+	      this.state.soundscapesApplied.splice(idx, 1);
+	    } else {
+	      var soundscapes = this.state.soundscapesApplied;
+	      soundscapes.push(soundscape_id);
+	      this.setState({ soundscapesApplied: soundscapes });
+	    }
+	    this.props.updateFilters("soundscapes", this.state.soundscapesApplied);
+	  },
+	  render: function render() {
+	    var _this = this;
+
+	    var soundscapes = this.props.allSoundscapes.map(function (soundscape) {
+	      return React.createElement(SoundscapeFilterItem, { soundscape: soundscape,
+	        key: soundscape.id,
+	        applySoundscape: _this._applySoundscape });
+	    });
+	    return React.createElement(
+	      'div',
+	      { className: 'soundscape_filter_index' },
+	      soundscapes
+	    );
+	  }
+	});
+
+	module.exports = SoundscapeFilterIndex;
+
+/***/ },
+/* 562 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Label = __webpack_require__(283).Label;
+	var FilterActions = __webpack_require__(555);
+	var classNames = __webpack_require__(273);
+
+	var SoundscapeFilterItem = React.createClass({
+	  displayName: 'SoundscapeFilterItem',
+	  getInitialState: function getInitialState() {
+	    return { seleted: false };
+	  },
+	  _soundscapeFilter: function _soundscapeFilter() {
+	    this.props.applySoundscape(this.props.soundscape.id);
+	    this.setState({ selected: !this.state.selected });
+	  },
+	  render: function render() {
+	    var soundscapeClass = void 0;
+	    if (this.state.selected) {
+	      soundscapeClass = classNames("soundscape_filter_item", "selected");
+	    } else {
+	      soundscapeClass = "soundscape_filter_item";
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: soundscapeClass, onClick: this._soundscapeFilter },
+	      React.createElement(
+	        'h4',
+	        { className: 'soundscape_item_text' },
+	        React.createElement(
+	          Label,
+	          { className: 'soundscape_label' },
+	          this.props.soundscape.title
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = SoundscapeFilterItem;
 
 /***/ }
 /******/ ]);

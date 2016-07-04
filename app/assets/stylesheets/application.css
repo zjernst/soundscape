@@ -32,7 +32,7 @@
  }
  */
 
-body, header, nav, div, h2, ul, li {
+body, header, nav, div, h2, h4, span, ul, li {
   margin: 0;
   padding: 0;
   border: 0;
@@ -245,6 +245,8 @@ body.cafe {
   margin-top: 0px;
   background: lightgray;
   min-height: 300px;
+  height: 600px;
+  overflow: scroll;
 }
 
 .track_index_item {
@@ -288,13 +290,46 @@ body.cafe {
   background-color: rgba(250, 250, 250, 0.8);
 }
 
+.soundscape_filter_index {
+  display: flex;
+  background-color: darkgray;
+}
+
+.soundscape_label {
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.soundscape_filter_item.selected {
+  background: black;
+  border-radius: 25px;
+  opacity: 1;
+}
+
 .tag_index {
   display: flex;
   flex-wrap: wrap;
+  background: gray;
+}
+
+.tag_item_text {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.tag_label {
+  border-radius: 0;
+  background-color: transparent;
 }
 
 .selected {
   opacity: 0.5;
+}
+
+.tag_index_item.selected {
+  background: black;
+  border-radius: 25px;
+  opacity: 1;
 }
 
 .button {
@@ -350,4 +385,18 @@ body.cafe {
 
 .user {
   width: 500px;
+}
+
+.userpage_content_container {
+  display: flex;
+}
+
+.user_stats_container {
+  display: block;
+  min-height: 200px;
+  background-color: lightgray;
+}
+
+.carousel_container {
+  display: flex;
 }

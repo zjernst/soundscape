@@ -9,7 +9,7 @@ const hashHistory = require('react-router').hashHistory;
 
 const UserPage = React.createClass({
   getInitialState() {
-    return({user: UserStore.find(this.props.params.userId)})
+    return({user: ""})
   },
 
   componentDidMount() {
@@ -30,12 +30,26 @@ const UserPage = React.createClass({
   },
 
   render() {
+    let num_tracks
+    if (this.state.user) {
+      num_tracks = this.state.user.tracks.length
+    }
     return(
       <div className="user_page">
         <h3 className="username">{this.state.user.username}</h3>
-        <div className="users_uploaded_tracks">
-          <h4>Tracks Uploaded</h4>
-          <TrackIndex tracks={this.state.user.tracks} parent="user"/>
+        <div className="userpage_content_container">
+          <div className="user_info_container">
+            <div className="prof_pic_container">
+              <img src={this.state.user.profile_pic}/ >
+            </div>
+            <div className="user_stats_container">
+              Number of tracks uploaded: {num_tracks}
+            </div>
+          </div>
+          <div className="users_uploaded_tracks">
+            <h4>Tracks Uploaded</h4>
+            <TrackIndex tracks={this.state.user.tracks} parent="user"/>
+          </div>
         </div>
       </div>
     )

@@ -16,16 +16,16 @@ const TagIndex = React.createClass({
       tags.push(tag_id)
       this.setState({tagsApplied: tags})
     }
-    this._updateResults();
+    this.props.updateFilters("tags", this.state.tagsApplied);
   },
 
-  _updateResults() {
-    FilterActions.updateResults(this.state.tagsApplied);
-    FilterActions.fetchAllTracks({tags: this.state.tagsApplied});
-  },
+  // _updateResults() {
+  //   FilterActions.updateResults(this.state.tagsApplied);
+  //   FilterActions.fetchAllTracks({tags: this.state.tagsApplied});
+  // },
 
   render() {
-    let tags = this.props.tags.map((tag) => {
+    let tags = this.props.allTags.map((tag) => {
       return <TagIndexItem tag={tag}
               key={tag.id}
               applyTag={this._applyTag} />

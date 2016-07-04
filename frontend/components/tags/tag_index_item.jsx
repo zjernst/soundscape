@@ -22,7 +22,7 @@ const TagIndexItem = React.createClass({
     }
     return(
       <div className={tagClass} onClick={this._tagFilter}>
-        <h3><Label>{this.props.tag.name}</Label></h3>
+        <h4 className="tag_item_text"><Label className="tag_label">{this.props.tag.name}</Label></h4>
       </div>
     )
   }
