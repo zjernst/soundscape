@@ -16,11 +16,21 @@ TrackStore.__onDispatch = function(payload) {
       resetTracks(payload.tracks);
       TrackStore.__emitChange();
       break;
+
+    case TrackConstants.REMOVE_TRACK:
+      removeTrack(payload.track);
+      TrackStore.__emitChange();
+      break;
   }
 }
 
 TrackStore.all = function() {
   return _tracks.slice();
+};
+
+function removeTrack(track) {
+  let idx = _tracks.indexOf(track)
+  _tracks.splice(idx, 1);
 };
 
 function resetTracks(tracks) {

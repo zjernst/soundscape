@@ -1,22 +1,32 @@
 class Api::TracksController < ApplicationController
   def index
-    @tracks = Track.all
-    if params[:tags] && params[:soundscapes]
-      @tracks = Track.tag_and_soundscape(params[:tags], params[:soundscapes])
-    elsif params[:tags]
-      @tracks = Track.has_tag(params[:tags])
-    elsif params[:soundscapes]
-      @tracks = Track.in_soundscape(params[:soundscapes])
+    # if params[:filters] || !params[:filters][:query].empty?
+    if params[:filters]
+      @tracks = Track.filter(params[:filters])
+    else
+      @tracks = Track.all
     end
-    # if params[:soundscapes]
-    #   tracks = []
-    #   @tracks.each do |track|
-    #     tracks << track if params[:soundscapes].includes?(track.soundscape_id)
-    #     byebug
-    #   end
-    #   @tracks = tracks
+    # else
+      # @tracks = Track.all
     # end
   end
+
+    # @tracks = Track.all
+    # if params[:tags] && params[:soundscapes]
+    #   @tracks = Track.tag_and_soundscape(params[:tags], params[:soundscapes])
+    # elsif params[:tags]
+    #   @tracks = Track.has_tag(params[:tags])
+    # elsif params[:soundscapes]
+    #   @tracks = Track.in_soundscape(params[:soundscapes])
+    # end
+    # if params[:query] && !params[:query].empty?
+    #   @tracks = @tracks.where(
+    #     [
+    #       'title LIKE :query OR description LIKE :query',
+    #       {query: "%#{params[:query]}%"}
+    #     ]
+    #   )
+    # end
 
   def create
     @track = Track.new(track_params)
