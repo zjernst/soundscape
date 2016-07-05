@@ -6,62 +6,47 @@ class Track < ActiveRecord::Base
   has_many :taggings
   has_many :tags, through: :taggings
 
-  # def self.has_tag(tag_ids)
-  #   tagging_join = self.joins(:tags).joins(:tags)
-  #   if (tag_ids.length > 1)
-  #     tagging_join = tagging_join.joins(:tags).where(tags: {id: tag_ids})
-  #   end
-  #   return Track.all
-  # end
 
-  def self.tag_and_soundscape(tag_ids, soundscape_ids)
-    tags = "(#{tag_ids.join(',')})"
-    soundscapes = "(#{soundscape_ids.join(',')})"
-    number = tag_ids.length
-    tracks = self.find_by_sql(
-    "SELECT
-    tracks.*
-    FROM
-    tracks
-    JOIN
-    taggings
-    ON
-    taggings.track_id = tracks.id
-    WHERE
-    taggings.tag_id IN #{tags} AND tracks.soundscape_id IN #{soundscapes}
-    GROUP BY
-    tracks.id
-    HAVING
-    COUNT(taggings.id) = #{number}
-    ORDER BY
-    tracks.title
-    ")
-    return tracks
+  def self.tags(tag_ids, tracks)
+    # tags = "(#{tag_ids.join(',')})"
+    track.joins(:taggings).where(taggings: {tag_id: tag_ids})
+      .group("tracks.id").having("COUNT(taggings.id) = ?", tag_ids.length)
   end
 
-  def self.has_tag(tag_ids)
-    tags = "(#{tag_ids.join(',')})"
-    number = tag_ids.length
-    tracks = self.find_by_sql(
-    "SELECT
-    tracks.*
-    FROM
-    tracks
-    JOIN
-    taggings
-    ON
-    taggings.track_id = tracks.id
-    WHERE
-    taggings.tag_id IN #{tags}
-    GROUP BY
-    tracks.id
-    HAVING
-    COUNT(taggings.id) = #{number}
-    ORDER BY
-    tracks.title
-    ")
-    return tracks
+  def self.filter(filters)
+    relation = Track
+    filtered = false
+    if filters[:tags]
+      filtered = true
+      relation = relation.joins(:taggings).where(taggings: {tag_id: filters[:tags]})
+        .group("tracks.id").having("COUNT(taggings.id) = ?", filters[:tags].length)
+    end
+    if filters[:soundscapes]
+      filtered = true
+      relation = relation.where(tracks: {soundscape_id: filters[:soundscapes]})
+    end
+    if filters[:artists]
+      filtered = true
+      relation = relation.where(tracks: {artist_id: filters[:artists]})
+    end
+    if filters[:query] && !filters[:query].empty?
+      filtered = true
+      relation = relation.where(
+        [
+          'title LIKE :query OR description LIKE :query',
+          {query: "%#{filters[:query]}%"}
+        ]
+      )
+    end
+
+    if filtered
+      relation
+    else
+      Track.all
+    end
   end
+
+
 
   def self.in_soundscape(soundscape_ids)
     soundscapes = "(#{soundscape_ids.join(',')})"

@@ -13,7 +13,7 @@ const FilteredList = React.createClass({
 
   componentDidMount() {
     this.filterListener = FilterStore.addListener(this._onChange)
-    FilterActions.fetchAllTracks();
+    FilterActions.fetchAllTracks({filters: {}});
   },
 
   componentWillUnmount() {

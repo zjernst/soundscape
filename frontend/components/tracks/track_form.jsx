@@ -91,23 +91,24 @@ const TrackForm = React.createClass({
     this.setState({showModal: true})
   },
 
-  _handleCheckbox(e) {
-    let val = parseInt(e.target.value)
-    if (this.state.tags.includes(val)) {
-      let idx = this.state.tags.indexOf(val);
-      this.state.tags.splice(idx, 1);
+  _handleCheckbox(tag_id) {
+    if (this.state.tags.includes(tag_id)) {
+      let idx = this.state.tags.indexOf(tag_id);
+      let tags = this.state.tags.splice(idx, 1);
+      this.setState({tags: this.state.tags});
     } else {
-      this.state.tags.push(val)
+      let tags = this.state.tags.push(tag_id);
+      this.setState({tags: this.state.tags});
     }
   },
 
   render() {
     let tags = this.state.allTags.map((tag) => {
       let checked = this.state.tags.includes(tag.id)
-      return <Checkbox onClick={this._handleCheckbox}
+      return <Checkbox onClick={this._handleCheckbox.bind(this, tag.id)}
                        key={tag.id}
                        defaultChecked={checked}
-                       value={tag.id}>{tag.name}</Checkbox>
+                       >{tag.name}</Checkbox>
     })
     return(
       <Modal show={this.state.showModal} onHide={this.close}>

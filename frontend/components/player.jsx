@@ -7,14 +7,15 @@ const Glyphicon = require('react-bootstrap').Glyphicon;
 
 const Player = React.createClass({
   getInitialState() {
-    return({tracks: [], playing: false, percentPlayed: 0})
+    return({tracks: [], playing: false, percentPlayed: 0, paused: false})
   },
 
   _play() {
     let song = document.getElementById('player')
     if (song) {
       song.play();
-      this.setState({playing: true})
+      this.setState({playing: true});
+      this.setState({paused: false})
     }
   },
 
@@ -22,7 +23,8 @@ const Player = React.createClass({
     let song = document.getElementById('player')
     if (song) {
       song.pause();
-      this.setState({playing: false})
+      this.setState({playing: false});
+      this.setState({paused: true})
     }
   },
 
@@ -50,6 +52,9 @@ const Player = React.createClass({
 
   _onChange() {
     this.setState({tracks: TrackStore.all()});
+    if (!this.state.paused) {
+      this._play();
+    }
   },
 
   componentDidMount() {

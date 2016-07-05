@@ -29,6 +29,13 @@ const TrackActions = {
     })
   },
 
+  removeTrack(track) {
+    Dispatcher.dispatch({
+      actionType: TrackConstants.REMOVE_TRACK,
+      track: track
+    })
+  },
+
   updateTracks(tracks) {
     Dispatcher.dispatch({
       actionType: TrackConstants.UPDATE_TRACKS,

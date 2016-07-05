@@ -5,7 +5,7 @@ const PlaylistItem = require('./playlist_item');
 
 const PlaylistSidebar = React.createClass({
   getInitialState() {
-    return({tracks: TrackStore.all()})
+    return({tracks: TrackStore.all(), details: false})
   },
 
   componentDidMount() {
@@ -20,12 +20,25 @@ const PlaylistSidebar = React.createClass({
     this.setState({tracks: TrackStore.all()})
   },
 
+  _mouseEnter() {
+    this.setState({details: true})
+  },
+
+  _mouseLeave() {
+    this.setState({details: false})
+  },
+
   render() {
     let tracks = this.state.tracks.map((track) => {
-      return <li className="playlist_track" key={track.id}>&#9824; {track.title}</li>
+      return <PlaylistItem key={track.id}
+                           track={track}
+                           details={this.state.details} />
     })
     return(
-      <div className="playlist_sidebar">
+      <div className="playlist_sidebar"
+           onMouseEnter={this._mouseEnter}
+           onMouseLeave={this._mouseLeave}
+           >
         {tracks}
       </div>
     )
