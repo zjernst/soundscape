@@ -31,11 +31,10 @@ const SoundscapeIndex = React.createClass({
     });
 
     return(
-      <div className="frontpage">
-        <div className="soundscape_index">
-          {soundscapes}
-          <FilteredList />
-        </div>
+      <div className="soundscape_index">
+        <div className="soundscape_index_text">Discover new sounds</div>
+        {soundscapes}
+        <FilteredList />
       </div>
     )
   }

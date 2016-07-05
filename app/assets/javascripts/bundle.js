@@ -74,6 +74,7 @@
 	var SoundscapeDetail = __webpack_require__(549);
 	var Player = __webpack_require__(563);
 	var PlaylistSidebar = __webpack_require__(564);
+	var Frontpage = __webpack_require__(567);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -95,7 +96,7 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
-	    React.createElement(IndexRoute, { component: SoundscapeIndex }),
+	    React.createElement(IndexRoute, { component: Frontpage }),
 	    React.createElement(Route, { path: '/soundscape/:ss_id', component: SoundscapeDetail }),
 	    React.createElement(Route, { path: '/login', component: LoginForm }),
 	    React.createElement(Route, { path: '/signup', component: LoginForm }),
@@ -53517,13 +53518,14 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'frontpage' },
+	      { className: 'soundscape_index' },
 	      React.createElement(
 	        'div',
-	        { className: 'soundscape_index' },
-	        soundscapes,
-	        React.createElement(FilteredList, null)
-	      )
+	        { className: 'soundscape_index_text' },
+	        'Discover new sounds'
+	      ),
+	      soundscapes,
+	      React.createElement(FilteredList, null)
 	    );
 	  }
 	});
@@ -54652,6 +54654,56 @@
 	});
 	
 	module.exports = PlaylistItemDetail;
+
+/***/ },
+/* 567 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var SoundscapeIndex = __webpack_require__(547);
+	var Header = __webpack_require__(568);
+	
+	var Frontpage = React.createClass({
+	  displayName: 'Frontpage',
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'frontpage' },
+	      React.createElement(Header, null),
+	      React.createElement(SoundscapeIndex, null)
+	    );
+	  }
+	});
+	
+	module.exports = Frontpage;
+
+/***/ },
+/* 568 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var Header = React.createClass({
+	  displayName: "Header",
+	  render: function render() {
+	    return React.createElement(
+	      "section",
+	      { className: "header_container" },
+	      React.createElement("div", { className: "header_background" }),
+	      React.createElement(
+	        "div",
+	        { className: "header_background_text" },
+	        "Hear the world."
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = Header;
 
 /***/ }
 /******/ ]);

@@ -41,7 +41,7 @@ body, header, nav, div, h2, h4, span, ul, li {
 }
 
 body {
-  background-color: white;
+  background-attachment: fixed;
   /*background-image: url('http://res.cloudinary.com/soundscape/image/upload/v1467305571/foggy_forest_qmxcjc.jpg');*/
 }
 
@@ -78,10 +78,6 @@ body.cafe {
   background-image: url('http://www.atlascafe.net/images/02.jpg');
 }
 
-.fullpage {
-  background: rgba(255, 255, 255, 0.3);
-}
-
 .logo {
 
 }
@@ -95,7 +91,7 @@ body.cafe {
 .navbar {
   position: fixed;
   top: 0;
-  height: 70px;
+  height: 65px;
   width: 100%;
   padding: 20px 0;
   z-index: 20;
@@ -130,16 +126,51 @@ body.cafe {
   cursor: pointer;
 }
 
+.header_container {
+  height: 600px;
+  position: relative;
+  overflow: hidden;
+}
+
+.header_background {
+  position: absolute;
+  background: url('https://res.cloudinary.com/soundscape/image/upload/v1467305571/foggy_forest_qmxcjc.jpg');
+  width: 100%;
+  z-index: 1;
+  height: 900px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.header_background_text {
+  position: absolute;
+  top: 230px;
+  left: 25%;
+  width: 100%;
+  z-index: 2;
+  font-size: 50px;
+  font-weight: 700;
+}
+
 .soundscape_index {
   margin-left: 130px;
   margin-right: 130px;
-  margin-top: 115px;
+  margin-top: 100px;
   margin-bottom: 200px;
   padding: 10px;
   background: #b7cad1;
   /*background-color: rgba(20, 100, 150, .3);*/
   display: flex;
   flex-wrap: wrap;
+  text-align: center;
+}
+
+.soundscape_index_text {
+  z-index: 2;
+  font-size: 40px;
+  font-weight: 500;
+  width: 100%;
 }
 
 .soundscape_index_item {
@@ -436,10 +467,10 @@ body.cafe {
 .playlist_sidebar {
   position: fixed;
   right: 0;
-  bottom: 20%;
+  top: 30%;
   display: flex;
-  min-height: 500px;
-  min-width: 30px;
+  min-height: 200px;
+  min-width: 20px;
   background-color: lightgray;
   display: flex;
   flex-direction: column;

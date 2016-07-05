@@ -26,6 +26,7 @@ const Navbar = require('./components/navbar');
 const SoundscapeDetail = require('./components/soundscapes/ss_detail');
 const Player = require('./components/player');
 const PlaylistSidebar = require('./components/playlist_sidebar');
+const Frontpage = require('./components/frontpage');
 
 const App = React.createClass({
   render() {
@@ -44,7 +45,7 @@ const App = React.createClass({
 const appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={SoundscapeIndex} />
+      <IndexRoute component={Frontpage} />
       <Route path="/soundscape/:ss_id" component={SoundscapeDetail} />
       <Route path="/login" component={LoginForm} />
       <Route path="/signup" component={LoginForm} />
