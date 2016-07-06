@@ -45,7 +45,7 @@ const TrackDetailItem = React.createClass({
           {this.props.track.description}
         </div>
         <div className="track_audio_item">
-          <audio controls="controls" src={this.props.track.track_url} />
+          <audio src={this.props.track.track_url} />
         </div>
         <Nav className="track_detail_options">
           <NavItem className="track_detail_option_item" onClick={this._addTrack}>
