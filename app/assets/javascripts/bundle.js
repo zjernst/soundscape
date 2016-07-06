@@ -70,11 +70,11 @@
 	var LoginForm = __webpack_require__(272);
 	var UserPage = __webpack_require__(273);
 	var SoundscapeIndex = __webpack_require__(547);
-	var Navbar = __webpack_require__(562);
+	var Navbar = __webpack_require__(553);
 	var SoundscapeDetail = __webpack_require__(549);
-	var Player = __webpack_require__(563);
-	var PlaylistSidebar = __webpack_require__(564);
-	var Frontpage = __webpack_require__(567);
+	var Player = __webpack_require__(554);
+	var PlaylistSidebar = __webpack_require__(555);
+	var Frontpage = __webpack_require__(558);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -53852,454 +53852,6 @@
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var TagStore = __webpack_require__(543);
-	var FilterStore = __webpack_require__(270);
-	var SoundscapeStore = __webpack_require__(262);
-	var FilterActions = __webpack_require__(274);
-	var TrackIndex = __webpack_require__(275);
-	var Filter = __webpack_require__(554);
-	
-	var FilteredList = React.createClass({
-	  displayName: 'FilteredList',
-	  getInitialState: function getInitialState() {
-	    return { results: [], tags: [] };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.filterListener = FilterStore.addListener(this._onChange);
-	    FilterActions.fetchAllTracks({ filters: {} });
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.filterListener.remove();
-	  },
-	  _onChange: function _onChange() {
-	    this.setState({ results: FilterStore.all() });
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'filtered_list_container' },
-	      React.createElement(Filter, null),
-	      React.createElement(
-	        'div',
-	        { className: 'filter_track_index' },
-	        React.createElement(TrackIndex, { tracks: this.state.results })
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = FilteredList;
-
-/***/ },
-/* 554 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var React = __webpack_require__(1);
-	var TagStore = __webpack_require__(543);
-	var FilterStore = __webpack_require__(270);
-	var SoundscapeStore = __webpack_require__(262);
-	var SoundscapeActions = __webpack_require__(268);
-	var FilterActions = __webpack_require__(274);
-	var UserActions = __webpack_require__(259);
-	var TrackIndex = __webpack_require__(275);
-	var TagActions = __webpack_require__(545);
-	var TagIndex = __webpack_require__(555);
-	var SoundscapesFilterIndex = __webpack_require__(557);
-	var ArtistFilterIndex = __webpack_require__(559);
-	var TrackSearchBox = __webpack_require__(561);
-	var Filter = React.createClass({
-	  displayName: 'Filter',
-	  getInitialState: function getInitialState() {
-	    return { allTags: [], tags: [],
-	      allSoundscapes: [], soundscapes: [],
-	      allArtists: [], artists: [],
-	      query: "" };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.tagListener = TagStore.addListener(this._onTagChange);
-	    this.ssStoreListener = SoundscapeStore.addListener(this._onSSChange);
-	    TagActions.fetchAllTags();
-	    SoundscapeActions.fetchAllSoundscapes();
-	    UserActions.fetchAllUsers();
-	    this.userListener = UserStore.addListener(this._onUserChange);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.tagListener.remove();
-	    this.ssStoreListener.remove();
-	    this.userListener.remove();
-	  },
-	  _onTagChange: function _onTagChange() {
-	    this.setState({ allTags: TagStore.all() });
-	  },
-	  _onSSChange: function _onSSChange() {
-	    this.setState({ allSoundscapes: SoundscapeStore.all() });
-	  },
-	  _onUserChange: function _onUserChange() {
-	    this.setState({ allArtists: UserStore.all() });
-	  },
-	  _updateFilters: function _updateFilters(filter, content) {
-	    this.setState(_defineProperty({}, filter, content));
-	  },
-	  componentWillUpdate: function componentWillUpdate(newProps, newState) {
-	    if (newState != this.state) {
-	      var filters = { filters: { tags: newState.tags,
-	          soundscapes: newState.soundscapes,
-	          artists: newState.artists,
-	          query: newState.query } };
-	      FilterActions.fetchAllTracks(filters);
-	    }
-	  },
-	
-	
-	  // _updateResults() {
-	  //   let filters = {tags: this.state.tags}
-	  //   FilterActions.fetchAllTracks(filters)
-	  // },
-	
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'filter_container' },
-	      React.createElement(
-	        'div',
-	        { className: 'ss_filter_container' },
-	        React.createElement(SoundscapesFilterIndex, { updateFilters: this._updateFilters,
-	          allSoundscapes: this.state.allSoundscapes })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'tag_index_container' },
-	        React.createElement(TagIndex, { updateFilters: this._updateFilters,
-	          allTags: this.state.allTags })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'artist_index_container' },
-	        React.createElement(ArtistFilterIndex, { updateFilters: this._updateFilters,
-	          allArtists: this.state.allArtists })
-	      ),
-	      React.createElement(TrackSearchBox, { updateFilters: this._updateFilters })
-	    );
-	  }
-	});
-	
-	module.exports = Filter;
-
-/***/ },
-/* 555 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var TagIndexItem = __webpack_require__(556);
-	var FilterActions = __webpack_require__(274);
-	
-	var TagIndex = React.createClass({
-	  displayName: 'TagIndex',
-	  getInitialState: function getInitialState() {
-	    return { tagsApplied: [] };
-	  },
-	  _applyTag: function _applyTag(tag_id) {
-	    if (this.state.tagsApplied.includes(tag_id)) {
-	      var idx = this.state.tagsApplied.indexOf(tag_id);
-	      this.state.tagsApplied.splice(idx, 1);
-	    } else {
-	      var tags = this.state.tagsApplied;
-	      tags.push(tag_id);
-	      this.setState({ tagsApplied: tags });
-	    }
-	    this.props.updateFilters("tags", this.state.tagsApplied);
-	  },
-	
-	
-	  // _updateResults() {
-	  //   FilterActions.updateResults(this.state.tagsApplied);
-	  //   FilterActions.fetchAllTracks({tags: this.state.tagsApplied});
-	  // },
-	
-	  render: function render() {
-	    var _this = this;
-	
-	    var tags = this.props.allTags.map(function (tag) {
-	      return React.createElement(TagIndexItem, { tag: tag,
-	        key: tag.id,
-	        applyTag: _this._applyTag });
-	    });
-	    return React.createElement(
-	      'div',
-	      { className: 'tag_index' },
-	      tags
-	    );
-	  }
-	});
-	
-	module.exports = TagIndex;
-
-/***/ },
-/* 556 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var Label = __webpack_require__(279).Label;
-	var FilterActions = __webpack_require__(274);
-	var classNames = __webpack_require__(277);
-	
-	var TagIndexItem = React.createClass({
-	  displayName: 'TagIndexItem',
-	  getInitialState: function getInitialState() {
-	    return { seleted: false };
-	  },
-	  _tagFilter: function _tagFilter() {
-	    this.props.applyTag(this.props.tag.id);
-	    this.setState({ selected: !this.state.selected });
-	  },
-	  render: function render() {
-	    var tagClass = void 0;
-	    if (this.state.selected) {
-	      tagClass = classNames("tag_index_item", "selected");
-	    } else {
-	      tagClass = "tag_index_item";
-	    }
-	    return React.createElement(
-	      'div',
-	      { className: tagClass, onClick: this._tagFilter },
-	      React.createElement(
-	        'h4',
-	        { className: 'tag_item_text' },
-	        React.createElement(
-	          Label,
-	          { className: 'tag_label' },
-	          this.props.tag.name
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = TagIndexItem;
-
-/***/ },
-/* 557 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var SoundscapeFilterItem = __webpack_require__(558);
-	var FilterActions = __webpack_require__(274);
-	
-	var SoundscapeFilterIndex = React.createClass({
-	  displayName: 'SoundscapeFilterIndex',
-	  getInitialState: function getInitialState() {
-	    return { soundscapesApplied: [] };
-	  },
-	  _applySoundscape: function _applySoundscape(soundscape_id) {
-	    if (this.state.soundscapesApplied.includes(soundscape_id)) {
-	      var idx = this.state.soundscapesApplied.indexOf(soundscape_id);
-	      this.state.soundscapesApplied.splice(idx, 1);
-	    } else {
-	      var soundscapes = this.state.soundscapesApplied;
-	      soundscapes.push(soundscape_id);
-	      this.setState({ soundscapesApplied: soundscapes });
-	    }
-	    this.props.updateFilters("soundscapes", this.state.soundscapesApplied);
-	  },
-	  render: function render() {
-	    var _this = this;
-	
-	    var soundscapes = this.props.allSoundscapes.map(function (soundscape) {
-	      return React.createElement(SoundscapeFilterItem, { soundscape: soundscape,
-	        key: soundscape.id,
-	        applySoundscape: _this._applySoundscape });
-	    });
-	    return React.createElement(
-	      'div',
-	      { className: 'soundscape_filter_index' },
-	      soundscapes
-	    );
-	  }
-	});
-	
-	module.exports = SoundscapeFilterIndex;
-
-/***/ },
-/* 558 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var Label = __webpack_require__(279).Label;
-	var FilterActions = __webpack_require__(274);
-	var classNames = __webpack_require__(277);
-	
-	var SoundscapeFilterItem = React.createClass({
-	  displayName: 'SoundscapeFilterItem',
-	  getInitialState: function getInitialState() {
-	    return { seleted: false };
-	  },
-	  _soundscapeFilter: function _soundscapeFilter() {
-	    this.props.applySoundscape(this.props.soundscape.id);
-	    this.setState({ selected: !this.state.selected });
-	  },
-	  render: function render() {
-	    var soundscapeClass = void 0;
-	    if (this.state.selected) {
-	      soundscapeClass = classNames("soundscape_filter_item", "selected");
-	    } else {
-	      soundscapeClass = "soundscape_filter_item";
-	    }
-	    return React.createElement(
-	      'div',
-	      { className: soundscapeClass, onClick: this._soundscapeFilter },
-	      React.createElement(
-	        'h4',
-	        { className: 'soundscape_item_text' },
-	        React.createElement(
-	          Label,
-	          { className: 'soundscape_label' },
-	          this.props.soundscape.title
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = SoundscapeFilterItem;
-
-/***/ },
-/* 559 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var ArtistFilterItem = __webpack_require__(560);
-	var FilterActions = __webpack_require__(274);
-	
-	var ArtistFilterIndex = React.createClass({
-	  displayName: 'ArtistFilterIndex',
-	  getInitialState: function getInitialState() {
-	    return { artistsApplied: [] };
-	  },
-	  _applyArtist: function _applyArtist(artist_id) {
-	    if (this.state.artistsApplied.includes(artist_id)) {
-	      var idx = this.state.artistsApplied.indexOf(artist_id);
-	      this.state.artistsApplied.splice(idx, 1);
-	    } else {
-	      var artists = this.state.artistsApplied;
-	      artists.push(artist_id);
-	      this.setState({ artistsApplied: artists });
-	    }
-	    this.props.updateFilters("artists", this.state.artistsApplied);
-	  },
-	  render: function render() {
-	    var _this = this;
-	
-	    var artists = this.props.allArtists.map(function (artist) {
-	      return React.createElement(ArtistFilterItem, { artist: artist,
-	        key: artist.id,
-	        applyArtist: _this._applyArtist });
-	    });
-	    return React.createElement(
-	      'div',
-	      { className: 'artist_filter_index' },
-	      artists
-	    );
-	  }
-	});
-	
-	module.exports = ArtistFilterIndex;
-
-/***/ },
-/* 560 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var Label = __webpack_require__(279).Label;
-	var FilterActions = __webpack_require__(274);
-	var classNames = __webpack_require__(277);
-	
-	var ArtistFilterItem = React.createClass({
-	  displayName: 'ArtistFilterItem',
-	  getInitialState: function getInitialState() {
-	    return { seleted: false };
-	  },
-	  _artistFilter: function _artistFilter() {
-	    this.props.applyArtist(this.props.artist.id);
-	    this.setState({ selected: !this.state.selected });
-	  },
-	  render: function render() {
-	    var artistClass = void 0;
-	    if (this.state.selected) {
-	      artistClass = classNames("artist_filter_item", "selected");
-	    } else {
-	      artistClass = "artist_filter_item";
-	    }
-	    return React.createElement(
-	      'div',
-	      { className: artistClass, onClick: this._artistFilter },
-	      React.createElement(
-	        'h4',
-	        { className: 'artist_item_text' },
-	        React.createElement(
-	          Label,
-	          { className: 'artist_label' },
-	          this.props.artist.username
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = ArtistFilterItem;
-
-/***/ },
-/* 561 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	
-	var FilterSearch = React.createClass({
-	  displayName: 'FilterSearch',
-	  _onInput: function _onInput(e) {
-	    this.props.updateFilters('query', e.target.value);
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'nav',
-	      { className: 'tracks-search-box' },
-	      React.createElement(
-	        'label',
-	        { htmlFor: 'search-box' },
-	        'Search Tracks'
-	      ),
-	      React.createElement('br', null),
-	      React.createElement('input', { id: 'search-box', onInput: this._onInput })
-	    );
-	  }
-	});
-	
-	module.exports = FilterSearch;
-
-/***/ },
-/* 562 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
 	var SessionStore = __webpack_require__(239);
 	var SessionActions = __webpack_require__(231);
 	var hashHistory = __webpack_require__(168).hashHistory;
@@ -54401,7 +53953,7 @@
 	// </Navbar>
 
 /***/ },
-/* 563 */
+/* 554 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54540,7 +54092,7 @@
 	module.exports = Player;
 
 /***/ },
-/* 564 */
+/* 555 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54548,7 +54100,7 @@
 	var React = __webpack_require__(1);
 	var TrackStore = __webpack_require__(269);
 	var TrackActions = __webpack_require__(264);
-	var PlaylistItem = __webpack_require__(565);
+	var PlaylistItem = __webpack_require__(556);
 	
 	var PlaylistSidebar = React.createClass({
 	  displayName: 'PlaylistSidebar',
@@ -54592,13 +54144,13 @@
 	module.exports = PlaylistSidebar;
 
 /***/ },
-/* 565 */
+/* 556 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var PlaylistItemDetail = __webpack_require__(566);
+	var PlaylistItemDetail = __webpack_require__(557);
 	
 	var PlaylistItem = React.createClass({
 	  displayName: 'PlaylistItem',
@@ -54625,7 +54177,7 @@
 	module.exports = PlaylistItem;
 
 /***/ },
-/* 566 */
+/* 557 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54663,16 +54215,16 @@
 	module.exports = PlaylistItemDetail;
 
 /***/ },
-/* 567 */
+/* 558 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
 	var SoundscapeIndex = __webpack_require__(547);
-	var Header = __webpack_require__(568);
-	var Midsection = __webpack_require__(569);
-	var FilteredList = __webpack_require__(553);
+	var Header = __webpack_require__(559);
+	var Midsection = __webpack_require__(560);
+	var FilteredList = __webpack_require__(561);
 	
 	var Frontpage = React.createClass({
 	  displayName: 'Frontpage',
@@ -54691,7 +54243,7 @@
 	module.exports = Frontpage;
 
 /***/ },
-/* 568 */
+/* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -54717,7 +54269,7 @@
 	module.exports = Header;
 
 /***/ },
-/* 569 */
+/* 560 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -54734,13 +54286,543 @@
 	      React.createElement(
 	        "div",
 	        { className: "midsection_text" },
-	        "Search the world."
+	        "Find your sound."
 	      )
 	    );
 	  }
 	});
 	
 	module.exports = Midsection;
+
+/***/ },
+/* 561 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var TagStore = __webpack_require__(543);
+	var FilterStore = __webpack_require__(270);
+	var SoundscapeStore = __webpack_require__(262);
+	var FilterActions = __webpack_require__(274);
+	var TrackIndex = __webpack_require__(275);
+	var Filter = __webpack_require__(562);
+	
+	var FilteredList = React.createClass({
+	  displayName: 'FilteredList',
+	  getInitialState: function getInitialState() {
+	    return { results: [], tags: [] };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.filterListener = FilterStore.addListener(this._onChange);
+	    FilterActions.fetchAllTracks({ filters: {} });
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.filterListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ results: FilterStore.all() });
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'filtered_list_container' },
+	      React.createElement(Filter, null),
+	      React.createElement(
+	        'div',
+	        { className: 'filter_track_index' },
+	        React.createElement(TrackIndex, { tracks: this.state.results })
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = FilteredList;
+
+/***/ },
+/* 562 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var React = __webpack_require__(1);
+	var TagStore = __webpack_require__(543);
+	var FilterStore = __webpack_require__(270);
+	var SoundscapeStore = __webpack_require__(262);
+	var SoundscapeActions = __webpack_require__(268);
+	var FilterActions = __webpack_require__(274);
+	var UserActions = __webpack_require__(259);
+	var TrackIndex = __webpack_require__(275);
+	var TagActions = __webpack_require__(545);
+	var TagIndex = __webpack_require__(563);
+	var SoundscapesFilterIndex = __webpack_require__(565);
+	var ArtistFilterIndex = __webpack_require__(567);
+	var TrackSearchBox = __webpack_require__(568);
+	var Filter = React.createClass({
+	  displayName: 'Filter',
+	  getInitialState: function getInitialState() {
+	    return { allTags: [], tags: [],
+	      allSoundscapes: [], soundscapes: [],
+	      allArtists: [], artists: [],
+	      query: "" };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.tagListener = TagStore.addListener(this._onTagChange);
+	    this.ssStoreListener = SoundscapeStore.addListener(this._onSSChange);
+	    TagActions.fetchAllTags();
+	    SoundscapeActions.fetchAllSoundscapes();
+	    UserActions.fetchAllUsers();
+	    this.userListener = UserStore.addListener(this._onUserChange);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.tagListener.remove();
+	    this.ssStoreListener.remove();
+	    this.userListener.remove();
+	  },
+	  _onTagChange: function _onTagChange() {
+	    this.setState({ allTags: TagStore.all() });
+	  },
+	  _onSSChange: function _onSSChange() {
+	    this.setState({ allSoundscapes: SoundscapeStore.all() });
+	  },
+	  _onUserChange: function _onUserChange() {
+	    this.setState({ allArtists: UserStore.all() });
+	  },
+	  _updateFilters: function _updateFilters(filter, content) {
+	    this.setState(_defineProperty({}, filter, content));
+	  },
+	  componentWillUpdate: function componentWillUpdate(newProps, newState) {
+	    if (newState != this.state) {
+	      var filters = { filters: { tags: newState.tags,
+	          soundscapes: newState.soundscapes,
+	          artists: newState.artists,
+	          query: newState.query } };
+	      FilterActions.fetchAllTracks(filters);
+	    }
+	  },
+	
+	
+	  // _updateResults() {
+	  //   let filters = {tags: this.state.tags}
+	  //   FilterActions.fetchAllTracks(filters)
+	  // },
+	
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'filter_container' },
+	      React.createElement(
+	        'div',
+	        { className: 'ss_filter_container' },
+	        React.createElement(SoundscapesFilterIndex, { updateFilters: this._updateFilters,
+	          allSoundscapes: this.state.allSoundscapes })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'tag_index_container' },
+	        React.createElement(TagIndex, { updateFilters: this._updateFilters,
+	          allTags: this.state.allTags })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'artist_index_container' },
+	        React.createElement(ArtistFilterIndex, { updateFilters: this._updateFilters,
+	          allArtists: this.state.allArtists })
+	      ),
+	      React.createElement(TrackSearchBox, { updateFilters: this._updateFilters })
+	    );
+	  }
+	});
+	
+	module.exports = Filter;
+
+/***/ },
+/* 563 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var TagIndexItem = __webpack_require__(564);
+	var FilterActions = __webpack_require__(274);
+	var Label = __webpack_require__(279).Label;
+	
+	var TagIndex = React.createClass({
+	  displayName: 'TagIndex',
+	  getInitialState: function getInitialState() {
+	    return { tagsApplied: [], all: true };
+	  },
+	  _applyTag: function _applyTag(tag_id) {
+	    this.setState({ all: false });
+	    if (this.state.tagsApplied.includes(tag_id)) {
+	      var idx = this.state.tagsApplied.indexOf(tag_id);
+	      this.state.tagsApplied.splice(idx, 1);
+	    } else {
+	      var tags = this.state.tagsApplied;
+	      tags.push(tag_id);
+	      this.setState({ tagsApplied: tags });
+	    }
+	    this.props.updateFilters("tags", this.state.tagsApplied);
+	  },
+	  _all: function _all() {
+	    this.setState({ tagsApplied: [], all: true });
+	    this.props.updateFilters("tags", []);
+	  },
+	  render: function render() {
+	    var _this = this;
+	
+	    var tags = this.props.allTags.map(function (tag) {
+	      return React.createElement(TagIndexItem, { tag: tag,
+	        key: tag.id,
+	        applyTag: _this._applyTag,
+	        all: _this.state.all });
+	    });
+	    var allClass = "tag_index_item";
+	    if (this.state.all) {
+	      allClass = allClass + " selected";
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'tag_index' },
+	      React.createElement(
+	        'div',
+	        { className: allClass, onClick: this._all },
+	        React.createElement(
+	          'h4',
+	          { className: 'tag_item_text' },
+	          React.createElement(
+	            Label,
+	            { className: 'tag_label' },
+	            'any tag'
+	          )
+	        )
+	      ),
+	      tags
+	    );
+	  }
+	});
+	
+	module.exports = TagIndex;
+
+/***/ },
+/* 564 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var Label = __webpack_require__(279).Label;
+	var FilterActions = __webpack_require__(274);
+	var classNames = __webpack_require__(277);
+	
+	var TagIndexItem = React.createClass({
+	  displayName: 'TagIndexItem',
+	  getInitialState: function getInitialState() {
+	    return { seleted: false };
+	  },
+	  _tagFilter: function _tagFilter() {
+	    this.props.applyTag(this.props.tag.id);
+	    this.setState({ selected: !this.state.selected });
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    if (newProps.all) {
+	      this.setState({ selected: false });
+	    }
+	  },
+	  render: function render() {
+	    var tagClass = void 0;
+	    if (this.state.selected) {
+	      tagClass = classNames("tag_index_item", "selected");
+	    } else {
+	      tagClass = "tag_index_item";
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: tagClass, onClick: this._tagFilter },
+	      React.createElement(
+	        'h4',
+	        { className: 'tag_item_text' },
+	        React.createElement(
+	          Label,
+	          { className: 'tag_label' },
+	          this.props.tag.name
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = TagIndexItem;
+
+/***/ },
+/* 565 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var SoundscapeFilterItem = __webpack_require__(566);
+	var FilterActions = __webpack_require__(274);
+	var Label = __webpack_require__(279).Label;
+	
+	var SoundscapeFilterIndex = React.createClass({
+	  displayName: 'SoundscapeFilterIndex',
+	  getInitialState: function getInitialState() {
+	    return { soundscapesApplied: [], all: true };
+	  },
+	  _applySoundscape: function _applySoundscape(soundscape_id) {
+	    this.setState({ all: false });
+	    if (this.state.soundscapesApplied.includes(soundscape_id)) {
+	      var idx = this.state.soundscapesApplied.indexOf(soundscape_id);
+	      this.state.soundscapesApplied.splice(idx, 1);
+	    } else {
+	      var soundscapes = this.state.soundscapesApplied;
+	      soundscapes.push(soundscape_id);
+	      this.setState({ soundscapesApplied: soundscapes });
+	    }
+	    this.props.updateFilters("soundscapes", this.state.soundscapesApplied);
+	  },
+	  _all: function _all() {
+	    this.setState({ soundscapesApplied: [], all: true });
+	    this.props.updateFilters("soundscapes", []);
+	  },
+	  render: function render() {
+	    var _this = this;
+	
+	    var soundscapes = this.props.allSoundscapes.map(function (soundscape) {
+	      return React.createElement(SoundscapeFilterItem, { soundscape: soundscape,
+	        key: soundscape.id,
+	        applySoundscape: _this._applySoundscape,
+	        all: _this.state.all });
+	    });
+	    var allClass = "soundscape_filter_item";
+	    if (this.state.all) {
+	      allClass = allClass + " selected";
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'soundscape_filter_index' },
+	      React.createElement(
+	        'div',
+	        { className: allClass,
+	          onClick: this._all },
+	        React.createElement(
+	          'h4',
+	          { className: 'soundscape_item_text' },
+	          React.createElement(
+	            Label,
+	            { className: 'soundscape_label' },
+	            'ALL SOUNDSCAPES'
+	          )
+	        )
+	      ),
+	      soundscapes
+	    );
+	  }
+	});
+	
+	module.exports = SoundscapeFilterIndex;
+
+/***/ },
+/* 566 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var Label = __webpack_require__(279).Label;
+	var FilterActions = __webpack_require__(274);
+	var classNames = __webpack_require__(277);
+	
+	var SoundscapeFilterItem = React.createClass({
+	  displayName: 'SoundscapeFilterItem',
+	  getInitialState: function getInitialState() {
+	    return { seleted: false };
+	  },
+	  _soundscapeFilter: function _soundscapeFilter() {
+	    this.props.applySoundscape(this.props.soundscape.id);
+	    this.setState({ selected: !this.state.selected });
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    if (newProps.all) {
+	      this.setState({ selected: false });
+	    }
+	  },
+	  render: function render() {
+	    var soundscapeClass = void 0;
+	    if (this.state.selected) {
+	      soundscapeClass = classNames("soundscape_filter_item", "selected");
+	    } else {
+	      soundscapeClass = "soundscape_filter_item";
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: soundscapeClass, onClick: this._soundscapeFilter },
+	      React.createElement(
+	        'h4',
+	        { className: 'soundscape_item_text' },
+	        React.createElement(
+	          Label,
+	          { className: 'soundscape_label' },
+	          this.props.soundscape.title.toUpperCase()
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = SoundscapeFilterItem;
+
+/***/ },
+/* 567 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var ArtistFilterItem = __webpack_require__(569);
+	var FilterActions = __webpack_require__(274);
+	var Label = __webpack_require__(279).Label;
+	
+	var ArtistFilterIndex = React.createClass({
+	  displayName: 'ArtistFilterIndex',
+	  getInitialState: function getInitialState() {
+	    return { artistsApplied: [], all: true };
+	  },
+	  _applyArtist: function _applyArtist(artist_id) {
+	    this.setState({ all: false });
+	    if (this.state.artistsApplied.includes(artist_id)) {
+	      var idx = this.state.artistsApplied.indexOf(artist_id);
+	      this.state.artistsApplied.splice(idx, 1);
+	    } else {
+	      var artists = this.state.artistsApplied;
+	      artists.push(artist_id);
+	      this.setState({ artistsApplied: artists });
+	    }
+	    this.props.updateFilters("artists", this.state.artistsApplied);
+	  },
+	  _all: function _all() {
+	    this.setState({ artistsApplied: [], all: true });
+	    this.props.updateFilters("artists", []);
+	  },
+	  render: function render() {
+	    var _this = this;
+	
+	    var artists = this.props.allArtists.map(function (artist) {
+	      return React.createElement(ArtistFilterItem, { artist: artist,
+	        key: artist.id,
+	        applyArtist: _this._applyArtist,
+	        all: _this.state.all });
+	    });
+	    var allClass = "artist_filter_item";
+	    if (this.state.all) {
+	      allClass = allClass + " selected";
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: 'artist_filter_index' },
+	      React.createElement(
+	        'div',
+	        { className: allClass,
+	          onClick: this._all },
+	        React.createElement(
+	          'h4',
+	          { className: 'artist_item_text' },
+	          React.createElement(
+	            Label,
+	            { className: 'artist_label' },
+	            'All Artists'
+	          )
+	        )
+	      ),
+	      artists
+	    );
+	  }
+	});
+	
+	module.exports = ArtistFilterIndex;
+
+/***/ },
+/* 568 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var FilterSearch = React.createClass({
+	  displayName: 'FilterSearch',
+	  _onInput: function _onInput(e) {
+	    this.props.updateFilters('query', e.target.value);
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'nav',
+	      { className: 'tracks-search-box' },
+	      React.createElement(
+	        'label',
+	        { htmlFor: 'search-box' },
+	        'Search Tracks'
+	      ),
+	      React.createElement('br', null),
+	      React.createElement('input', { id: 'search-box', onInput: this._onInput })
+	    );
+	  }
+	});
+	
+	module.exports = FilterSearch;
+
+/***/ },
+/* 569 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var Label = __webpack_require__(279).Label;
+	var FilterActions = __webpack_require__(274);
+	var classNames = __webpack_require__(277);
+	
+	var ArtistFilterItem = React.createClass({
+	  displayName: 'ArtistFilterItem',
+	  getInitialState: function getInitialState() {
+	    return { seleted: false };
+	  },
+	  _artistFilter: function _artistFilter() {
+	    this.props.applyArtist(this.props.artist.id);
+	    this.setState({ selected: !this.state.selected });
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    if (newProps.all) {
+	      this.setState({ selected: false });
+	    }
+	  },
+	  render: function render() {
+	    var artistClass = void 0;
+	    if (this.state.selected) {
+	      artistClass = classNames("artist_filter_item", "selected");
+	    } else {
+	      artistClass = "artist_filter_item";
+	    }
+	    return React.createElement(
+	      'div',
+	      { className: artistClass, onClick: this._artistFilter },
+	      React.createElement(
+	        'h4',
+	        { className: 'artist_item_text' },
+	        React.createElement(
+	          Label,
+	          { className: 'artist_label' },
+	          this.props.artist.username
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = ArtistFilterItem;
 
 /***/ }
 /******/ ]);

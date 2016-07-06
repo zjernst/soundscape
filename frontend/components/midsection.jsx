@@ -5,7 +5,7 @@ const Midsection = React.createClass({
     return(
       <div className="midsection_container">
         <div className="midsection_background" />
-        <div className="midsection_text">Search the world.</div>
+        <div className="midsection_text">Find your sound.</div>
       </div>
     )
   }

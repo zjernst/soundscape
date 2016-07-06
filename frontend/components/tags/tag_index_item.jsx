@@ -13,6 +13,12 @@ const TagIndexItem = React.createClass({
     this.setState({selected: !this.state.selected})
   },
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.all) {
+      this.setState({selected: false})
+    }
+  },
+
   render() {
     let tagClass
     if (this.state.selected) {
