@@ -53492,7 +53492,6 @@
 	var SoundscapeActions = __webpack_require__(268);
 	var SoundscapeIndexItem = __webpack_require__(548);
 	var WelcomeCarousel = __webpack_require__(552);
-	var FilteredList = __webpack_require__(553);
 	
 	var SoundscapeIndex = React.createClass({
 	  displayName: 'SoundscapeIndex',
@@ -53524,8 +53523,7 @@
 	        { className: 'soundscape_index_text' },
 	        'Discover new sounds'
 	      ),
-	      soundscapes,
-	      React.createElement(FilteredList, null)
+	      soundscapes
 	    );
 	  }
 	});
@@ -53560,10 +53558,19 @@
 	  },
 	  render: function render() {
 	    var itemClass = classNames("soundscape_index_item", this.props.soundscape.title);
+	    var itemContainer = classNames(this.props.soundscape.title, "ss_item_container");
 	    return React.createElement(
 	      'div',
-	      { className: itemClass, onClick: this._displayDetails },
-	      this.state.details ? React.createElement(SoundscapeDetail, { soundscape: this.props.soundscape }) : ""
+	      { className: itemContainer },
+	      React.createElement(
+	        'div',
+	        { className: 'ss_screen' },
+	        React.createElement(
+	          'div',
+	          { className: itemClass, onClick: this._displayDetails },
+	          this.state.details ? React.createElement(SoundscapeDetail, { soundscape: this.props.soundscape }) : ""
+	        )
+	      )
 	    );
 	  }
 	});
@@ -53870,7 +53877,7 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'filter_container' },
+	      { className: 'filtered_list_container' },
 	      React.createElement(Filter, null),
 	      React.createElement(
 	        'div',
@@ -54664,6 +54671,8 @@
 	var React = __webpack_require__(1);
 	var SoundscapeIndex = __webpack_require__(547);
 	var Header = __webpack_require__(568);
+	var Midsection = __webpack_require__(569);
+	var FilteredList = __webpack_require__(553);
 	
 	var Frontpage = React.createClass({
 	  displayName: 'Frontpage',
@@ -54672,7 +54681,9 @@
 	      'div',
 	      { className: 'frontpage' },
 	      React.createElement(Header, null),
-	      React.createElement(SoundscapeIndex, null)
+	      React.createElement(SoundscapeIndex, null),
+	      React.createElement(Midsection, null),
+	      React.createElement(FilteredList, null)
 	    );
 	  }
 	});
@@ -54704,6 +54715,32 @@
 	});
 	
 	module.exports = Header;
+
+/***/ },
+/* 569 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var Midsection = React.createClass({
+	  displayName: "Midsection",
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "midsection_container" },
+	      React.createElement("div", { className: "midsection_background" }),
+	      React.createElement(
+	        "div",
+	        { className: "midsection_text" },
+	        "Search the world."
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = Midsection;
 
 /***/ }
 /******/ ]);

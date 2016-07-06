@@ -153,14 +153,37 @@ body.cafe {
   font-weight: 700;
 }
 
+.midsection_container {
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.midsection_background {
+  position: relative;
+  background: url('https://res.cloudinary.com/soundscape/image/upload/v1467349002/beachwaves_qgvy7z.jpg');
+  width: 100%;
+  z-index: 1;
+  height: 900px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  bottom: 120px;
+}
+
+.midsection_text {
+  background: red;
+  z-index: 5;
+  font-size: 50px;
+  font-weight: 700;
+}
+
 .soundscape_index {
   margin-left: 130px;
   margin-right: 130px;
   margin-top: 100px;
   margin-bottom: 200px;
   padding: 10px;
-  background: #b7cad1;
-  /*background-color: rgba(20, 100, 150, .3);*/
   display: flex;
   flex-wrap: wrap;
   text-align: center;
@@ -175,80 +198,143 @@ body.cafe {
 
 .soundscape_index_item {
   border-radius: 15px;
-  border: 5px solid whitesmoke;
+  display: block;
+  height: inherit;
+  width: inherit;
+}
+
+.ss_item_container {
+  border-radius: 20px;
+  border: 10px solid white;
   display: block;
   flex: 0, 0, 25em;
-  width: 200px;
-  height: 200px;
-  background-color: rgba(250, 240, 230, 0.3);
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
   margin: 10px;
-  padding: 10px;
+  z-index: 2;
+  background-color: rgba(250. 250, 250, .5);
+}
+
+.ss_item_container:hover {
+  cursor: pointer;
+}
+
+.ss_screen {
+  width: inherit;
+  height: inherit;
+  background-color: rgba(0, 0, 0, .5)
+}
+
+.ss_screen:hover {
+  background-color: transparent;;
 }
 
 .soundscape_index_item:hover {
-  cursor: pointer;
-  background-color: rgba(250, 250, 250, 0.8);
+  opacity: 0;
+}
+
+.rain.ss_item_container {
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,h_500/v1467780063/drops_uggrdb.jpg');
+  background-position: center;
 }
 
 .soundscape_index_item.rain {
-  background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_310,w_330/v1467311173/logo_sqngrs.png');
-  background-size: 160px;
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_crop,h_270/v1467779130/white%20icons/logo_21.png');
+  /*background-size: 300px;*/
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.waves.ss_item_container {
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,h_400/v1467349002/beachwaves_qgvy7z.jpg');
+  background-position: center;
 }
 
 .soundscape_index_item.waves {
-  background-image: url('http://res.cloudinary.com/soundscape/image/upload/v1467310749/waves_logo.png');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_crop,h_218/v1467779152/white%20icons/logo_22.png');
   background-position: center;
-  background-size: 200px;
+  /*background-size: 200px;*/
+  background-repeat: no-repeat;
+}
 
+.wind.ss_item_container {
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,h_500/v1467780939/photo-1438045809872-34a58ff469f6_kyula2.jpg');
+  background-position: center;
 }
 
 .soundscape_index_item.wind {
-  background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_250/v1467311170/logo_1_t2yfgn.png');
-  background-size: 150px;
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_crop,h_250/v1467779157/white%20icons/logo_24.png');
+  /*background-size: 150px;*/
   background-repeat: no-repeat;
   background-position: center;
+  position: relative;
+  bottom: 30px;
+  right: 5px;
+}
 
+.city.ss_item_container {
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,h_350/v1467348911/city_ef8ajv.jpg');
+  background-position: center;
 }
 
 .soundscape_index_item.city {
-  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_crop,h_213/v1467311166/logo_3_kaby3y.png');
-  background-size: 170px;
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_crop,h_310/v1467766168/white%20icons/logo_20.png');
+  /*background-size: 300px;*/
   background-position: center;
   background-repeat: no-repeat;
+  background-size: 280px;
 
 }
 
+.forest.ss_item_container {
+  background-image: url('https://static.pexels.com/photos/1826/wood-nature-sunny-forest.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .soundscape_index_item.forest {
-  background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_360/v1467311162/logo_4_axnjxa.png');
-  background-size: 140px;
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_crop,h_285/v1467764269/white%20icons/logo_16.png');
+  /*background-size: 140px;*/
   background-repeat: no-repeat;
   background-position: center;
+}
 
+.home.ss_item_container {
+  background-image: url('http://s.shld.net/is/image/Sears/s_025CO66554812B-qm-$cq_width_160$-qm-$cq_width_250$');
+  background-position: center;
+  background-size: 600px;
 }
 
 .soundscape_index_item.home {
-  background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_310/v1467311155/logo_6_bqqnfp.png');
-  background-size: 150px;
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_crop,h_265/v1467764269/white%20icons/logo_12.png');
+  /*background-size: 150px;*/
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.fire.ss_item_container {
+  background-image: url('http://www.win10themes.com/wp-content/uploads/2016/01/Fireplace-Wallpaper-Images.png');
+  background-position: center;
+  background-size: 600px;
 }
 
 .soundscape_index_item.fire {
-  background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_370/v1467311158/logo_5_kptop2.png');
-  background-size: 120px;
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_crop,h_310/v1467764269/white%20icons/logo_13.png');
   background-repeat: no-repeat;
   background-position: center;
+}
 
+.cafe.ss_item_container {
+  background-image: url('http://www.atlascafe.net/images/02.jpg');
+  background-position: center
 }
 
 .soundscape_index_item.cafe {
-  background-image: url('http://res.cloudinary.com/soundscape/image/upload/c_crop,h_310,w_350/v1467311151/logo_8_qqdcng.png');
-  background-size: 150px;
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_crop,h_260/v1467764270/white%20icons/logo_17.png');
+  background-size: 260px;
   background-repeat: no-repeat;
   background-position: center;
-
 }
 
 .soundscape_detail {
@@ -278,7 +364,8 @@ body.cafe {
 .track_index {
   display: flex;
   flex-direction: column;
-  margin: 60px;
+  margin: 60px auto;
+  width: 75%;
   margin-top: 0px;
   background: lightgray;
   min-height: 300px;
@@ -334,14 +421,21 @@ body.cafe {
   background-color: rgba(250, 250, 250, 0.8);
 }
 
+.ss_filter_container {
+  width: 100%;
+  background-color: darkgray;
+}
+
 .soundscape_filter_index {
   display: flex;
-  background-color: darkgray;
+  width: 65%;
+  margin: 0 auto;
 }
 
 .soundscape_filter_item {
   flex: 1;
   text-align: center;
+  margin: 4px;
 }
 
 .soundscape_label {
@@ -362,14 +456,21 @@ body.cafe {
   opacity: 1;
 }
 
-.artist_filter_index {
-  display: flex;
+.artist_index_container {
   background-color: #303a41;
+  width: 100%;
+}
+
+.artist_filter_index {
+  width: 65%;
+  margin: 0 auto;
+  display: flex;
 }
 
 .artist_filter_item {
   flex: 1;
   text-align: center;
+  margin: 4px;
 }
 
 .artist_label {
@@ -393,6 +494,8 @@ body.cafe {
 .filter_container {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  margin: 50px auto;
 }
 
 .tracks-search-box {
@@ -400,15 +503,22 @@ body.cafe {
     margin: auto;
 }
 
+.tag_index_container {
+  background: gray;
+  width: 100%;
+}
+
 .tag_index {
+  width: 65%;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  background: gray;
   text-align: center;
 }
 
 .tag_index_item {
   flex: 1;
+  margin: 4px;
 }
 
 .tag_item_text {
@@ -453,6 +563,7 @@ body.cafe {
   position: fixed;
   bottom: 0;
   width: 100%;
+  z-index: 10;
 }
 
 .music_play_item {
