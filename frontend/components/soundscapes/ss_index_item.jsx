@@ -18,9 +18,14 @@ const SoundscapeIndexItem = React.createClass({
 
   render() {
     let itemClass = classNames("soundscape_index_item", this.props.soundscape.title)
+    let itemContainer = classNames(this.props.soundscape.title, "ss_item_container")
     return(
-      <div className={itemClass} onClick={this._displayDetails}>
-        {this.state.details ? <SoundscapeDetail soundscape={this.props.soundscape} /> : ""}
+      <div className={itemContainer}>
+        <div className="ss_screen">
+          <div className={itemClass} onClick={this._displayDetails}>
+            {this.state.details ? <SoundscapeDetail soundscape={this.props.soundscape} /> : ""}
+          </div>
+        </div>
       </div>
     )
   }

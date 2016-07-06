@@ -26,7 +26,7 @@ const FilteredList = React.createClass({
 
   render() {
     return(
-      <div className="filter_container">
+      <div className="filtered_list_container">
         <Filter />
         <div className="filter_track_index">
           <TrackIndex tracks={this.state.results} />
