@@ -363,6 +363,35 @@ body.cafe {
   font-size: 26px;
 }
 
+.track_index_container {
+  margin-top:  30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.track_header {
+  display: flex;
+  justify-content: flex-start;
+  width: 75%;
+  margin: auto;
+  text-align: left;
+}
+
+.play_button_header {
+  flex: 1;
+}
+
+.track_title_header {
+  flex: 4;
+  text-align: inherit;
+}
+
+.track_artist_header {
+  flex: 2;
+  text-align: inherit;
+}
+
 .track_index {
   display: flex;
   flex-direction: column;
@@ -376,13 +405,28 @@ body.cafe {
 }
 
 .track_index_item {
+  display: flex;
+  text-align: left;
+  justify-content: flex-start;
   margin: 5px;
+  min-height: 40px;
   margin-left: 10px;
   background: whitesmoke;
   padding: 5px;
 }
 
+.track_play_button {
+  flex: 1;
+}
+
+.track_index_artist {
+  flex: 2;
+  text-align: left;
+}
+
 .track_index_title {
+  flex: 4;
+  text-align: left;
   background: lightblue;
   font-weight: bold;
   font-size: 18px;
@@ -539,6 +583,29 @@ body.cafe {
   background-color: transparent;
 }
 
+.tracks_search_box {
+  text-align: center;
+  background: #212121;
+  display: flex;
+  justify-content: center;
+}
+
+.tracks_search_label {
+  padding: 6px;
+  margin-right: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.search_box {
+  margin: 6px;
+    padding: 3px;
+    padding-left: 10px;
+    border-radius: 3px;
+    min-width: 200px;
+}
+
 .selected {
   opacity: 0.5;
 }
@@ -595,7 +662,6 @@ body.cafe {
   flex-direction: column;
   z-index: 10;
 }
-/*color: #d0dde5;*/
 
 .track_collapse {
   float: right;

@@ -8,10 +8,9 @@ const FilterSearch = React.createClass({
 
   render() {
     return (
-      <nav className="tracks-search-box">
-        <label htmlFor="search-box">Search Tracks</label>
-        <br />
-        <input id="search-box" onInput={this._onInput} />
+      <nav className="tracks_search_box">
+        <div className="tracks_search_label">Search Tracks</div>
+        <input className="search_box" onInput={this._onInput} />
       </nav>
     );
   }

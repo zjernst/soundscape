@@ -33781,6 +33781,7 @@
 	var SoundscapeActions = __webpack_require__(268);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var classNames = __webpack_require__(277);
+	var TrackHeader = __webpack_require__(570);
 	
 	var TrackIndex = React.createClass({
 	  displayName: 'TrackIndex',
@@ -33802,8 +33803,13 @@
 	    var indexClass = classNames("track_index", this.props.parent);
 	    return React.createElement(
 	      'div',
-	      { className: indexClass },
-	      tracks
+	      { className: 'track_index_container' },
+	      React.createElement(TrackHeader, null),
+	      React.createElement(
+	        'div',
+	        { className: indexClass },
+	        tracks
+	      )
 	    );
 	  }
 	});
@@ -33819,6 +33825,7 @@
 	var React = __webpack_require__(1);
 	var classNames = __webpack_require__(277);
 	var TrackDetailItem = __webpack_require__(278);
+	var Glyphicon = __webpack_require__(279).Glyphicon;
 	
 	var TrackIndexItem = React.createClass({
 	  displayName: 'TrackIndexItem',
@@ -33835,20 +33842,26 @@
 	    var details = void 0;
 	    if (this.state.details) {
 	      details = React.createElement(TrackDetailItem, { track: this.props.track, hideDetails: this._hideDetails });
-	    } else {
-	      details = React.createElement(
-	        'div',
-	        { onClick: this._displayDetails },
-	        '...'
-	      );
-	    }
+	    } // else {
+	    //   details = <div onClick={this._displayDetails}>...</div>
+	    // }
 	    return React.createElement(
 	      'div',
 	      { className: 'track_index_item' },
 	      React.createElement(
 	        'div',
+	        { className: 'track_play_button' },
+	        React.createElement(Glyphicon, { className: 'track_index_play', glyph: 'play-circle' })
+	      ),
+	      React.createElement(
+	        'div',
 	        { className: 'track_index_title', onClick: this._displayDetails },
 	        this.props.track.title
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'track_index_artist' },
+	        this.props.track.artist_id
 	      ),
 	      details
 	    );
@@ -33970,7 +33983,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'track_audio_item' },
-	        React.createElement('audio', { controls: 'controls', src: this.props.track.track_url })
+	        React.createElement('audio', { src: this.props.track.track_url })
 	      ),
 	      React.createElement(
 	        Nav,
@@ -54760,14 +54773,13 @@
 	  render: function render() {
 	    return React.createElement(
 	      'nav',
-	      { className: 'tracks-search-box' },
+	      { className: 'tracks_search_box' },
 	      React.createElement(
-	        'label',
-	        { htmlFor: 'search-box' },
+	        'div',
+	        { className: 'tracks_search_label' },
 	        'Search Tracks'
 	      ),
-	      React.createElement('br', null),
-	      React.createElement('input', { id: 'search-box', onInput: this._onInput })
+	      React.createElement('input', { className: 'search_box', onInput: this._onInput })
 	    );
 	  }
 	});
@@ -54823,6 +54835,37 @@
 	});
 	
 	module.exports = ArtistFilterItem;
+
+/***/ },
+/* 570 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var TrackHeader = React.createClass({
+	  displayName: "TrackHeader",
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "track_header" },
+	      React.createElement("span", { className: "play_button_header" }),
+	      React.createElement(
+	        "span",
+	        { className: "track_title_header" },
+	        "Track"
+	      ),
+	      React.createElement(
+	        "span",
+	        { className: "track_artist_header" },
+	        "Artist"
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = TrackHeader;
 
 /***/ }
 /******/ ]);
