@@ -215,7 +215,7 @@ body.cafe {
   overflow: hidden;
   margin: 10px;
   z-index: 2;
-  background-color: rgba(250. 250, 250, .5);
+  background-color: rgba(250, 250, 250, .5);
 }
 
 .ss_item_container:hover {
