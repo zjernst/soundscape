@@ -13,6 +13,12 @@ const ArtistFilterItem = React.createClass({
     this.setState({selected: !this.state.selected})
   },
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.all) {
+      this.setState({selected: false})
+    }
+  },
+
   render() {
     let artistClass
     if (this.state.selected) {
