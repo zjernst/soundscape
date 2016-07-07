@@ -2,7 +2,7 @@ const React = require('react');
 const TrackActions = require('../../actions/track_actions');
 const Glyphicon = require('react-bootstrap').Glyphicon;
 const TrackForm = require('./track_form');
-const Button = require('react-bootstrap').Button;
+// const Button = require('react-bootstrap').Button;
 const Nav = require('react-bootstrap').Nav;
 const NavItem = require('react-bootstrap').NavItem;
 const Label = require('react-bootstrap').Label;
@@ -40,36 +40,40 @@ const TrackDetailItem = React.createClass({
     }
 
     return(
+      <div className="track_drop_down">
       <div className="track_detail_item">
-        <div className="track_description">
-          {this.props.track.description}
+        <div className="track_tags">{tags}</div>
+        <div className="track_description_container">
+          <div className="description_label">Description:</div>
+          <div className="track_description">{this.props.track.description}</div>
         </div>
         <div className="track_audio_item">
           <audio src={this.props.track.track_url} />
         </div>
-        <Nav className="track_detail_options">
-          <NavItem className="track_detail_option_item" onClick={this._addTrack}>
-            <Glyphicon glyph="plus" /> Add to Playlist
-          </NavItem>
-          <NavItem className="track_detail_option_item" onClick={this._toggleForm}>
-            <Glyphicon glyph="edit" />
-            {editForm}
-          </NavItem>
+        <div className="track_detail_options">
+        <button className="download_button"
+        href={this.props.track.track_url}
+        download={this.props.track.title}>Download</button>
+          <div className="edit_track" onClick={this._toggleForm}><Glyphicon glyph="edit" />
+              {editForm}
+          </div>
             {this.props.track.artist_id === SessionStore.currentUser().id ?
-              <NavItem className="track_detail_option_item">
+              <div className="trash_track">
               <Glyphicon glyph="trash" onClick={this._delete}/>
-              </NavItem> : ""}
-          <NavItem>{tags}</NavItem>
-          <Button bsStyle="default" href={this.props.track.track_url} download={this.props.track.title}>Download</Button>
-          <NavItem className="track_detail_option_item" onClick={this.props.hideDetails}>
-          <Glyphicon glyph="collapse-up" className="track_collapse"/>
-          </NavItem>
-        </Nav>
+              </div> : ""}
+        </div>
+      </div>
+      <div className="collapse_track" onClick={this.props.hideDetails}>
+        <Glyphicon className="collapse_glyph" glyph="collapse-up"/>
+      </div>
       </div>
     )
   }
 });
 // <NavItem className="track_detail_option_item">
 // </NavItem>
+// <NavItem className="track_detail_option_item" onClick={this._addTrack}>
+// </NavItem>
+// <div className="add_to_playlist" onClick={this._addTrack}><Glyphicon glyph="plus" /> Add to Playlist</div>
 
 module.exports = TrackDetailItem;

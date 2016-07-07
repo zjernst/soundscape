@@ -36,14 +36,38 @@ const UserPage = React.createClass({
     }
     return(
       <div className="user_page">
-        <h3 className="username">{this.state.user.username}</h3>
-        <div className="userpage_content_container">
-          <div className="user_info_container">
-            <div className="prof_pic_container">
-              <img src={this.state.user.profile_pic}/ >
+        <div className="profile">
+          <div className="cover_photo_container">
+            <img className="cover_photo" src={this.state.user.cover_photo}/>
+          </div>
+
+          <div className="content_bottom">
+            <div className="profile_inner">
+              <div className="username_and_avatar">
+                <div className="avatar">
+                  <img className="profile_pic" src={this.state.user.profile_pic} />
+                </div>
+                <div className="username">{this.state.user.username}</div>
+              </div>
+              <div className="user_stats">
+                <div className="stat">
+                  <div className="value">0</div>
+                  <div className="stat_text">Downloads</div>
+                </div>
+                <div className="stat">
+                  <div className="value">0</div>
+                  <div className="stat_text">Uploads</div>
+                </div>
+              </div>
             </div>
-            <div className="user_stats_container">
-              Number of tracks uploaded: {num_tracks}
+          </div>
+        </div>
+
+        <div className="userpage_content_container">
+          <div className="bio_container">
+            <h4>Bio</h4>
+            <div className="bio">
+              <p className="bio_text">{this.state.user.bio}</p>
             </div>
           </div>
           <div className="users_uploaded_tracks">
