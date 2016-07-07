@@ -376,6 +376,12 @@ body.cafe {
   width: 75%;
   margin: auto;
   text-align: left;
+  background: #303a41;
+  color: white;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 5px;
+  margin-bottom: 5px;
 }
 
 .play_button_header {
@@ -405,42 +411,41 @@ body.cafe {
 }
 
 .track_index_item {
+  margin-bottom: 3px;
   display: flex;
   text-align: left;
   justify-content: flex-start;
-  margin: 5px;
-  min-height: 40px;
-  margin-left: 10px;
-  background: whitesmoke;
-  padding: 5px;
+  min-height: 50px;
+  line-height: 50px;
+  background: #fbfbfb;
 }
 
 .track_play_button {
   flex: 1;
+  text-align: center;
+  font-size: 20px;
+  margin-top: 2px;
+  color: inherit;
 }
 
 .track_index_artist {
   flex: 2;
   text-align: left;
+  font-size: 17px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .track_index_title {
   flex: 4;
   text-align: left;
-  background: lightblue;
-  font-weight: bold;
-  font-size: 18px;
-  margin: 3px;
-  padding: 3px;
-  padding-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 17px;
 }
 
 .track_detail_item {
   padding-left: 10px;
-  margin: 5px;
-}
-
-.track_index_title {
   margin: 5px;
 }
 
@@ -469,6 +474,7 @@ body.cafe {
 
 .filtered_list_container {
   background-color: #eef2f3;
+  padding-bottom: 200px;
 }
 
 .ss_filter_container {
@@ -697,6 +703,9 @@ body.cafe {
 
 }
 
-.carousel_container {
-  display: flex;
+.footer {
+  height: 250px;
+  width: 100%;
+  background-color: #212121;
+  bottom: 0;
 }

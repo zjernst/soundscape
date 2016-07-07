@@ -27,6 +27,7 @@ const SoundscapeDetail = require('./components/soundscapes/ss_detail');
 const Player = require('./components/player');
 const PlaylistSidebar = require('./components/playlist_sidebar');
 const Frontpage = require('./components/frontpage');
+const Footer = require('./components/footer');
 
 const App = React.createClass({
   render() {
@@ -36,6 +37,7 @@ const App = React.createClass({
         {this.props.children}
         <PlaylistSidebar />
         <Player />
+        <Footer />
       </div>
     )
   }

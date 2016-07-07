@@ -75,6 +75,7 @@
 	var Player = __webpack_require__(554);
 	var PlaylistSidebar = __webpack_require__(555);
 	var Frontpage = __webpack_require__(558);
+	var Footer = __webpack_require__(571);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -85,7 +86,8 @@
 	      React.createElement(Navbar, null),
 	      this.props.children,
 	      React.createElement(PlaylistSidebar, null),
-	      React.createElement(Player, null)
+	      React.createElement(Player, null),
+	      React.createElement(Footer, null)
 	    );
 	  }
 	});
@@ -33860,8 +33862,8 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'track_index_artist' },
-	        this.props.track.artist_id
+	        { className: 'track_index_artist', onClick: this._toArtist },
+	        this.props.track.artist
 	      ),
 	      details
 	    );
@@ -53558,16 +53560,15 @@
 	var SoundscapeActions = __webpack_require__(268);
 	var SoundscapeDetail = __webpack_require__(549);
 	var hashHistory = __webpack_require__(168).hashHistory;
+	var TrackActions = __webpack_require__(264);
 	
 	var SoundscapeIndexItem = React.createClass({
 	  displayName: 'SoundscapeIndexItem',
 	  getInitialState: function getInitialState() {
 	    return { details: false };
 	  },
-	  _displayDetails: function _displayDetails() {
-	    this.setState({ details: !this.state.details });
-	    var id = this.props.soundscape.id;
-	    hashHistory.push('/soundscape/' + id);
+	  _addToPlayer: function _addToPlayer() {
+	    TrackActions.updateTracks(this.props.soundscape.tracks);
 	  },
 	  render: function render() {
 	    var itemClass = classNames("soundscape_index_item", this.props.soundscape.title);
@@ -53578,11 +53579,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'ss_screen' },
-	        React.createElement(
-	          'div',
-	          { className: itemClass, onClick: this._displayDetails },
-	          this.state.details ? React.createElement(SoundscapeDetail, { soundscape: this.props.soundscape }) : ""
-	        )
+	        React.createElement('div', { className: itemClass, onClick: this._addToPlayer })
 	      )
 	    );
 	  }
@@ -54020,10 +54017,7 @@
 	    TrackActions.updateTracks(this.state.tracks);
 	  },
 	  _onChange: function _onChange() {
-	    this.setState({ tracks: TrackStore.all() });
-	    if (!this.state.paused) {
-	      this._play();
-	    }
+	    this.setState({ playing: true, tracks: TrackStore.all() });
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.trackListener = TrackStore.addListener(this._onChange);
@@ -54043,7 +54037,6 @@
 	  _onTimeUpdate: function _onTimeUpdate(e) {
 	    e.preventDefault();
 	    var song = document.getElementById('player');
-	
 	    var duration = song.duration;
 	    var timePlayed = song.currentTime;
 	    this.setState({ percentPlayed: timePlayed / duration * 100 });
@@ -54053,6 +54046,11 @@
 	    var song = document.getElementById('player');
 	    var targetTime = e.target.value / 100 * song.duration;
 	    song.currentTime = targetTime;
+	  },
+	  autoplay: function autoplay() {
+	    if (this.state.playing) {
+	      this._play();
+	    }
 	  },
 	  render: function render() {
 	    var song = void 0;
@@ -54096,7 +54094,8 @@
 	        { className: 'music_play_item', onClick: this._next },
 	        React.createElement(Glyphicon, { glyph: 'forward' })
 	      ),
-	      song
+	      song,
+	      this.autoplay()
 	    );
 	    return player;
 	  }
@@ -54866,6 +54865,28 @@
 	});
 	
 	module.exports = TrackHeader;
+
+/***/ },
+/* 571 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var Footer = React.createClass({
+	  displayName: "Footer",
+	  render: function render() {
+	    var content = void 0;
+	    return React.createElement(
+	      "div",
+	      { className: "footer" },
+	      content
+	    );
+	  }
+	});
+	
+	module.exports = Footer;
 
 /***/ }
 /******/ ]);
