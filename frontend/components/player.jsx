@@ -51,10 +51,7 @@ const Player = React.createClass({
   },
 
   _onChange() {
-    this.setState({tracks: TrackStore.all()});
-    if (!this.state.paused) {
-      this._play();
-    }
+    this.setState({playing: true, tracks: TrackStore.all()});
   },
 
   componentDidMount() {
@@ -74,13 +71,11 @@ const Player = React.createClass({
 
   _onSongEnd() {
     this._next()
-
   },
 
   _onTimeUpdate(e) {
     e.preventDefault();
     let song = document.getElementById('player')
-
     let duration = song.duration
     let timePlayed = song.currentTime
     this.setState({percentPlayed: (timePlayed/duration) * 100})
@@ -91,6 +86,12 @@ const Player = React.createClass({
     let song = document.getElementById('player')
     let targetTime = (e.target.value / 100) * song.duration;
     song.currentTime = targetTime;
+  },
+
+  autoplay() {
+    if (this.state.playing) {
+      this._play()
+    }
   },
 
   render() {
@@ -119,6 +120,7 @@ const Player = React.createClass({
                       <NavItem className="music_play_item" onClick={this._back}><Glyphicon glyph="backward"/></NavItem>
                       <NavItem className="music_play_item" onClick={this._next}><Glyphicon glyph="forward"/></NavItem>
                     {song}
+                    {this.autoplay()}
                   </Nav>)
     return player
   }

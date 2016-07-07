@@ -4,16 +4,15 @@ const SoundscapeStore = require('../../stores/soundscape_store');
 const SoundscapeActions = require('../../actions/soundscape_actions');
 const SoundscapeDetail = require('./ss_detail');
 const hashHistory = require('react-router').hashHistory;
+const TrackActions = require('../../actions/track_actions');
 
 const SoundscapeIndexItem = React.createClass({
   getInitialState() {
     return({details: false})
   },
 
-  _displayDetails() {
-    this.setState({details: !this.state.details})
-    let id = this.props.soundscape.id;
-    hashHistory.push(`/soundscape/${id}`)
+  _addToPlayer() {
+    TrackActions.updateTracks(this.props.soundscape.tracks)
   },
 
   render() {
@@ -22,8 +21,7 @@ const SoundscapeIndexItem = React.createClass({
     return(
       <div className={itemContainer}>
         <div className="ss_screen">
-          <div className={itemClass} onClick={this._displayDetails}>
-            {this.state.details ? <SoundscapeDetail soundscape={this.props.soundscape} /> : ""}
+          <div className={itemClass} onClick={this._addToPlayer}>
           </div>
         </div>
       </div>
