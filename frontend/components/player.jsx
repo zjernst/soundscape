@@ -1,4 +1,5 @@
 const React = require('react');
+const ReactPlayer = require('react-player');
 const TrackStore = require('../stores/track_store');
 const TrackActions = require('../actions/track_actions');
 const Nav = require('react-bootstrap').Nav;
@@ -7,25 +8,19 @@ const Glyphicon = require('react-bootstrap').Glyphicon;
 
 const Player = React.createClass({
   getInitialState() {
-    return({tracks: [], playing: false, percentPlayed: 0, paused: false})
+    return({tracks: [],
+            playing: true,
+            played: 0,
+            paused: false,
+            duration: 0})
   },
 
   _play() {
-    let song = document.getElementById('player')
-    if (song) {
-      song.play();
-      this.setState({playing: true});
-      this.setState({paused: false})
-    }
+    this.setState({playing: true})
   },
 
   _pause() {
-    let song = document.getElementById('player')
-    if (song) {
-      song.pause();
-      this.setState({playing: false});
-      this.setState({paused: true})
-    }
+    this.setState({playing: false})
   },
 
   _next() {
@@ -62,30 +57,27 @@ const Player = React.createClass({
     this.trackListener.remove();
   },
 
-  componentDidUpdate() {
-    if (this.keepPlaying) {
-      this._play();
-      this.keepPlaying = false
-    }
-  },
-
   _onSongEnd() {
     this._next()
   },
 
-  _onTimeUpdate(e) {
-    e.preventDefault();
-    let song = document.getElementById('player')
-    let duration = song.duration
-    let timePlayed = song.currentTime
-    this.setState({percentPlayed: (timePlayed/duration) * 100})
+  _seekMouseDown(e) {
+    this.setState({seeking: true})
   },
 
-  _seek(e) {
-    e.preventDefault();
-    let song = document.getElementById('player')
-    let targetTime = (e.target.value / 100) * song.duration;
-    song.currentTime = targetTime;
+  _seekMouseUp(e) {
+    this.setState({seeking: false})
+    this.refs.player.seekTo(parseFloat(e.target.value))
+  },
+
+  _seekChange(e) {
+    this.setState({played: parseFloat(e.target.value)})
+  },
+
+  _onProgress(state) {
+    if (!this.state.seeking) {
+      this.setState(state)
+    }
   },
 
   autoplay() {
@@ -96,14 +88,9 @@ const Player = React.createClass({
 
   render() {
     let song
-    if (this.state.tracks.length > 0) {
-      song = <audio id='player' src={this.state.tracks[0].track_url}
-              onEnded={this._onSongEnd}
-              onTimeUpdate={this._onTimeUpdate} />
-    } else {
-      song = <div />
-    };
-
+    if (this.state.tracks[0]) {
+      song = this.state.tracks[0].track_url
+    }
     let player = (<Nav className="music_player">
                     <NavItem className="music_play_item" onClick={this._play}><Glyphicon glyph="play"/></NavItem>
                     <NavItem className="music_play_item" onClick={this._pause}><Glyphicon glyph="pause"/></NavItem>
@@ -111,19 +98,95 @@ const Player = React.createClass({
                       <input
                         className="progress_bar"
                         type="range"
-                        value={this.state.percentPlayed}
+                        value={this.state.played}
                         min="0"
-                        max="100"
-                        step="0.01"
+                        max="1"
+                        step="any"
                         onInput={this.seek}
+                        onMouseDown={this._seekMouseDown}
+                        onMouseUp={this._seekMouseUp}
+                        onChange={this._seekChange}
                       />
                       <NavItem className="music_play_item" onClick={this._back}><Glyphicon glyph="backward"/></NavItem>
                       <NavItem className="music_play_item" onClick={this._next}><Glyphicon glyph="forward"/></NavItem>
-                    {song}
-                    {this.autoplay()}
                   </Nav>)
-    return player
+    return (
+      <div className="player_container">
+        <ReactPlayer url={song}
+                     className="react_player"
+                     id='react_song'
+                     ref='player'
+                     onPlay={() => this.setState({playing: true})}
+                     onPause={() => this.setState({playing: false})}
+                     onEnded={() => this.setState({playing: false})}
+                     playing={this.state.playing}
+                     onEnded={this._onSongEnd}
+                     onProgress={this._onProgress}
+                     />
+        {player}
+      </div>
+    )
   }
-});
+})
+
+// const Player = React.createClass({
+//
+//
+//
+//   componentDidUpdate() {
+//     if (this.keepPlaying) {
+//       this._play();
+//       this.keepPlaying = false
+//     }
+//   },
+//
+// _play() {
+//   let song = document.getElementById('player')
+//   if (song) {
+//     song.play();
+//     this.setState({playing: true});
+//     this.setState({paused: false})
+//   }
+// },
+// _pause() {
+//   let song = document.getElementById('player')
+//   if (song) {
+//     song.pause();
+//     this.setState({playing: false});
+//     this.setState({paused: true})
+//   }
+// },
+//
+//   render() {
+//     let song
+//     if (this.state.tracks.length > 0) {
+//       song = <audio id='player' src={this.state.tracks[0].track_url}
+//               onEnded={this._onSongEnd}
+//               onTimeUpdate={this._onTimeUpdate} />
+//     } else {
+//       song = <div />
+//     };
+//
+//     let player = (<Nav className="music_player">
+//                     <NavItem className="music_play_item" onClick={this._play}><Glyphicon glyph="play"/></NavItem>
+//                     <NavItem className="music_play_item" onClick={this._pause}><Glyphicon glyph="pause"/></NavItem>
+//
+//                       <input
+//                         className="progress_bar"
+//                         type="range"
+//                         value={this.state.played}
+//                         min="0"
+//                         max="100"
+//                         step="0.01"
+//                         onInput={this.seek}
+//                       />
+//                       <NavItem className="music_play_item" onClick={this._back}><Glyphicon glyph="backward"/></NavItem>
+//                       <NavItem className="music_play_item" onClick={this._next}><Glyphicon glyph="forward"/></NavItem>
+//                     {song}
+//                     {this.autoplay()}
+//                   </Nav>)
+//     return player
+//   }
+// });
 
 module.exports = Player;
