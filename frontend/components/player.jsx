@@ -9,18 +9,29 @@ const Glyphicon = require('react-bootstrap').Glyphicon;
 const Player = React.createClass({
   getInitialState() {
     return({tracks: [],
-            playing: true,
+            playing: false,
             played: 0,
             paused: false,
+            volume: 0.8,
             duration: 0})
   },
 
-  _play() {
-    this.setState({playing: true})
+  _playPause() {
+    this.setState({playing: !this.state.playing})
   },
 
   _pause() {
     this.setState({playing: false})
+  },
+
+  _stop() {
+    TrackActions.removeTrack(this.state.tracks[0])
+    let otherTracks = this.state.tracks.slice(1);
+    this.setState({tracks: otherTracks, playing: false});
+  },
+
+  _setVolume(e) {
+    this.setState({volume: parseFloat(e.target.value)})
   },
 
   _next() {
@@ -80,21 +91,22 @@ const Player = React.createClass({
     }
   },
 
-  autoplay() {
-    if (this.state.playing) {
-      this._play()
-    }
-  },
-
   render() {
     let song
     if (this.state.tracks[0]) {
       song = this.state.tracks[0].track_url
     }
+    let playPause
+    if (this.state.playing) {
+      playPause = <Glyphicon className="play_pause" glyph="pause"/>
+    } else {
+      playPause = <Glyphicon className="play_pause" glyph="play"/>
+    }
     let player = (<Nav className="music_player">
-                    <NavItem className="music_play_item" onClick={this._play}><Glyphicon glyph="play"/></NavItem>
-                    <NavItem className="music_play_item" onClick={this._pause}><Glyphicon glyph="pause"/></NavItem>
-
+                    <NavItem className="music_play_item" onClick={this._playPause}>{playPause}</NavItem>
+                    <NavItem className="music_play_item" onClick={this._stop}>
+                      <Glyphicon className="stop" glyph="stop" />
+                    </NavItem>
                       <input
                         className="progress_bar"
                         type="range"
@@ -109,13 +121,25 @@ const Player = React.createClass({
                       />
                       <NavItem className="music_play_item" onClick={this._back}><Glyphicon glyph="backward"/></NavItem>
                       <NavItem className="music_play_item" onClick={this._next}><Glyphicon glyph="forward"/></NavItem>
+                      <NavItem className="music_play_item"><Glyphicon className="volume" glyph="volume-up" /></NavItem>
+                      <input
+                       type="range"
+                       className="volume_bar"
+                       min="0"
+                       max="1"
+                       step='any'
+                       value={this.state.volume}
+                       onChange={this._setVolume} />
                   </Nav>)
     return (
       <div className="player_container">
         <ReactPlayer url={song}
                      className="react_player"
+                     height={0}
+                     width={0}
                      id='react_song'
                      ref='player'
+                     volume={this.state.volume}
                      onPlay={() => this.setState({playing: true})}
                      onPause={() => this.setState({playing: false})}
                      onEnded={() => this.setState({playing: false})}

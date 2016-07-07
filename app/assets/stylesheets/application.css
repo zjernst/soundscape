@@ -405,26 +405,26 @@ body.cafe {
   width: 75%;
   margin-top: 0px;
   background: lightgray;
-  min-height: 300px;
-  height: 600px;
   overflow: scroll;
 }
 
 .track_index_item {
   margin-bottom: 3px;
-  display: flex;
   text-align: left;
   justify-content: flex-start;
-  min-height: 50px;
   line-height: 50px;
   background: #fbfbfb;
+}
+
+.track_item_header {
+  display: flex;
 }
 
 .track_play_button {
   flex: 1;
   text-align: center;
-  font-size: 20px;
-  margin-top: 2px;
+  font-size: 30px;
+  margin-top: 5px;
   color: inherit;
 }
 
@@ -445,17 +445,73 @@ body.cafe {
 }
 
 .track_detail_item {
-  padding-left: 10px;
-  margin: 5px;
+  margin-left: 14%;
+  margin-right: 14%;
 }
 
 .track_index_title:hover {
   cursor: pointer;
 }
 
+.tag.label {
+  background-color: #067f86;
+  margin: 4px;
+}
+
+.track_detail_options {
+  height: 50px;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.add_to_playlist {
+  flex: 1;
+}
+
+.edit_track {
+  float: right;
+  line-height: normal;
+  padding: 10px;
+  padding-left: 20px;
+  margin-right: 10px;
+  padding-right: 0;
+  margin-right: 0;
+  font-size: 20px;
+}
+
+.download_button {
+  float: left;
+  line-height: normal;
+  vertical-align: middle;
+  margin: auto;
+  background: #067f86;
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+  }
+
+.trash_track {
+  float: right;
+  line-height: normal;
+  padding: 10px;
+  margin-right: 2px;
+  font-size: 20px;
+}
+
+.collapse_track {
+  margin-right: 14%;
+  height: 30px;
+  font-size: 20px;
+}
+
+.collapse_glyph {
+  float: right;
+}
+
 .track_description {
   padding-top: 5px;
   padding-bottom: 5px;
+  line-height: normal;
 }
 
 .soundscape_icon {
@@ -647,6 +703,11 @@ body.cafe {
   z-index: 10;
 }
 
+.react_player {
+  width: 0;
+  height: 0;
+}
+
 .music_play_item {
   flex: 1;
   text-align: center;
@@ -669,14 +730,6 @@ body.cafe {
   z-index: 10;
 }
 
-.track_collapse {
-  float: right;
-}
-
-.track_detail_options {
-  display: flex;
-}
-
 .track_detail_option_item {
   flex: 1;
 }
@@ -687,6 +740,9 @@ body.cafe {
 
 .userpage_content_container {
   display: flex;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-top: 150px;
 }
 
 .user_stats_container {
@@ -695,12 +751,118 @@ body.cafe {
   background-color: lightgray;
 }
 
-.user_page {
-  margin-left: 60px;
-  margin-right: 60px;
-  padding-left: 20px;
-  padding-right: 20px;
+.cover_photo_container {
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
 
+.cover_photo {
+  width: 1600px;
+  display: block;
+}
+
+.profile {
+  position: relative;
+  height: 500px;
+  background-color: #999;
+  z-index: 1;
+  display: block;
+}
+
+.profile_inner {
+  width: 80%;
+  margin: auto;
+  height: inherit;
+  display: flex;
+  justify-content: space-between;
+}
+
+.content_bottom {
+  position: absolute;
+  bottom: 25px;
+  background-color: transparent;
+  z-index: 5;
+  left: 0;
+  height: 80px;
+  width: 100%;
+}
+
+.profile_pic {
+  height: 80px;
+  width: 80px;
+  background-color: transparent;;
+}
+
+.username_and_avatar {
+  height: inherit;
+  display: flex;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border: 2px solid white;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.username {
+  color: white;
+  font-weight: 400;
+  font-size: 1.7em;
+  margin-top: 16px;
+  margin-left: 20px;
+}
+
+.user_stats {
+  display: flex;
+  text-align: center;
+  align-items: flex-end;
+  margin-right: 20px
+}
+
+.stat {
+  width: 120px;
+  text-align: center;
+}
+
+.value {
+  color: white;
+  font-size: 2.2em;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat_text {
+  color: #a6a6a6;
+  font-size: 1.2em;
+}
+
+.bio {
+  border: 1px solid #eaeaea;
+  margin-top: 30px;
+  min-height: 200px;
+}
+
+.bio_container {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.user_page {
+}
+
+.users_uploaded_tracks {
+  flex: 2;
+}
+
+.user.track_index {
+  width: 100%;
+}
+
+.user.track_header {
+  width: 100%;
 }
 
 .footer {

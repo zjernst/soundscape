@@ -25,6 +25,7 @@ const TrackIndexItem = React.createClass({
     // }
     return(
       <div className='track_index_item'>
+        <div className="track_item_header">
           <div className='track_play_button'>
             <Glyphicon className="track_index_play" glyph="play-circle" />
           </div>
@@ -32,8 +33,9 @@ const TrackIndexItem = React.createClass({
             {this.props.track.title}
           </div>
           <div className="track_index_artist" onClick={this._toArtist}>
-            {this.props.track.artist}
+            {this.props.parent === "user" ? "0" : this.props.track.artist}
           </div>
+        </div>
         {details}
       </div>
     )

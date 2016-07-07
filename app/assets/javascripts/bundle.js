@@ -69,12 +69,12 @@
 	
 	var LoginForm = __webpack_require__(272);
 	var UserPage = __webpack_require__(273);
-	var SoundscapeIndex = __webpack_require__(547);
-	var Navbar = __webpack_require__(553);
-	var SoundscapeDetail = __webpack_require__(549);
-	var Player = __webpack_require__(554);
-	var PlaylistSidebar = __webpack_require__(555);
-	var Frontpage = __webpack_require__(558);
+	var SoundscapeIndex = __webpack_require__(548);
+	var Navbar = __webpack_require__(554);
+	var SoundscapeDetail = __webpack_require__(550);
+	var Player = __webpack_require__(555);
+	var PlaylistSidebar = __webpack_require__(556);
+	var Frontpage = __webpack_require__(559);
 	var Footer = __webpack_require__(571);
 	
 	var App = React.createClass({
@@ -33687,26 +33687,87 @@
 	      'div',
 	      { className: 'user_page' },
 	      React.createElement(
-	        'h3',
-	        { className: 'username' },
-	        this.state.user.username
+	        'div',
+	        { className: 'profile' },
+	        React.createElement(
+	          'div',
+	          { className: 'cover_photo_container' },
+	          React.createElement('img', { className: 'cover_photo', src: this.state.user.cover_photo })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'content_bottom' },
+	          React.createElement(
+	            'div',
+	            { className: 'profile_inner' },
+	            React.createElement(
+	              'div',
+	              { className: 'username_and_avatar' },
+	              React.createElement(
+	                'div',
+	                { className: 'avatar' },
+	                React.createElement('img', { className: 'profile_pic', src: this.state.user.profile_pic })
+	              ),
+	              React.createElement(
+	                'div',
+	                { className: 'username' },
+	                this.state.user.username
+	              )
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'user_stats' },
+	              React.createElement(
+	                'div',
+	                { className: 'stat' },
+	                React.createElement(
+	                  'div',
+	                  { className: 'value' },
+	                  '0'
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'stat_text' },
+	                  'Downloads'
+	                )
+	              ),
+	              React.createElement(
+	                'div',
+	                { className: 'stat' },
+	                React.createElement(
+	                  'div',
+	                  { className: 'value' },
+	                  '0'
+	                ),
+	                React.createElement(
+	                  'div',
+	                  { className: 'stat_text' },
+	                  'Uploads'
+	                )
+	              )
+	            )
+	          )
+	        )
 	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'userpage_content_container' },
 	        React.createElement(
 	          'div',
-	          { className: 'user_info_container' },
+	          { className: 'bio_container' },
 	          React.createElement(
-	            'div',
-	            { className: 'prof_pic_container' },
-	            React.createElement('img', { src: this.state.user.profile_pic })
+	            'h4',
+	            null,
+	            'Bio'
 	          ),
 	          React.createElement(
 	            'div',
-	            { className: 'user_stats_container' },
-	            'Number of tracks uploaded: ',
-	            num_tracks
+	            { className: 'bio' },
+	            React.createElement(
+	              'p',
+	              { className: 'bio_text' },
+	              this.state.user.bio
+	            )
 	          )
 	        ),
 	        React.createElement(
@@ -33783,7 +33844,7 @@
 	var SoundscapeActions = __webpack_require__(268);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var classNames = __webpack_require__(277);
-	var TrackHeader = __webpack_require__(570);
+	var TrackHeader = __webpack_require__(547);
 	
 	var TrackIndex = React.createClass({
 	  displayName: 'TrackIndex',
@@ -33796,17 +33857,19 @@
 	    }
 	  },
 	  render: function render() {
+	    var _this = this;
+	
 	    var tracks = "missing";
 	    if (this.state.tracks && this.state.tracks.length > 0) {
 	      tracks = this.state.tracks.map(function (track) {
-	        return React.createElement(TrackIndexItem, { key: track.id, track: track });
+	        return React.createElement(TrackIndexItem, { key: track.id, track: track, parent: _this.props.parent });
 	      });
 	    }
 	    var indexClass = classNames("track_index", this.props.parent);
 	    return React.createElement(
 	      'div',
 	      { className: 'track_index_container' },
-	      React.createElement(TrackHeader, null),
+	      React.createElement(TrackHeader, { parent: this.props.parent }),
 	      React.createElement(
 	        'div',
 	        { className: indexClass },
@@ -33852,18 +33915,22 @@
 	      { className: 'track_index_item' },
 	      React.createElement(
 	        'div',
-	        { className: 'track_play_button' },
-	        React.createElement(Glyphicon, { className: 'track_index_play', glyph: 'play-circle' })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'track_index_title', onClick: this._displayDetails },
-	        this.props.track.title
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'track_index_artist', onClick: this._toArtist },
-	        this.props.track.artist
+	        { className: 'track_item_header' },
+	        React.createElement(
+	          'div',
+	          { className: 'track_play_button' },
+	          React.createElement(Glyphicon, { className: 'track_index_play', glyph: 'play-circle' })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'track_index_title', onClick: this._displayDetails },
+	          this.props.track.title
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'track_index_artist', onClick: this._toArtist },
+	          this.props.parent === "user" ? "0" : this.props.track.artist
+	        )
 	      ),
 	      details
 	    );
@@ -33936,7 +34003,7 @@
 	var TrackActions = __webpack_require__(264);
 	var Glyphicon = __webpack_require__(279).Glyphicon;
 	var TrackForm = __webpack_require__(541);
-	var Button = __webpack_require__(279).Button;
+	// const Button = require('react-bootstrap').Button;
 	var Nav = __webpack_require__(279).Nav;
 	var NavItem = __webpack_require__(279).NavItem;
 	var Label = __webpack_require__(279).Label;
@@ -33976,58 +34043,70 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'track_detail_item' },
+	      { className: 'track_drop_down' },
 	      React.createElement(
 	        'div',
-	        { className: 'track_description' },
-	        this.props.track.description
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'track_audio_item' },
-	        React.createElement('audio', { src: this.props.track.track_url })
-	      ),
-	      React.createElement(
-	        Nav,
-	        { className: 'track_detail_options' },
+	        { className: 'track_detail_item' },
 	        React.createElement(
-	          NavItem,
-	          { className: 'track_detail_option_item', onClick: this._addTrack },
-	          React.createElement(Glyphicon, { glyph: 'plus' }),
-	          ' Add to Playlist'
-	        ),
-	        React.createElement(
-	          NavItem,
-	          { className: 'track_detail_option_item', onClick: this._toggleForm },
-	          React.createElement(Glyphicon, { glyph: 'edit' }),
-	          editForm
-	        ),
-	        this.props.track.artist_id === SessionStore.currentUser().id ? React.createElement(
-	          NavItem,
-	          { className: 'track_detail_option_item' },
-	          React.createElement(Glyphicon, { glyph: 'trash', onClick: this._delete })
-	        ) : "",
-	        React.createElement(
-	          NavItem,
-	          null,
+	          'div',
+	          { className: 'track_tags' },
 	          tags
 	        ),
 	        React.createElement(
-	          Button,
-	          { bsStyle: 'default', href: this.props.track.track_url, download: this.props.track.title },
-	          'Download'
+	          'div',
+	          { className: 'track_description_container' },
+	          React.createElement(
+	            'div',
+	            { className: 'description_label' },
+	            'Description:'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'track_description' },
+	            this.props.track.description
+	          )
 	        ),
 	        React.createElement(
-	          NavItem,
-	          { className: 'track_detail_option_item', onClick: this.props.hideDetails },
-	          React.createElement(Glyphicon, { glyph: 'collapse-up', className: 'track_collapse' })
+	          'div',
+	          { className: 'track_audio_item' },
+	          React.createElement('audio', { src: this.props.track.track_url })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'track_detail_options' },
+	          React.createElement(
+	            'button',
+	            { className: 'download_button',
+	              href: this.props.track.track_url,
+	              download: this.props.track.title },
+	            'Download'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'edit_track', onClick: this._toggleForm },
+	            React.createElement(Glyphicon, { glyph: 'edit' }),
+	            editForm
+	          ),
+	          this.props.track.artist_id === SessionStore.currentUser().id ? React.createElement(
+	            'div',
+	            { className: 'trash_track' },
+	            React.createElement(Glyphicon, { glyph: 'trash', onClick: this._delete })
+	          ) : ""
 	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'collapse_track', onClick: this.props.hideDetails },
+	        React.createElement(Glyphicon, { className: 'collapse_glyph', glyph: 'collapse-up' })
 	      )
 	    );
 	  }
 	});
 	// <NavItem className="track_detail_option_item">
 	// </NavItem>
+	// <NavItem className="track_detail_option_item" onClick={this._addTrack}>
+	// </NavItem>
+	// <div className="add_to_playlist" onClick={this._addTrack}><Glyphicon glyph="plus" /> Add to Playlist</div>
 	
 	module.exports = TrackDetailItem;
 
@@ -53500,13 +53579,48 @@
 /* 547 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var TrackHeader = React.createClass({
+	  displayName: "TrackHeader",
+	  render: function render() {
+	    var header = "track_header";
+	    if (this.props.parent === "user") {
+	      header = header + " user";
+	    }
+	    return React.createElement(
+	      "div",
+	      { className: header },
+	      React.createElement("span", { className: "play_button_header" }),
+	      React.createElement(
+	        "span",
+	        { className: "track_title_header" },
+	        "Track"
+	      ),
+	      React.createElement(
+	        "span",
+	        { className: "track_artist_header" },
+	        this.props.parent === "user" ? "Downloads" : "Artist"
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = TrackHeader;
+
+/***/ },
+/* 548 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
 	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
-	var SoundscapeIndexItem = __webpack_require__(548);
-	var WelcomeCarousel = __webpack_require__(552);
+	var SoundscapeIndexItem = __webpack_require__(549);
+	var WelcomeCarousel = __webpack_require__(553);
 	
 	var SoundscapeIndex = React.createClass({
 	  displayName: 'SoundscapeIndex',
@@ -53549,7 +53663,7 @@
 	module.exports = SoundscapeIndex;
 
 /***/ },
-/* 548 */
+/* 549 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53558,7 +53672,7 @@
 	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
-	var SoundscapeDetail = __webpack_require__(549);
+	var SoundscapeDetail = __webpack_require__(550);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var TrackActions = __webpack_require__(264);
 	
@@ -53588,7 +53702,7 @@
 	module.exports = SoundscapeIndexItem;
 
 /***/ },
-/* 549 */
+/* 550 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53597,7 +53711,7 @@
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
 	var TrackIndex = __webpack_require__(275);
-	var SoundscapeDetailsIndex = __webpack_require__(550);
+	var SoundscapeDetailsIndex = __webpack_require__(551);
 	var TrackForm = __webpack_require__(541);
 	
 	var SoundscapeDetail = React.createClass({
@@ -53671,7 +53785,7 @@
 	module.exports = SoundscapeDetail;
 
 /***/ },
-/* 550 */
+/* 551 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53679,7 +53793,7 @@
 	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
-	var SoundscapeIcon = __webpack_require__(551);
+	var SoundscapeIcon = __webpack_require__(552);
 	
 	var SoundscapeDetailsIndex = React.createClass({
 	  displayName: 'SoundscapeDetailsIndex',
@@ -53702,7 +53816,7 @@
 	module.exports = SoundscapeDetailsIndex;
 
 /***/ },
-/* 551 */
+/* 552 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53710,7 +53824,7 @@
 	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
-	var SoundscapeIndexItem = __webpack_require__(548);
+	var SoundscapeIndexItem = __webpack_require__(549);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var classNames = __webpack_require__(277);
 	var Image = __webpack_require__(279).Image;
@@ -53738,7 +53852,7 @@
 	module.exports = SoundscapeIcon;
 
 /***/ },
-/* 552 */
+/* 553 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53856,7 +53970,7 @@
 	module.exports = WelcomeCarousel;
 
 /***/ },
-/* 553 */
+/* 554 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53963,7 +54077,7 @@
 	// </Navbar>
 
 /***/ },
-/* 554 */
+/* 555 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53982,16 +54096,25 @@
 	  displayName: 'Player',
 	  getInitialState: function getInitialState() {
 	    return { tracks: [],
-	      playing: true,
+	      playing: false,
 	      played: 0,
 	      paused: false,
+	      volume: 0.8,
 	      duration: 0 };
 	  },
-	  _play: function _play() {
-	    this.setState({ playing: true });
+	  _playPause: function _playPause() {
+	    this.setState({ playing: !this.state.playing });
 	  },
 	  _pause: function _pause() {
 	    this.setState({ playing: false });
+	  },
+	  _stop: function _stop() {
+	    TrackActions.removeTrack(this.state.tracks[0]);
+	    var otherTracks = this.state.tracks.slice(1);
+	    this.setState({ tracks: otherTracks, playing: false });
+	  },
+	  _setVolume: function _setVolume(e) {
+	    this.setState({ volume: parseFloat(e.target.value) });
 	  },
 	  _next: function _next() {
 	    var front = this.state.tracks.shift();
@@ -54040,11 +54163,6 @@
 	      this.setState(state);
 	    }
 	  },
-	  autoplay: function autoplay() {
-	    if (this.state.playing) {
-	      this._play();
-	    }
-	  },
 	  render: function render() {
 	    var _this = this,
 	        _React$createElement;
@@ -54053,18 +54171,24 @@
 	    if (this.state.tracks[0]) {
 	      song = this.state.tracks[0].track_url;
 	    }
+	    var playPause = void 0;
+	    if (this.state.playing) {
+	      playPause = React.createElement(Glyphicon, { className: 'play_pause', glyph: 'pause' });
+	    } else {
+	      playPause = React.createElement(Glyphicon, { className: 'play_pause', glyph: 'play' });
+	    }
 	    var player = React.createElement(
 	      Nav,
 	      { className: 'music_player' },
 	      React.createElement(
 	        NavItem,
-	        { className: 'music_play_item', onClick: this._play },
-	        React.createElement(Glyphicon, { glyph: 'play' })
+	        { className: 'music_play_item', onClick: this._playPause },
+	        playPause
 	      ),
 	      React.createElement(
 	        NavItem,
-	        { className: 'music_play_item', onClick: this._pause },
-	        React.createElement(Glyphicon, { glyph: 'pause' })
+	        { className: 'music_play_item', onClick: this._stop },
+	        React.createElement(Glyphicon, { className: 'stop', glyph: 'stop' })
 	      ),
 	      React.createElement('input', {
 	        className: 'progress_bar',
@@ -54087,15 +54211,31 @@
 	        NavItem,
 	        { className: 'music_play_item', onClick: this._next },
 	        React.createElement(Glyphicon, { glyph: 'forward' })
-	      )
+	      ),
+	      React.createElement(
+	        NavItem,
+	        { className: 'music_play_item' },
+	        React.createElement(Glyphicon, { className: 'volume', glyph: 'volume-up' })
+	      ),
+	      React.createElement('input', {
+	        type: 'range',
+	        className: 'volume_bar',
+	        min: '0',
+	        max: '1',
+	        step: 'any',
+	        value: this.state.volume,
+	        onChange: this._setVolume })
 	    );
 	    return React.createElement(
 	      'div',
 	      { className: 'player_container' },
 	      React.createElement(ReactPlayer, (_React$createElement = { url: song,
 	        className: 'react_player',
+	        height: 0,
+	        width: 0,
 	        id: 'react_song',
 	        ref: 'player',
+	        volume: this.state.volume,
 	        onPlay: function onPlay() {
 	          return _this.setState({ playing: true });
 	        },
@@ -54175,7 +54315,7 @@
 	module.exports = Player;
 
 /***/ },
-/* 555 */
+/* 556 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54183,7 +54323,7 @@
 	var React = __webpack_require__(1);
 	var TrackStore = __webpack_require__(269);
 	var TrackActions = __webpack_require__(264);
-	var PlaylistItem = __webpack_require__(556);
+	var PlaylistItem = __webpack_require__(557);
 	
 	var PlaylistSidebar = React.createClass({
 	  displayName: 'PlaylistSidebar',
@@ -54227,13 +54367,13 @@
 	module.exports = PlaylistSidebar;
 
 /***/ },
-/* 556 */
+/* 557 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var PlaylistItemDetail = __webpack_require__(557);
+	var PlaylistItemDetail = __webpack_require__(558);
 	
 	var PlaylistItem = React.createClass({
 	  displayName: 'PlaylistItem',
@@ -54260,7 +54400,7 @@
 	module.exports = PlaylistItem;
 
 /***/ },
-/* 557 */
+/* 558 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54298,16 +54438,16 @@
 	module.exports = PlaylistItemDetail;
 
 /***/ },
-/* 558 */
+/* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var SoundscapeIndex = __webpack_require__(547);
-	var Header = __webpack_require__(559);
-	var Midsection = __webpack_require__(560);
-	var FilteredList = __webpack_require__(561);
+	var SoundscapeIndex = __webpack_require__(548);
+	var Header = __webpack_require__(560);
+	var Midsection = __webpack_require__(561);
+	var FilteredList = __webpack_require__(562);
 	
 	var Frontpage = React.createClass({
 	  displayName: 'Frontpage',
@@ -54326,7 +54466,7 @@
 	module.exports = Frontpage;
 
 /***/ },
-/* 559 */
+/* 560 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -54352,7 +54492,7 @@
 	module.exports = Header;
 
 /***/ },
-/* 560 */
+/* 561 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -54378,7 +54518,7 @@
 	module.exports = Midsection;
 
 /***/ },
-/* 561 */
+/* 562 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54389,7 +54529,7 @@
 	var SoundscapeStore = __webpack_require__(262);
 	var FilterActions = __webpack_require__(274);
 	var TrackIndex = __webpack_require__(275);
-	var Filter = __webpack_require__(562);
+	var Filter = __webpack_require__(563);
 	
 	var FilteredList = React.createClass({
 	  displayName: 'FilteredList',
@@ -54423,7 +54563,7 @@
 	module.exports = FilteredList;
 
 /***/ },
-/* 562 */
+/* 563 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54439,10 +54579,10 @@
 	var UserActions = __webpack_require__(259);
 	var TrackIndex = __webpack_require__(275);
 	var TagActions = __webpack_require__(545);
-	var TagIndex = __webpack_require__(563);
-	var SoundscapesFilterIndex = __webpack_require__(565);
-	var ArtistFilterIndex = __webpack_require__(567);
-	var TrackSearchBox = __webpack_require__(568);
+	var TagIndex = __webpack_require__(564);
+	var SoundscapesFilterIndex = __webpack_require__(566);
+	var ArtistFilterIndex = __webpack_require__(568);
+	var TrackSearchBox = __webpack_require__(570);
 	var Filter = React.createClass({
 	  displayName: 'Filter',
 	  getInitialState: function getInitialState() {
@@ -54522,13 +54662,13 @@
 	module.exports = Filter;
 
 /***/ },
-/* 563 */
+/* 564 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var TagIndexItem = __webpack_require__(564);
+	var TagIndexItem = __webpack_require__(565);
 	var FilterActions = __webpack_require__(274);
 	var Label = __webpack_require__(279).Label;
 	
@@ -54590,7 +54730,7 @@
 	module.exports = TagIndex;
 
 /***/ },
-/* 564 */
+/* 565 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54640,13 +54780,13 @@
 	module.exports = TagIndexItem;
 
 /***/ },
-/* 565 */
+/* 566 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var SoundscapeFilterItem = __webpack_require__(566);
+	var SoundscapeFilterItem = __webpack_require__(567);
 	var FilterActions = __webpack_require__(274);
 	var Label = __webpack_require__(279).Label;
 	
@@ -54709,7 +54849,7 @@
 	module.exports = SoundscapeFilterIndex;
 
 /***/ },
-/* 566 */
+/* 567 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54759,7 +54899,7 @@
 	module.exports = SoundscapeFilterItem;
 
 /***/ },
-/* 567 */
+/* 568 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54828,35 +54968,6 @@
 	module.exports = ArtistFilterIndex;
 
 /***/ },
-/* 568 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	
-	var FilterSearch = React.createClass({
-	  displayName: 'FilterSearch',
-	  _onInput: function _onInput(e) {
-	    this.props.updateFilters('query', e.target.value);
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'nav',
-	      { className: 'tracks_search_box' },
-	      React.createElement(
-	        'div',
-	        { className: 'tracks_search_label' },
-	        'Search Tracks'
-	      ),
-	      React.createElement('input', { className: 'search_box', onInput: this._onInput })
-	    );
-	  }
-	});
-	
-	module.exports = FilterSearch;
-
-/***/ },
 /* 569 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -54910,32 +55021,30 @@
 /* 570 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	var React = __webpack_require__(1);
 	
-	var TrackHeader = React.createClass({
-	  displayName: "TrackHeader",
+	var FilterSearch = React.createClass({
+	  displayName: 'FilterSearch',
+	  _onInput: function _onInput(e) {
+	    this.props.updateFilters('query', e.target.value);
+	  },
 	  render: function render() {
 	    return React.createElement(
-	      "div",
-	      { className: "track_header" },
-	      React.createElement("span", { className: "play_button_header" }),
+	      'nav',
+	      { className: 'tracks_search_box' },
 	      React.createElement(
-	        "span",
-	        { className: "track_title_header" },
-	        "Track"
+	        'div',
+	        { className: 'tracks_search_label' },
+	        'Search Tracks'
 	      ),
-	      React.createElement(
-	        "span",
-	        { className: "track_artist_header" },
-	        "Artist"
-	      )
+	      React.createElement('input', { className: 'search_box', onInput: this._onInput })
 	    );
 	  }
 	});
 	
-	module.exports = TrackHeader;
+	module.exports = FilterSearch;
 
 /***/ },
 /* 571 */

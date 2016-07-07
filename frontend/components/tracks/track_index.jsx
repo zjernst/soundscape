@@ -21,13 +21,13 @@ const TrackIndex = React.createClass({
     let tracks = "missing"
     if (this.state.tracks && this.state.tracks.length > 0) {
       tracks = this.state.tracks.map((track) => {
-        return <TrackIndexItem key={track.id} track={track} />
+        return <TrackIndexItem key={track.id} track={track} parent={this.props.parent} />
       })
     }
     let indexClass = classNames("track_index", this.props.parent);
     return(
       <div className="track_index_container">
-        <TrackHeader />
+        <TrackHeader parent={this.props.parent}/>
         <div className={indexClass}>
           {tracks}
         </div>
