@@ -1,0 +1,38 @@
+.track_form_container {
+    padding: 20px;
+    margin: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+select {
+  display: block;
+}
+
+.button {
+  font-size: 18px;
+}
+
+.upload-form {
+  font-size: 18px;
+}
+
+.modal-content {
+  width: 80%;
+  margin: auto;
+  padding: 30px;
+}
+
+.btn-default {
+  margin: 10px;
+}

@@ -5,6 +5,7 @@ const SoundscapeActions = require('../../actions/soundscape_actions');
 const hashHistory = require('react-router').hashHistory;
 const classNames = require('classnames');
 const TrackHeader = require('./track_header');
+const NullTrack = require('./null_track');
 
 const TrackIndex = React.createClass({
   getInitialState() {
@@ -18,7 +19,7 @@ const TrackIndex = React.createClass({
   },
 
   render() {
-    let tracks = "missing"
+    let tracks = <NullTrack />
     if (this.state.tracks && this.state.tracks.length > 0) {
       tracks = this.state.tracks.map((track) => {
         return <TrackIndexItem key={track.id} track={track} parent={this.props.parent} />
