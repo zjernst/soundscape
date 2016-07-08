@@ -8,16 +8,14 @@ const SessionActions = {
   signup(formData) {
     SessionApiUtil.signup(
       formData,
-      SessionActions.receiveCurrentUser,
-      ErrorActions.setErrors()
+      SessionActions.receiveCurrentUser
     );
   },
 
   login(formData) {
     SessionApiUtil.login(
       formData,
-      SessionActions.receiveCurrentUser,
-      ErrorActions.setErrors
+      SessionActions.receiveCurrentUser
     );
   },
 

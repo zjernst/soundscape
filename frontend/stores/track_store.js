@@ -48,14 +48,14 @@ function resetTracks(tracks) {
 };
 
 function addTrack(track) {
-  if (track.indexOf(track) !== -1) {
+  if (_tracks.indexOf(track) === -1) {
     _tracks.push(track);
   }
 };
 
 function setPlaying(track) {
   let idx = _tracks.indexOf(track);
-  if (idx === -1) {
+  if (idx !== -1) {
     _tracks.splice(idx, 1);
   }
   _tracks.unshift(track);

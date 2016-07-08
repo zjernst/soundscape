@@ -14,5 +14,18 @@ module.exports = {
     AppDispatcher.dispatch({
       actionType: ErrorConstants.CLEAR_ERRORS
     });
+  },
+
+  receiveErrors: function(errors) {
+    AppDispatcher.dispatch({
+      actionType: ErrorConstants.SHOW_ERRORS,
+      errors: errors
+    });
+  },
+
+  resetErrors: function() {
+    AppDispatcher.dispatch({
+      actionType: ErrorConstants.RESET_ERRORS
+    });
   }
 };
