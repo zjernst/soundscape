@@ -97,11 +97,21 @@
 	  var isLoggedIn = SessionStore.isUserLoggedIn();
 	  if (!isLoggedIn) {
 	    transition({
-	      path: '/',
+	      path: '/join',
 	      state: { nextPathname: nextState.location.pathname }
 	    });
 	  }
 	};
+	
+	function authSuccess(nextState, transition) {
+	  var isLoggedIn = SessionStore.isUserLoggedIn();
+	  if (isLoggedIn) {
+	    transition({
+	      path: '/index',
+	      state: { nextPathname: nextState.location.pathname }
+	    });
+	  }
+	}
 	
 	var appRouter = React.createElement(
 	  Router,
@@ -111,6 +121,7 @@
 	    { path: '/', component: App },
 	    React.createElement(IndexRoute, { component: SplashPage }),
 	    React.createElement(Route, { path: '/index', component: Frontpage, onEnter: requireAuth }),
+	    React.createElement(Route, { path: '/join', component: SplashPage, onEnter: authSuccess }),
 	    React.createElement(Route, { path: '/users/:userId', component: UserPage, onEnter: requireAuth })
 	  )
 	);
@@ -26477,6 +26488,7 @@
 	var AppDispatcher = __webpack_require__(232);
 	var Store = __webpack_require__(240).Store;
 	var SessionConstants = __webpack_require__(238);
+	var hashHistory = __webpack_require__(168).hashHistory;
 	
 	var SessionStore = new Store(AppDispatcher);
 	
@@ -26495,6 +26507,7 @@
 	    case SessionConstants.LOGIN:
 	      _login(payload.user);
 	      SessionStore.__emitChange();
+	      hashHistory.push('/index');
 	      break;
 	    case SessionConstants.LOGOUT:
 	      _logout();
@@ -54449,7 +54462,7 @@
 	    var username = "Charizard".split("");
 	    var password = "password".split("");
 	    var time = 50;
-	    var self = this;
+	    var that = this;
 	
 	    $(".btn").addClass("disabled");
 	    $(".btn").attr("disabled", true);
@@ -54458,7 +54471,7 @@
 	    username.forEach(function (letter) {
 	      time += 50;
 	      setTimeout(function () {
-	        self.setState({ username: self.state.username + letter });
+	        that.setState({ username: that.state.username + letter });
 	      }, time);
 	    });
 	
@@ -54467,7 +54480,7 @@
 	    password.forEach(function (letter) {
 	      time += 50;
 	      setTimeout(function () {
-	        self.setState({ password1: self.state.password1 + letter });
+	        that.setState({ password1: that.state.password1 + letter });
 	      }, time);
 	    });
 	
@@ -54476,7 +54489,7 @@
 	    password.forEach(function (letter) {
 	      time += 50;
 	      setTimeout(function () {
-	        self.setState({ password2: self.state.password2 + letter });
+	        that.setState({ password2: that.state.password2 + letter });
 	      }, time);
 	    });
 	
@@ -54484,10 +54497,10 @@
 	
 	    setTimeout(function () {
 	      SessionActions.login({
-	        username: self.state.username,
-	        password: self.state.password1
+	        username: that.state.username,
+	        password: that.state.password1
 	      });
-	      self.close();
+	      that.close();
 	      hashHistory.push('/index');
 	    }, time);
 	  },
@@ -54990,7 +55003,7 @@
 /* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license

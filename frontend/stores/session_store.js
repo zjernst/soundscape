@@ -1,6 +1,7 @@
 const AppDispatcher = require('../dispatcher/dispatcher.js');
 const Store = require('flux/utils').Store;
 const SessionConstants = require('../constants/session_constants');
+const hashHistory = require('react-router').hashHistory;
 
 const SessionStore = new Store(AppDispatcher);
 
@@ -19,6 +20,7 @@ SessionStore.__onDispatch = function(payload) {
     case SessionConstants.LOGIN:
       _login(payload.user);
       SessionStore.__emitChange();
+      hashHistory.push('/index');
       break;
     case SessionConstants.LOGOUT:
       _logout();

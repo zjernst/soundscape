@@ -78,7 +78,7 @@ const SigninForm = React.createClass({
     let username = "Charizard".split("");
     let password = "password".split("");
     let time = 50;
-    let self = this;
+    let that = this;
 
     $(".btn").addClass("disabled");
     $(".btn").attr("disabled", true);
@@ -87,7 +87,7 @@ const SigninForm = React.createClass({
     username.forEach(function(letter) {
       time += 50;
       setTimeout(function() {
-        self.setState({username: self.state.username + letter});
+        that.setState({username: that.state.username + letter});
       }, time);
     });
 
@@ -96,7 +96,7 @@ const SigninForm = React.createClass({
     password.forEach(function(letter) {
       time += 50;
       setTimeout(function() {
-        self.setState({password1: self.state.password1 + letter});
+        that.setState({password1: that.state.password1 + letter});
       }, time);
     });
 
@@ -105,7 +105,7 @@ const SigninForm = React.createClass({
     password.forEach(function(letter) {
       time += 50;
       setTimeout(function() {
-        self.setState({password2: self.state.password2 + letter});
+        that.setState({password2: that.state.password2 + letter});
       }, time);
     });
 
@@ -113,10 +113,10 @@ const SigninForm = React.createClass({
 
     setTimeout(function() {
       SessionActions.login({
-        username: self.state.username,
-        password: self.state.password1
+        username: that.state.username,
+        password: that.state.password1
       });
-      self.close();
+      that.close();
       hashHistory.push('/index');
     }, time);
   },
