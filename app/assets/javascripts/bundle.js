@@ -96,7 +96,6 @@
 	function requireAuth(nextState, transition) {
 	  var isLoggedIn = SessionStore.isUserLoggedIn();
 	  if (!isLoggedIn) {
-	    debugger;
 	    transition({
 	      path: '/',
 	      state: { nextPathname: nextState.location.pathname }
@@ -54447,7 +54446,7 @@
 	    e.preventDefault();
 	    this.setState({ username: "", password1: "", password2: "" });
 	
-	    var username = "guest".split("");
+	    var username = "Charizard".split("");
 	    var password = "password".split("");
 	    var time = 50;
 	    var self = this;

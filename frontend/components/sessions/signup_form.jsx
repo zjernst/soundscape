@@ -75,7 +75,7 @@ const SigninForm = React.createClass({
     e.preventDefault();
     this.setState({username: "", password1: "", password2: ""});
 
-    let username = "guest".split("");
+    let username = "Charizard".split("");
     let password = "password".split("");
     let time = 50;
     let self = this;
