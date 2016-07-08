@@ -41,6 +41,20 @@ const TrackActions = {
       actionType: TrackConstants.UPDATE_TRACKS,
       tracks: tracks
     })
+  },
+
+  addTrack(track) {
+    Dispatcher.dispatch({
+      actionType: TrackConstants.ADD_TRACK,
+      track: track
+    })
+  },
+
+  setPlaying(track) {
+    Dispatcher.dispatch({
+      actionType: TrackConstants.SET_PLAYING,
+      track: track
+    })
   }
 }
 

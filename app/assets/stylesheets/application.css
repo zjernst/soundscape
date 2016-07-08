@@ -406,6 +406,7 @@ body.cafe {
   margin-top: 0px;
   background: lightgray;
   overflow: scroll;
+  max-height: 600px;
 }
 
 .track_index_item {
@@ -699,8 +700,11 @@ body.cafe {
   display: flex;
   position: fixed;
   bottom: 0;
+  padding-left: 5%;
   width: 100%;
   z-index: 10;
+  padding-right: 5%;
+  height: 60px;
 }
 
 .react_player {
@@ -709,25 +713,39 @@ body.cafe {
 }
 
 .music_play_item {
+  font-size: 25px;
   flex: 1;
   text-align: center;
+  color: white;
+  margin-right: 5px;
+}
+
+.progress_music {
+  flex: 10;
+}
+
+.progress_bar {
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.nav>li>a {
+  position: relative;
+  display: block;
+  padding: 15px 15px;
+  color: #eaeaea;
+}
+
+.nav>li>a:hover {
+  color: #067f86;
+}
+
+.nav>li>a:focus {
+  color: #067f86;
 }
 
 .glyphicon {
   margin: 0 auto;
-}
-
-.playlist_sidebar {
-  position: fixed;
-  right: 0;
-  top: 30%;
-  display: flex;
-  min-height: 200px;
-  min-width: 20px;
-  background-color: lightgray;
-  display: flex;
-  flex-direction: column;
-  z-index: 10;
 }
 
 .track_detail_option_item {

@@ -12,7 +12,7 @@ const Player = React.createClass({
             playing: false,
             played: 0,
             paused: false,
-            volume: 0.8,
+            volume: 1,
             duration: 0})
   },
 
@@ -32,6 +32,14 @@ const Player = React.createClass({
 
   _setVolume(e) {
     this.setState({volume: parseFloat(e.target.value)})
+  },
+
+  _toggleVolume() {
+    if (this.state.volume === 1) {
+      this.setState({volume: 0})
+    } else {
+      this.setState({volume: 1})
+    }
   },
 
   _next() {
@@ -103,10 +111,13 @@ const Player = React.createClass({
       playPause = <Glyphicon className="play_pause" glyph="play"/>
     }
     let player = (<Nav className="music_player">
-                    <NavItem className="music_play_item" onClick={this._playPause}>{playPause}</NavItem>
+                    <NavItem className="music_play_item" onClick={this._back}><Glyphicon glyph="backward"/></NavItem>
                     <NavItem className="music_play_item" onClick={this._stop}>
                       <Glyphicon className="stop" glyph="stop" />
                     </NavItem>
+                    <NavItem className="music_play_item" onClick={this._playPause}>{playPause}</NavItem>
+                    <NavItem className="music_play_item" onClick={this._next}><Glyphicon glyph="forward"/></NavItem>
+                    <NavItem className="progress_music">
                       <input
                         className="progress_bar"
                         type="range"
@@ -119,17 +130,9 @@ const Player = React.createClass({
                         onMouseUp={this._seekMouseUp}
                         onChange={this._seekChange}
                       />
-                      <NavItem className="music_play_item" onClick={this._back}><Glyphicon glyph="backward"/></NavItem>
-                      <NavItem className="music_play_item" onClick={this._next}><Glyphicon glyph="forward"/></NavItem>
-                      <NavItem className="music_play_item"><Glyphicon className="volume" glyph="volume-up" /></NavItem>
-                      <input
-                       type="range"
-                       className="volume_bar"
-                       min="0"
-                       max="1"
-                       step='any'
-                       value={this.state.volume}
-                       onChange={this._setVolume} />
+                      </NavItem>
+                      <NavItem className="music_play_item" onClick={this._toggleVolume}>
+                        <Glyphicon className="volume" glyph="volume-up" /></NavItem>
                   </Nav>)
     return (
       <div className="player_container">
@@ -147,12 +150,44 @@ const Player = React.createClass({
                      onEnded={this._onSongEnd}
                      onProgress={this._onProgress}
                      />
-        {player}
+        {this.state.tracks.length > 0 ? player : ""}
       </div>
     )
   }
 })
 
+
+
+
+// <div className="music_player">
+//                 <div className="music_play_item" onClick={this._playPause}>{playPause}</div>
+//                 <div className="music_play_item" onClick={this._stop}>
+//                   <Glyphicon className="stop" glyph="stop" />
+//                 </div>
+//                   <input
+//                     className="progress_bar"
+//                     type="range"
+//                     value={this.state.played}
+//                     min="0"
+//                     max="1"
+//                     step="any"
+//                     onInput={this.seek}
+//                     onMouseDown={this._seekMouseDown}
+//                     onMouseUp={this._seekMouseUp}
+//                     onChange={this._seekChange}
+//                   />
+//                   <div className="music_play_item" onClick={this._back}><Glyphicon glyph="backward"/></div>
+//                   <div className="music_play_item" onClick={this._next}><Glyphicon glyph="forward"/></div>
+//                   <div className="music_play_item"><Glyphicon className="volume" glyph="volume-up" /></div>
+//                   <input
+//                    type="range"
+//                    className="volume_bar"
+//                    min="0"
+//                    max="1"
+//                    step='any'
+//                    value={this.state.volume}
+//                    onChange={this._setVolume} />
+//               </div>)
 // const Player = React.createClass({
 //
 //

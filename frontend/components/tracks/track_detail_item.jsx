@@ -22,8 +22,11 @@ const TrackDetailItem = React.createClass({
   },
 
   _toggleForm() {
-
     this.setState({editForm: !this.state.editForm})
+  },
+
+  _addToPlayer() {
+    TrackActions.addTrack(this.props.track)
   },
 
   render() {
@@ -54,9 +57,14 @@ const TrackDetailItem = React.createClass({
         <button className="download_button"
         href={this.props.track.track_url}
         download={this.props.track.title}>Download</button>
-          <div className="edit_track" onClick={this._toggleForm}><Glyphicon glyph="edit" />
+        <div className="add_to_playlist" onClick={this._addToPlayer}>
+          <i className="fa fa-plus-circle" aria-hidden="true"></i>
+          <span className="add_to_playlist_text">Add to playlist</span>
+        </div>
+          {this.props.track.artist_id === SessionStore.currentUser().id?
+            <div className="edit_track" onClick={this._toggleForm}><Glyphicon glyph="edit" />
               {editForm}
-          </div>
+          </div> : ""}
             {this.props.track.artist_id === SessionStore.currentUser().id ?
               <div className="trash_track">
               <Glyphicon glyph="trash" onClick={this._delete}/>

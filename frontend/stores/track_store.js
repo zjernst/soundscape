@@ -21,6 +21,16 @@ TrackStore.__onDispatch = function(payload) {
       removeTrack(payload.track);
       TrackStore.__emitChange();
       break;
+
+    case TrackConstants.ADD_TRACK:
+      addTrack(payload.track);
+      TrackStore.__emitChange();
+      break;
+
+    case TrackConstants.SET_PLAYING:
+      setPlaying(payload.track);
+      TrackStore.__emitChange();
+      break;
   }
 }
 
@@ -38,7 +48,17 @@ function resetTracks(tracks) {
 };
 
 function addTrack(track) {
-  _tracks.push(track);
+  if (track.indexOf(track) !== -1) {
+    _tracks.push(track);
+  }
+};
+
+function setPlaying(track) {
+  let idx = _tracks.indexOf(track);
+  if (idx === -1) {
+    _tracks.splice(idx, 1);
+  }
+  _tracks.unshift(track);
 };
 
 module.exports = TrackStore;
