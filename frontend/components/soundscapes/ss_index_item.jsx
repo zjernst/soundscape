@@ -12,7 +12,14 @@ const SoundscapeIndexItem = React.createClass({
   },
 
   _addToPlayer() {
-    TrackActions.updateTracks(this.props.soundscape.tracks)
+    let tracks = this.props.soundscape.tracks;
+    for (let i = tracks.length-1; i >=0; i--) {
+      let randomIndex = Math.floor(Math.random()*(i+1));
+      let itemAtIndex = tracks[randomIndex];
+      tracks[randomIndex] = tracks[i];
+      tracks[i] = itemAtIndex;
+    }
+    TrackActions.updateTracks(tracks.slice(0, 5))
   },
 
   render() {

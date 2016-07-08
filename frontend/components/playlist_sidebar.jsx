@@ -32,8 +32,10 @@ const PlaylistSidebar = React.createClass({
     let tracks = this.state.tracks.map((track) => {
       return <PlaylistItem key={track.id}
                            track={track}
-                           details={this.state.details} />
+                           details={this.state.details}
+                           playing={track === this.state.tracks[0]}/>
     })
+
     return(
       <div className="playlist_sidebar"
            onMouseEnter={this._mouseEnter}

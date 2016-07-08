@@ -2,6 +2,7 @@ const React = require('react');
 const classNames = require('classnames');
 const TrackDetailItem = require('./track_detail_item');
 const Glyphicon = require('react-bootstrap').Glyphicon;
+const hashHistory = require('react-router').hashHistory;
 
 const TrackIndexItem = React.createClass({
   getInitialState() {
@@ -16,6 +17,14 @@ const TrackIndexItem = React.createClass({
     this.setState({details: false})
   },
 
+  _addToPlayer() {
+    TrackActions.setPlaying(this.props.track)
+  },
+
+  _toArtist() {
+    hashHistory.push(`/users/${this.props.track.artist_id}`)
+  },
+
   render() {
     let details
     if (this.state.details) {
@@ -26,7 +35,7 @@ const TrackIndexItem = React.createClass({
     return(
       <div className='track_index_item'>
         <div className="track_item_header">
-          <div className='track_play_button'>
+          <div className='track_play_button' onClick={this._addToPlayer}>
             <Glyphicon className="track_index_play" glyph="play-circle" />
           </div>
           <div className='track_index_title' onClick={this._displayDetails}>

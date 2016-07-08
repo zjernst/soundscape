@@ -1,0 +1,31 @@
+.track_item_header:hover {
+    background: #067f86;
+    color: white;
+    cursor: pointer;
+}
+
+.track_play_button:hover {
+  color: #ffcf59;
+}
+
+.collapse_track:hover {
+  cursor: pointer;
+}
+
+.add_to_playlist {
+    float: left;
+    font-size: 25px;
+    padding-left: 20px;
+    line-height: normal;
+    padding: 10px;
+    margin-left: 20px;
+}
+
+.add_to_playlist_text {
+  font-size: 16px;
+  margin-left: 4px;
+}
+
+.add_to_playlist:hover {
+  cursor: pointer;
+}
