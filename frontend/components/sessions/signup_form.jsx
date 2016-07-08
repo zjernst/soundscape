@@ -18,7 +18,7 @@ const SigninForm = React.createClass({
   },
 
   close: function() {
-    // this.setState({ show: false });
+    this.setState({ show: false });
     this.props.closeForm();
   },
 
@@ -117,6 +117,7 @@ const SigninForm = React.createClass({
         password: self.state.password1
       });
       self.close();
+      hashHistory.push('/index');
     }, time);
   },
 
