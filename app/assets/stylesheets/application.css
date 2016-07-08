@@ -303,7 +303,7 @@ body.cafe {
 }
 
 .home.ss_item_container {
-  background-image: url('http://s.shld.net/is/image/Sears/s_025CO66554812B-qm-$cq_width_160$-qm-$cq_width_250$');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1467995598/home_qrl68f.jpg');
   background-position: center;
   background-size: 600px;
 }
@@ -316,7 +316,7 @@ body.cafe {
 }
 
 .fire.ss_item_container {
-  background-image: url('http://www.win10themes.com/wp-content/uploads/2016/01/Fireplace-Wallpaper-Images.png');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1467995596/Fireplace-Wallpaper-Images_dnak9o.png');
   background-position: center;
   background-size: 600px;
 }
@@ -328,7 +328,7 @@ body.cafe {
 }
 
 .cafe.ss_item_container {
-  background-image: url('http://www.atlascafe.net/images/02.jpg');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1467995597/atlascafe_en2p31.jpg');
   background-position: center
 }
 

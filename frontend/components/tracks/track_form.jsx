@@ -20,6 +20,7 @@ const TrackForm = React.createClass({
       return({title: this.props.track.title,
               description: this.props.track.description,
               track_url: this.props.track.track_url,
+              soundscape_id: this.props.track.soundscape_id,
               allTags: [],
               tags: this.props.track.tags.map((tag) => tag.id),
               disabled: false,
@@ -28,6 +29,7 @@ const TrackForm = React.createClass({
       return({title: "",
               description: "",
               track_url: "sample.mp3",
+              soundscape_id: 1,
               allTags: [],
               tags: [],
               disabled: true,
@@ -65,7 +67,7 @@ const TrackForm = React.createClass({
                    description: this.state.description,
                    track_url: this.state.track_url,
                    artist_id: this.props.track.artist_id,
-                   soundscape_id: this.props.track.soundscape_id,
+                   soundscape_id: this.state.soundscape_id,
                    tags_added: this.state.tags}
       TrackActions.editTrack(track);
       this.setState({title: '', description: ''});
@@ -74,8 +76,9 @@ const TrackForm = React.createClass({
                    description: this.state.description,
                    track_url: this.state.track_url,
                    artist_id: SessionStore.currentUser().id,
-                   soundscape_id: this.props.ssID,
+                   soundscape_id: this.state.soundscape_id,
                    tags_added: this.state.tags}
+                   debugger
       TrackActions.createTrack(track);
       this.setState({title: '', description: ''});
     }
@@ -102,6 +105,10 @@ const TrackForm = React.createClass({
     }
   },
 
+  _selected(e) {
+    this.setState({soundscape_id: e.target.value})
+  },
+
   render() {
     let tags = this.state.allTags.map((tag) => {
       let checked = this.state.tags.includes(tag.id)
@@ -121,6 +128,20 @@ const TrackForm = React.createClass({
                      value={this.state.title}
                      onChange={this._update('title')}
                      className="track_field" />
+             </FormGroup>
+             <FormGroup>
+             <ControlLabel className="track_soundscape_label">Soundscape</ControlLabel>
+             <select value={this.state.soundscape_id}
+                     onChange={this._selected}>
+                <option value="1">Rain</option>
+                <option value="2">Ocean</option>
+                <option value="3">Wind</option>
+                <option value="4">City</option>
+                <option value="5">Forest</option>
+                <option value="6">Home</option>
+                <option value="7">Fire</option>
+                <option value="8">Cafe</option>
+             </select>
              </FormGroup>
              <FormGroup>
               <ControlLabel className="track_description_label">Description</ControlLabel>

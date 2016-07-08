@@ -1,0 +1,57 @@
+.add_track_container {
+  display: flex;
+  text-align: center;
+  height: 500px;
+  padding-right: 10%;
+  padding-left: 10%;
+  padding-bottom: 100px;
+  overflow: hidden;
+  background-color: #eef2f3;
+}
+
+.add_track_inner {
+  flex: 2;
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1467996341/market_nvc260.jpg');
+  background-position: center;
+  background-size: 800px;
+}
+
+.add_track_text {
+  flex: 1;
+  display: flex;
+  background: white;
+  padding: 20px;
+  flex-direction: column;
+  align-content: center;
+  color: #717171;
+}
+
+.add_track_title {
+  flex: 1;
+  margin-top: 25px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.add_track_p {
+  flex: 1;
+  color: #333333;
+}
+
+.add_track_button_container {
+  flex: 2;
+}
+
+.add_track_button {
+  width: 80%;
+  height: 60%;
+  font-size: 28px;
+  border-radius: 10px;
+  background-color: #067f86;
+  color: white;
+  font-weight: 500;
+}
+
+.add_track_button:hover {
+  background-color: #3abfb4;
+}
