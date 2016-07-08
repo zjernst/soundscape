@@ -53534,6 +53534,7 @@
 	      return { title: this.props.track.title,
 	        description: this.props.track.description,
 	        track_url: this.props.track.track_url,
+	        soundscape_id: this.props.track.soundscape_id,
 	        allTags: [],
 	        tags: this.props.track.tags.map(function (tag) {
 	          return tag.id;
@@ -53544,6 +53545,7 @@
 	      return { title: "",
 	        description: "",
 	        track_url: "sample.mp3",
+	        soundscape_id: 1,
 	        allTags: [],
 	        tags: [],
 	        disabled: true,
@@ -53579,7 +53581,7 @@
 	        description: this.state.description,
 	        track_url: this.state.track_url,
 	        artist_id: this.props.track.artist_id,
-	        soundscape_id: this.props.track.soundscape_id,
+	        soundscape_id: this.state.soundscape_id,
 	        tags_added: this.state.tags };
 	      TrackActions.editTrack(track);
 	      this.setState({ title: '', description: '' });
@@ -53588,8 +53590,9 @@
 	        description: this.state.description,
 	        track_url: this.state.track_url,
 	        artist_id: SessionStore.currentUser().id,
-	        soundscape_id: this.props.ssID,
+	        soundscape_id: this.state.soundscape_id,
 	        tags_added: this.state.tags };
+	      debugger;
 	      TrackActions.createTrack(_track);
 	      this.setState({ title: '', description: '' });
 	    }
@@ -53611,6 +53614,9 @@
 	      var _tags = this.state.tags.push(tag_id);
 	      this.setState({ tags: this.state.tags });
 	    }
+	  },
+	  _selected: function _selected(e) {
+	    this.setState({ soundscape_id: e.target.value });
 	  },
 	  render: function render() {
 	    var _this2 = this;
@@ -53652,6 +53658,60 @@
 	              value: this.state.title,
 	              onChange: this._update('title'),
 	              className: 'track_field' })
+	          ),
+	          React.createElement(
+	            FormGroup,
+	            null,
+	            React.createElement(
+	              ControlLabel,
+	              { className: 'track_soundscape_label' },
+	              'Soundscape'
+	            ),
+	            React.createElement(
+	              'select',
+	              { value: this.state.soundscape_id,
+	                onChange: this._selected },
+	              React.createElement(
+	                'option',
+	                { value: '1' },
+	                'Rain'
+	              ),
+	              React.createElement(
+	                'option',
+	                { value: '2' },
+	                'Ocean'
+	              ),
+	              React.createElement(
+	                'option',
+	                { value: '3' },
+	                'Wind'
+	              ),
+	              React.createElement(
+	                'option',
+	                { value: '4' },
+	                'City'
+	              ),
+	              React.createElement(
+	                'option',
+	                { value: '5' },
+	                'Forest'
+	              ),
+	              React.createElement(
+	                'option',
+	                { value: '6' },
+	                'Home'
+	              ),
+	              React.createElement(
+	                'option',
+	                { value: '7' },
+	                'Fire'
+	              ),
+	              React.createElement(
+	                'option',
+	                { value: '8' },
+	                'Cafe'
+	              )
+	            )
 	          ),
 	          React.createElement(
 	            FormGroup,
@@ -57444,6 +57504,7 @@
 	var Header = __webpack_require__(578);
 	var Midsection = __webpack_require__(579);
 	var FilteredList = __webpack_require__(580);
+	var AddTrack = __webpack_require__(591);
 	
 	var Frontpage = React.createClass({
 	  displayName: 'Frontpage',
@@ -57454,7 +57515,8 @@
 	      React.createElement(Header, null),
 	      React.createElement(SoundscapeIndex, null),
 	      React.createElement(Midsection, null),
-	      React.createElement(FilteredList, null)
+	      React.createElement(FilteredList, null),
+	      React.createElement(AddTrack, null)
 	    );
 	  }
 	});
@@ -58126,6 +58188,66 @@
 	//   <p className="infotext third">Explore the Soundscape</p>
 	// </div>
 	module.exports = SplashPage;
+
+/***/ },
+/* 591 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var TrackForm = __webpack_require__(542);
+	
+	var AddTrack = React.createClass({
+	  displayName: 'AddTrack',
+	  getInitialState: function getInitialState() {
+	    return { show: false };
+	  },
+	  _addForm: function _addForm() {
+	    this.setState({ show: true });
+	  },
+	  _closeForm: function _closeForm() {
+	    this.setState({ show: false });
+	  },
+	  render: function render() {
+	    var form = void 0;
+	    if (this.state.show) {
+	      form = React.createElement(TrackForm, { toggleButton: this._closeForm });
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'add_track_container' },
+	      form,
+	      React.createElement('div', { className: 'add_track_inner' }),
+	      React.createElement(
+	        'div',
+	        { className: 'add_track_text' },
+	        React.createElement(
+	          'h4',
+	          { className: 'add_track_title' },
+	          'Share your sounds!'
+	        ),
+	        React.createElement(
+	          'p',
+	          { className: 'add_track_p' },
+	          'Upload your own tracks. Make the world a more audible place for all.'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'add_track_button_container' },
+	          React.createElement(
+	            'button',
+	            { className: 'add_track_button', onClick: this._addForm },
+	            'Add Track'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = AddTrack;
 
 /***/ }
 /******/ ]);
