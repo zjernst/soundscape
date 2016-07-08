@@ -47,7 +47,6 @@ const App = React.createClass({
 function requireAuth(nextState, transition) {
   let isLoggedIn = SessionStore.isUserLoggedIn()
   if (!isLoggedIn) {
-    debugger
     transition({
       path: '/',
       state: { nextPathname: nextState.location.pathname}
