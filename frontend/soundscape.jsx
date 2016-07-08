@@ -17,7 +17,7 @@ const ErrorActions = window.ErrorActions = require('./actions/error_actions');
 const SoundscapeStore = window.ssStore = require('./stores/soundscape_store');
 const TrackActions = window.TrackActions = require('./actions/track_actions');
 const TrackStore = window.TrackStore = require('./stores/track_store');
-const FilterStore = window.FilterStore = require('./stores/filter_store')
+const FilterStore = window.FilterStore = require('./stores/filter_store');
 
 const LoginForm = require('./components/sessions/login_form');
 const UserPage = require('./components/users/user_page');
@@ -28,6 +28,7 @@ const Player = require('./components/player');
 const PlaylistSidebar = require('./components/playlist_sidebar');
 const Frontpage = require('./components/frontpage');
 const Footer = require('./components/footer');
+const SplashPage = require('./components/splash_page');
 
 const App = React.createClass({
   render() {
@@ -43,15 +44,24 @@ const App = React.createClass({
   }
 });
 
+function requireAuth(nextState, transition) {
+  let isLoggedIn = SessionStore.isUserLoggedIn()
+  if (!isLoggedIn) {
+    debugger
+    transition({
+      path: '/',
+      state: { nextPathname: nextState.location.pathname}
+    })
+  }
+};
+
 
 const appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Frontpage} />
-      <Route path="/soundscape/:ss_id" component={SoundscapeDetail} />
-      <Route path="/login" component={LoginForm} />
-      <Route path="/signup" component={LoginForm} />
-      <Route path="/users/:userId" component={UserPage} />
+      <IndexRoute component={SplashPage} />
+      <Route path="/index" component={Frontpage} onEnter={requireAuth}/>
+      <Route path="/users/:userId" component={UserPage} onEnter={requireAuth} />
     </Route>
   </Router>
 );

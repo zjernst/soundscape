@@ -1,11 +1,13 @@
 const React = require('react');
 const SessionStore = require('../stores/session_store');
 const SessionActions = require('../actions/session_actions');
+const LoginForm = require('./sessions/login_form');
+const SignupForm = require('./sessions/signup_form');
 const hashHistory = require('react-router').hashHistory;
 
 const Navbar = React.createClass({
   getInitialState() {
-    return({logged_in: SessionStore.isUserLoggedIn()})
+    return({logged_in: SessionStore.isUserLoggedIn(), form: ""})
   },
 
   componentDidMount() {
@@ -21,11 +23,15 @@ const Navbar = React.createClass({
   },
 
   _toSignup() {
-    hashHistory.push('/signup');
+    this.setState({form: <SignupForm closeForm={this._close}/>})
   },
 
   _toLogin() {
-    hashHistory.push('login');
+    this.setState({form: <LoginForm closeForm={this._close}/>})
+  },
+
+  _close() {
+    this.setState({form: ""})
   },
 
   _handleGuest() {
@@ -34,18 +40,23 @@ const Navbar = React.createClass({
   },
 
   _gotoIndex() {
-    hashHistory.push('/')
+    hashHistory.push('/index')
   },
 
   _gotoUserpage() {
     hashHistory.push(`/users/${SessionStore.currentUser().id}`)
   },
 
+  _logout() {
+    SessionActions.logout();
+    hashHistory.push('/');
+  },
+
   render() {
     let logged_in = SessionStore.isUserLoggedIn();
     let buttons = []
     if (logged_in) {
-      buttons.push(<button className="nav_button" key="logout" onClick={SessionActions.logout}>Logout</button>)
+      buttons.push(<button className="nav_button" key="logout" onClick={this._logout}>Logout</button>)
     } else {
       buttons.push(<button className="nav_button" key="signup" onClick={this._toSignup}>Sign Up</button>);
       buttons.push(<button className="nav_button" key="login" onClick={this._toLogin}>Log In</button>);
@@ -53,6 +64,7 @@ const Navbar = React.createClass({
     }
     return(
       <div className="navbar">
+        {this.state.form}
         <div className="logo_container">
           <h2 className="logo" onClick={this._gotoIndex}>sound s_c_a_p_e</h2>
         </div>

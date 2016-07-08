@@ -1,0 +1,52 @@
+.splash_page {
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1467949981/mountainlandscape_kf309i.jpg');
+  height: 1000px;
+  background-size: 1600px;
+  background-position: center;
+  width: 100%;
+  position: fixed;
+}
+
+.info.first {
+  position: absolute;
+  top: 18%;
+  left: 25%;
+  right: 25%;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 600;
+  height: 380px;
+  background: rgba(0,0,40,.3);
+  border: 10px solid white;
+}
+
+
+.small_text_container {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  font-weight: 400;
+  text-align: center;
+  top: 45%;
+  font-size: 25px;
+  color: white;
+}
+
+.info:hover {
+  background-color: #067f86;
+  cursor: pointer;
+}
+.info.second {
+  top: 40%;
+  right: 40%;
+}
+
+.info.third {
+  top: 60%;
+  left: 25%;
+}
+
+.infotext {
+  color: white;
+  margin: 20px;
+}

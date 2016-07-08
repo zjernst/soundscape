@@ -1,14 +1,17 @@
+const ErrorActions = require('../actions/error_actions');
+
 module.exports = {
-  login(user, success, error) {
+  login(user, success) {
     $.ajax({
       url: '/api/session',
       type: 'POST',
       data: {user: user},
       success: function(res) {
-        success(res)
+        success(res);
+        ErrorActions.resetErrors();
       },
-      error(res) {
-        error("login", res.responseJSON)
+      error: function(res) {
+        ErrorActions.receiveErrors(res.responseJSON)
       }
     });
   },
@@ -24,15 +27,18 @@ module.exports = {
     });
   },
 
-  signup(user, success, error) {
+  signup(user, success) {
     $.ajax({
       url: 'api/users',
       type: 'POST',
       dataType: 'json',
       data: {user: user},
-      success,
-      error(res) {
-        error("signup", res.responseJSON)
+      success: function(res) {
+        success(res);
+        ErrorActions.resetErrors();
+      },
+      error: function(res) {
+        ErrorActions.receiveErrors(res.responseJSON)
       }
     });
   },
