@@ -48,18 +48,29 @@ function requireAuth(nextState, transition) {
   let isLoggedIn = SessionStore.isUserLoggedIn()
   if (!isLoggedIn) {
     transition({
-      path: '/',
+      path: '/join',
       state: { nextPathname: nextState.location.pathname}
     })
   }
 };
 
+function authSuccess(nextState, transition) {
+  let isLoggedIn = SessionStore.isUserLoggedIn()
+  if (isLoggedIn) {
+    transition({
+      path: '/index',
+      state: { nextPathname: nextState.location.pathname}
+    })
+  }
+}
+
 
 const appRouter = (
   <Router history={hashHistory}>
-    <Route path="/" component={App}>
+    <Route path="/" component={App} >
       <IndexRoute component={SplashPage} />
       <Route path="/index" component={Frontpage} onEnter={requireAuth}/>
+      <Route path="/join" component={SplashPage} onEnter={authSuccess} />
       <Route path="/users/:userId" component={UserPage} onEnter={requireAuth} />
     </Route>
   </Router>
