@@ -29,3 +29,24 @@
 .add_to_playlist:hover {
   cursor: pointer;
 }
+
+.null.track_index_item {
+  text-align: center;
+}
+
+.null_text {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.link_to_add {
+  font-size: 17px;
+  line-height: normal;
+  width: 70%;
+  margin: auto;
+  margin-bottom: 30px;
+}
+
+.link_to_add:hover {
+  cursor: pointer;
+}

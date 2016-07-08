@@ -166,7 +166,7 @@ Tagging.create({track_id: 13, tag_id: 18})
 Tagging.create({track_id: 13, tag_id: 21})
 Tagging.create({track_id: 13, tag_id: 11})
 
-Track.create({title: 'Flickering Flame', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467321148/Allegro_from_Duet_in_C_Major_jvdgmr.mp3',
+Track.create({title: 'Flickering Flame', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467614594/fire/182368__kingsrow__fire-crackling-02.mp3',
   description: 'gentle sound of crackling fire', soundscape_id: 7, artist_id: 1})
 
 Tagging.create({track_id: 14, tag_id: 3})

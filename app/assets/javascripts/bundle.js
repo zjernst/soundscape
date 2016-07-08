@@ -53273,6 +53273,7 @@
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var classNames = __webpack_require__(296);
 	var TrackHeader = __webpack_require__(548);
+	var NullTrack = __webpack_require__(592);
 	
 	var TrackIndex = React.createClass({
 	  displayName: 'TrackIndex',
@@ -53287,7 +53288,7 @@
 	  render: function render() {
 	    var _this = this;
 	
-	    var tracks = "missing";
+	    var tracks = React.createElement(NullTrack, null);
 	    if (this.state.tracks && this.state.tracks.length > 0) {
 	      tracks = this.state.tracks.map(function (track) {
 	        return React.createElement(TrackIndexItem, { key: track.id, track: track, parent: _this.props.parent });
@@ -58217,7 +58218,7 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'add_track_container' },
+	      { id: 'add', className: 'add_track_container' },
 	      form,
 	      React.createElement('div', { className: 'add_track_inner' }),
 	      React.createElement(
@@ -58248,6 +58249,48 @@
 	});
 	
 	module.exports = AddTrack;
+
+/***/ },
+/* 592 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var NullTrack = React.createClass({
+	  displayName: 'NullTrack',
+	  _scrollToLink: function _scrollToLink() {
+	    $('html,body').animate({
+	      scrollTop: $('.add_track_container').offset().top - 100 }, 'slow');
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'null track_index_item' },
+	      React.createElement(
+	        'div',
+	        { className: 'null_text' },
+	        React.createElement(
+	          'p',
+	          null,
+	          'No Results Found'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'link_to_add' },
+	        React.createElement(
+	          'a',
+	          { onClick: this._scrollToLink },
+	          'Have something in mind? Be the sound in the world you want to hear!'
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = NullTrack;
 
 /***/ }
 /******/ ]);

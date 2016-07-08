@@ -1,127 +1,86 @@
-# SoundScape
+# Soundscape
 
 [Heroku link] https://sound-scape.herokuapp.com/
 
-## Minimum Viable Product
 
-SoundScape is a web application inspired by Bandcamp, with a twist focusing on
-natural and ambient sounds. Users will be able to upload and share the sounds
-of their environment. SoundScape will be built using Ruby on Rails and React.js.
-By the end of Week 9, this app will, at minimum, satisfy the following criteria:
+Soundscape is a full-stack web application inspired by popular online music
+applications such as Bandcamp, Last.fm, and Soundcloud. However, instead of playing
+popular music, Soundscape serves as an online platform to explore, upload, and share
+ambient and natural sounds. It utilizes Ruby on Rails on the backend, a PostgreSQL
+database, and React.js with a Flux architectural framework on the frontend.
 
-- [ ] Hosting on Heroku
-- [ ] New account creation, login, and guest login
-- [ ] A production README
-- [ ] Tracks
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Environments(/Artists) page
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Song Player
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Search
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
+## Features and Implementation
 
-## Design Docs
-* [React Components][components]
-* [Flux Cycles][flux-cycles]
-* [Wireframes][wireframes]
-* [API endpoints][api-endpoints]
-* [DB schema][schema]
+### Single-Page App
 
-[components]: docs/components.md
-[flux-cycles]: docs/flux-cycles.md
-[wireframes]: docs/wireframes
-[api-endpoints]: docs/api-endpoints.md
-[schema]: docs/schema.md
+All Soundscape content is rendered on the same static page. Components mount and
+unmount as necessary all through user interaction. This design allows the audio
+player to remain active and unaffected even while navigating through the site.
+
+### Audio Player
+
+Soundscape supports an audio player built on-top of React-Player. The player
+supports play, pause, stop, mute, and draggable seeking. In conjunction with a
+playlist component, is also keeps a record of tracks in the queue that allow
+responsive next and back capability. Playlists are able to be built up through
+ease of use one-press buttons that add 5 randomized sample tracks from one of
+the eight soundscape categories or, for the more detail focused, manually by
+utilizing search, sort, and filter functionality to create the perfect, curated,
+playlist.
+
+### Filtering
+
+Soundscape boasts powerful filtering and search functionality to find the perfect
+track. Through a combination of soundscapes, tags, and artists, users are able to
+filter through the database through a chain of Activerecord relations on the
+backend. On top of this, Soundscape allows the ability to search within these
+results with an input field that matches Title and Description columns in the
+Tracks database. This flexibility allows searches ranging from all tracks
+tagged as calm under the ocean, rain, wind, and forest soundscapes or as
+specific as looking for a city track by a known artist that has tags of 'busy',
+'loud', 'sharp', 'voices', and 'rumbling' that contains the string "recording
+of a carnival in Morocco" in the description.
+
+### Tags
+
+Often, you don't know what the title of the sound you're looking for
+will be -- but you know how to /describe/ it. Soundscape implements a tagging
+system to tackle and streamline the searching process. A Tagging join table
+works as the mediator linking Tracks and Tags. Tags are able to be added and
+edited through during Track creation and editing.
+
+### Upload and Download
+
+More than just providing a clean interface to listen to ambient sounds,
+Soundscape is built around the concept of sharing. Utilizing Cloudinary, users
+can easily upload their own sounds and efficiently add them to the database.
+Users can also download any track hosted for their own personal use. Think of
+Soundscape as a sharing platform that lets you interact with the world at an
+aural level.
 
 
+## Future Directions for Soundscape
 
-## Implementation Timeline
+Soundscape has a roster of features -- but there is always room to build. I
+intend to continue to iterate on Soundscape turning it into a truly comprehensive
+application.
 
-### Phase 1: Backend setup and Front End User Authentication (1 day, W1 Tu 6pm)
+### Improved Community Features
 
-**Objective** Functioning rails project with auth
+Currently, users have a user page that displays the tracks they have uploaded.
+I want to build upon this, adding multitude of user stats utilizing backend
+database queries. Provide users with incentive to find and upload new sounds,
+and serve as a platform for the sound-enthusiast community. Beefed up profiles,
+Likes, Friends, and models for discovering similar Artists are intended steps in
+this direction.
 
-- [ ] create new project
-- [ ] create `User` model
-- [ ] authentication
-- [ ] user signup/signin pages
+### Improved Filter and Track Ratings
 
-### Phase 2: Environments and Tracks Model, API, basic APIUtil (1.5 day, W1 Th 12pm)
+Users should be able to rate tracks, and this feature could be added to the
+search system. Other improvements to filtering to be implemented include sorting
+by downloads, uploads, and new additions.
 
-**Objective** Tracks can be created/read/update/destroyed through API
 
-- [ ] create `Track` and `Environment` models
-- [ ] seed database sample data
-- [ ] CRUD API for tracks
-- [ ] setup `APIUtil` to interact with the API
-
-### Phase 3: Flux and Router Setup (1 day, W1 F 12pm)
-
-**Objective** Tracks can be fully interacted with through user interface
-
-- [ ] setup flux loop
-- [ ] setup React Router
-- implement each track component
-  - [ ] `TrackIndex`
-  - [ ] `TrackIndexItem`
-  - [ ] `TrackForm`
-
-### Phase 4: Upload and Play Tracks (0.5 days, W1 F 6pm)
-
-**Objective** Tracks are able to be uploaded and played back
-
-- [ ] implement ability to upload track during track creation
-- [ ] implement an existing API to playback music from database
-- [ ] add music player
-
-### Phase 5: Users (1 days, W2 M 6pm)
-
-**Objective** Users have a page, collection, and playlists
-
-- build out API, Flux loop, and components for:
-  - [ ] Users have UserPage
-  - [ ] collections
-  - [ ] playlists
-- style user pages
-
-### Phase 6: Styling (1 days, W2 Tu 6pm)
-
-**Objective** Index, Sign-in, Environments, User, Track pages all styled
-
-- [ ] revise previous stylings
-- satisfying styling needs to:
-  - [ ] front page
-  - [ ] environment index
-  - [ ] track index
-  - [ ] user page
-
-### Phase 7: Tags and Search (1.5 day, W2 Th 12pm)
-
-**Objective** Tracks can be tagged and searched and filtered by tag
-
-- [ ] create `Tag` model and join table
-- build out API, Flux loop, and components for:
-  - [ ] fetching tags for tracks
-  - [ ] adding tags to tracks
-  - [ ] searching tracks by tag
-- [ ] implement search and sort components
-
-### Phase 8: Finishing Touches (1.5 days, W2 F 6pm)
-
-**Objective** Build out extras to help site feel alive and legitimate
-
-- [ ] Revisit styling
-- [ ] add transitions and other flourishes
-- [ ] implement more seed data, pump up site
 
 ### Bonus Features
 - implement and build out additional components, flux cycles, API for:

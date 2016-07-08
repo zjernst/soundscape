@@ -21,7 +21,7 @@ const AddTrack = React.createClass({
     }
 
     return(
-      <div className="add_track_container">
+      <div id="add" className="add_track_container">
         {form}
         <div className="add_track_inner">
         </div>
