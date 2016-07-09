@@ -15,7 +15,11 @@ function resetErrors() {
 }
 
 ErrorStore.all = function() {
-  return _errors.slice();
+  if (_errors.length > 0) {
+    return _errors.slice();
+  } else {
+    return []
+  }
 };
 
 ErrorStore.__onDispatch = function(payload) {

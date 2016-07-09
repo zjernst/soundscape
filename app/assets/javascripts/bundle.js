@@ -33112,7 +33112,11 @@
 	}
 	
 	ErrorStore.all = function () {
-	  return _errors.slice();
+	  if (_errors.length > 0) {
+	    return _errors.slice();
+	  } else {
+	    return [];
+	  }
 	};
 	
 	ErrorStore.__onDispatch = function (payload) {
@@ -55064,7 +55068,7 @@
 /* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -57777,7 +57781,7 @@
 	          React.createElement(
 	            Label,
 	            { className: 'tag_label' },
-	            'any tag'
+	            'Any Tag'
 	          )
 	        )
 	      ),
@@ -57820,6 +57824,8 @@
 	    } else {
 	      tagClass = "tag_index_item";
 	    }
+	    name = this.props.tag.name;
+	    name = name.charAt(0).toUpperCase() + name.slice(1);
 	    return React.createElement(
 	      'div',
 	      { className: tagClass, onClick: this._tagFilter },
@@ -57829,7 +57835,7 @@
 	        React.createElement(
 	          Label,
 	          { className: 'tag_label' },
-	          this.props.tag.name
+	          name
 	        )
 	      )
 	    );
@@ -57896,7 +57902,7 @@
 	          React.createElement(
 	            Label,
 	            { className: 'soundscape_label' },
-	            'ALL SOUNDSCAPES'
+	            'All Soundscapes'
 	          )
 	        )
 	      ),
@@ -57939,6 +57945,8 @@
 	    } else {
 	      soundscapeClass = "soundscape_filter_item";
 	    }
+	    name = this.props.soundscape.title;
+	    name = name.charAt(0).toUpperCase() + name.slice(1);
 	    return React.createElement(
 	      'div',
 	      { className: soundscapeClass, onClick: this._soundscapeFilter },
@@ -57948,7 +57956,7 @@
 	        React.createElement(
 	          Label,
 	          { className: 'soundscape_label' },
-	          this.props.soundscape.title.toUpperCase()
+	          name
 	        )
 	      )
 	    );
