@@ -41,7 +41,7 @@ const TagIndex = React.createClass({
       <div className="tag_index">
         <div className={allClass} onClick={this._all}>
           <h4 className="tag_item_text"><Label className="tag_label">
-          any tag
+          Any Tag
           </Label></h4>
         </div>
         {tags}

@@ -38,6 +38,7 @@ body, header, nav, div, h2, h4, span, ul, li {
   border: 0;
   outline: 0;
   text-align: inherit;
+  font-family: 'Lato', sans-serif;
 }
 
 body {
@@ -204,6 +205,11 @@ body.cafe {
   display: block;
   height: inherit;
   width: inherit;
+
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
 }
 
 .ss_item_container {
@@ -225,7 +231,10 @@ body.cafe {
 .ss_screen {
   width: inherit;
   height: inherit;
-  background-color: rgba(0, 0, 0, .5)
+  background-color: rgba(0, 0, 0, .5);
+  transition: background-color .25s ease-in-out;
+  -moz-transition: background-color .25s ease-in-out;
+  -webkit-transition: background-color .25s ease-in-out;
 }
 
 .ss_screen:hover {

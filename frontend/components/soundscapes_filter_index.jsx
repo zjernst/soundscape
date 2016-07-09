@@ -43,7 +43,7 @@ const SoundscapeFilterIndex = React.createClass({
              onClick={this._all}>
              <h4 className="soundscape_item_text">
              <Label className="soundscape_label">
-             ALL SOUNDSCAPES
+             All Soundscapes
              </Label>
              </h4>
         </div>

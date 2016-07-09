@@ -1,0 +1,11 @@
+.label {
+  display: inline;
+  font-size: 16px;
+  padding: .2em .6em .3em;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+  font-weight: 400;
+}

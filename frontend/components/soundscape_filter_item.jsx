@@ -26,9 +26,11 @@ const SoundscapeFilterItem = React.createClass({
     } else {
       soundscapeClass = "soundscape_filter_item"
     }
+    name = this.props.soundscape.title
+    name = name.charAt(0).toUpperCase() + name.slice(1);
     return(
       <div className={soundscapeClass} onClick={this._soundscapeFilter}>
-        <h4 className="soundscape_item_text"><Label className="soundscape_label">{this.props.soundscape.title.toUpperCase()}</Label></h4>
+        <h4 className="soundscape_item_text"><Label className="soundscape_label">{name}</Label></h4>
       </div>
     )
   }
