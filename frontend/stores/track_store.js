@@ -7,17 +7,12 @@ const TrackStore = new Store(AppDispatcher);
 
 TrackStore.__onDispatch = function(payload) {
   switch (payload.actionType) {
-    case TrackConstants.TRACK_RECEIVED:
-      addTrack(payload.track);
-      TrackStore.__emitChange();
-      break;
-
     case TrackConstants.UPDATE_TRACKS:
       resetTracks(payload.tracks);
       TrackStore.__emitChange();
       break;
 
-    case TrackConstants.REMOVE_TRACK:
+    case TrackConstants.DROP_TRACK:
       removeTrack(payload.track);
       TrackStore.__emitChange();
       break;

@@ -26507,7 +26507,7 @@
 	    case SessionConstants.LOGIN:
 	      _login(payload.user);
 	      SessionStore.__emitChange();
-	      hashHistory.push('/index');
+	      // hashHistory.push('/index');
 	      break;
 	    case SessionConstants.LOGOUT:
 	      _logout();
@@ -33275,16 +33275,16 @@
 	
 	var TrackActions = {
 	  createTrack: function createTrack(track) {
-	    TrackApiUtil.createTrack(track, SoundscapeActions.getSoundscape);
+	    TrackApiUtil.createTrack(track, TrackActions.receiveTrack);
 	  },
 	  getTrack: function getTrack(id) {
 	    TrackApiUtil.getTrack(id, TrackActions.receiveTrack);
 	  },
 	  deleteTrack: function deleteTrack(id) {
-	    TrackApiUtil.deleteTrack(id, SoundscapeActions.getSoundscape);
+	    TrackApiUtil.deleteTrack(id, TrackActions.removeTrack);
 	  },
 	  editTrack: function editTrack(track) {
-	    TrackApiUtil.updateTrack(track, SoundscapeActions.getSoundscape);
+	    TrackApiUtil.updateTrack(track, TrackActions.receiveTrack);
 	  },
 	  receiveTrack: function receiveTrack(track) {
 	    Dispatcher.dispatch({
@@ -33295,6 +33295,12 @@
 	  removeTrack: function removeTrack(track) {
 	    Dispatcher.dispatch({
 	      actionType: TrackConstants.REMOVE_TRACK,
+	      track: track
+	    });
+	  },
+	  dropTrack: function dropTrack(track) {
+	    Dispatcher.dispatch({
+	      actionType: TrackConstants.DROP_TRACK,
 	      track: track
 	    });
 	  },
@@ -33351,7 +33357,7 @@
 	      dataType: 'json',
 	      data: { track: track },
 	      success: function success(res) {
-	        _success3(res.soundscape_id);
+	        _success3(res);
 	      }
 	    });
 	  },
@@ -33360,7 +33366,7 @@
 	      url: 'api/tracks/' + id,
 	      type: 'DELETE',
 	      success: function success(res) {
-	        _success4(res.soundscape_id);
+	        _success4(res);
 	      }
 	    });
 	  },
@@ -33371,7 +33377,7 @@
 	      dataType: 'json',
 	      data: { track: track },
 	      success: function success(res) {
-	        _success5(res.soundscape_id);
+	        _success5(res);
 	      }
 	    });
 	  }
@@ -33386,7 +33392,7 @@
 	module.exports = {
 	  TRACK_RECEIVED: 'TRACK_RECEIVED',
 	  UPDATE_TRACKS: 'UPDATE_TRACKS',
-	  REMOVE_TRACK: 'REMOVE_TRACK',
+	  DROP_TRACK: 'DROP_TRACK',
 	  ADD_TRACK: 'ADD_TRACK',
 	  SET_PLAYING: 'SET_PLAYING'
 	};
@@ -33464,17 +33470,12 @@
 	
 	TrackStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
-	    case TrackConstants.TRACK_RECEIVED:
-	      addTrack(payload.track);
-	      TrackStore.__emitChange();
-	      break;
-	
 	    case TrackConstants.UPDATE_TRACKS:
 	      resetTracks(payload.tracks);
 	      TrackStore.__emitChange();
 	      break;
 	
-	    case TrackConstants.REMOVE_TRACK:
+	    case TrackConstants.DROP_TRACK:
 	      removeTrack(payload.track);
 	      TrackStore.__emitChange();
 	      break;
@@ -33527,10 +33528,11 @@
 	'use strict';
 	
 	var FilterConstants = __webpack_require__(271);
+	var TrackConstants = __webpack_require__(266);
 	var AppDispatcher = __webpack_require__(232);
 	var Store = __webpack_require__(240).Store;
 	
-	var _filteredTracks = [];
+	var _tracks = {};
 	var _filters = [];
 	var FilterStore = new Store(AppDispatcher);
 	
@@ -33547,31 +33549,39 @@
 	    case FilterConstants.FILTER_BY_TAGS:
 	      updateFilters(payload.tag_ids);
 	      FilterStore.__emitChange();
+	    case TrackConstants.TRACK_RECEIVED:
+	      setTrack(payload.track);
+	      FilterStore.__emitChange();
+	      break;
+	    case TrackConstants.REMOVE_TRACK:
+	      removeTrack(payload.track);
+	      FilterStore.__emitChange();
 	  }
 	};
 	
 	FilterStore.all = function () {
-	  return _filteredTracks.slice();
-	};
-	
-	FilterStore.filtered = function () {
 	  var tracks = [];
-	  _filteredTracks.forEach(function (track) {
-	    var track_tags = track.tags.map(function (tag) {
-	      return tag.id;
-	    });
-	    var adding = true;
-	    _filters.forEach(function (tag) {
-	      if (!track_tags.includes(tag)) {
-	        adding = false;
-	      }
-	    });
-	    if (adding) {
-	      tracks.push(track);
-	    }
-	  });
+	  var keys = Object.keys(_tracks);
+	  for (var i = 0; i < keys.length; i++) {
+	    tracks.push(_tracks[keys[i]]);
+	  }
 	  return tracks;
 	};
+	
+	// FilterStore.filtered = function() {
+	//   let tracks = [];
+	//   _tracks.forEach((track) => {
+	//     let track_tags = track.tags.map((tag) => tag.id)
+	//     let adding = true
+	//     _filters.forEach((tag) => {
+	//       if (!track_tags.includes(tag)) {
+	//         adding = false
+	//       }
+	//     })
+	//     if (adding) { tracks.push(track) }
+	//   })
+	//   return tracks
+	// };
 	
 	FilterStore.filters = function () {
 	  return _filters.slice();
@@ -33581,22 +33591,32 @@
 	  _filters = tag_ids;
 	};
 	
-	function filterByTag(tag_id) {
-	  var tracks = [];
-	  _filteredTracks.forEach(function (track) {
-	    var tag_ids = track.tags.map(function (tag) {
-	      return tag.id;
-	    });
-	    if (tag_ids.includes(tag_id)) {
-	      tracks.push(track);
-	    }
+	function resetTracks(tracks) {
+	  _tracks = {};
+	  tracks.forEach(function (track) {
+	    _tracks[track.id] = track;
 	  });
-	  _filteredTracks = tracks;
 	};
 	
-	function resetTracks(tracks) {
-	  _filteredTracks = tracks;
+	function setTrack(track) {
+	  _tracks[track.id] = track;
 	};
+	
+	function removeTrack(track) {
+	  delete _tracks[track.id];
+	}
+	
+	//
+	// function filterByTag(tag_id) {
+	//   let tracks = [];
+	//   _tracks.forEach((track) => {
+	//     let tag_ids = track.tags.map((tag) => tag.id)
+	//     if (tag_ids.includes(tag_id)) {
+	//       tracks.push(track)
+	//     }
+	//   })
+	//   _tracks = tracks;
+	// };
 	
 	module.exports = FilterStore;
 
@@ -53087,6 +53107,7 @@
 	var UserActions = __webpack_require__(259);
 	var SessionActions = __webpack_require__(237);
 	var SessionStore = __webpack_require__(239);
+	var FilterStore = __webpack_require__(270);
 	var FilterActions = __webpack_require__(538);
 	var TrackIndex = __webpack_require__(539);
 	var UserStore = __webpack_require__(257);
@@ -53095,25 +53116,32 @@
 	var UserPage = React.createClass({
 	  displayName: 'UserPage',
 	  getInitialState: function getInitialState() {
-	    return { user: "" };
+	    return { user: "", tracks: FilterStore.all() };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.userListener = UserStore.addListener(this._onChange);
+	    this.filterListener = FilterStore.addListener(this._filterChange);
 	    UserActions.fetchAllUsers();
+	    FilterActions.fetchAllTracks({ filters: { artists: [this.props.params.userId] } });
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.userListener.remove();
+	    this.filterListener.remove();
 	  },
 	  _onChange: function _onChange() {
 	    this.setState({ user: UserStore.find(this.props.params.userId) });
 	  },
+	  _filterChange: function _filterChange() {
+	    this.setState({ tracks: FilterStore.all() });
+	  },
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    this.setState({ user: UserStore.find(newProps.params.userId) });
+	    FilterActions.fetchAllTracks({ filters: { artists: [newProps.params.userId] } });
 	  },
 	  render: function render() {
 	    var num_tracks = void 0;
-	    if (this.state.user) {
-	      num_tracks = this.state.user.tracks.length;
+	    if (this.state.tracks) {
+	      num_tracks = this.state.tracks.length;
 	    }
 	    return React.createElement(
 	      'div',
@@ -53210,7 +53238,7 @@
 	            null,
 	            'Tracks Uploaded'
 	          ),
-	          React.createElement(TrackIndex, { tracks: this.state.user.tracks, parent: 'user' })
+	          React.createElement(TrackIndex, { tracks: this.state.tracks, parent: 'user' })
 	        )
 	      )
 	    );
@@ -53369,7 +53397,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'track_index_artist', onClick: this._toArtist },
-	          this.props.parent === "user" ? "0" : this.props.track.artist
+	          this.props.parent === "user" ? this.props.track.downloads : this.props.track.artist
 	        )
 	      ),
 	      details
@@ -53411,6 +53439,11 @@
 	  },
 	  _addToPlayer: function _addToPlayer() {
 	    TrackActions.addTrack(this.props.track);
+	  },
+	  _updateDownload: function _updateDownload() {
+	    var track = this.props.track;
+	    track.downloads += 1;
+	    TrackActions.editTrack(track);
 	  },
 	  render: function render() {
 	    var tags = this.props.track.tags.map(function (tag) {
@@ -53465,9 +53498,13 @@
 	          React.createElement(
 	            'button',
 	            { className: 'download_button',
-	              href: this.props.track.track_url,
-	              download: this.props.track.title },
-	            'Download'
+	              onClick: this._updateDownload },
+	            React.createElement(
+	              'a',
+	              { href: this.props.track.track_url,
+	                download: this.props.track.title },
+	              'Download'
+	            )
 	          ),
 	          React.createElement(
 	            'div',
@@ -55068,7 +55105,7 @@
 /* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -57462,7 +57499,7 @@
 	    return { track: this.props.track };
 	  },
 	  _trash: function _trash() {
-	    TrackActions.removeTrack(this.props.track);
+	    TrackActions.dropTrack(this.props.track);
 	  },
 	  _setPlaying: function _setPlaying() {
 	    TrackActions.setPlaying(this.props.track);

@@ -1,14 +1,11 @@
 class Api::TracksController < ApplicationController
   def index
-    # if params[:filters] || !params[:filters][:query].empty?
     if params[:filters]
       @tracks = Track.filter(params[:filters])
     else
       @tracks = Track.all
     end
-    # else
-      # @tracks = Track.all
-    # end
+    @tracks.order(:title)
   end
 
     # @tracks = Track.all
@@ -47,17 +44,21 @@ class Api::TracksController < ApplicationController
   def update
     @track = Track.find(params[:id])
     if @track.update_attributes(track_params)
-      @track.taggings.each do |tagging|
-        tagging.destroy
-      end
-      params[:track][:tags_added].each do |tag|
-        Tagging.create(track_id: @track.id, tag_id: tag)
+      if params[:track][:tags_added]
+        @track.taggings.each do |tagging|
+          tagging.destroy
+        end
+        params[:track][:tags_added].each do |tag|
+          Tagging.create(track_id: @track.id, tag_id: tag)
+        end
       end
       render :show
     else
       render json: @track.errors.full_messages, status: 422
     end
   end
+
+
 
   def destroy
     @track = Track.find(params[:id])

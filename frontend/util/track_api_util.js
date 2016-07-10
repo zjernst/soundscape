@@ -25,7 +25,7 @@ module.exports = {
       dataType: 'json',
       data: {track: track},
       success(res) {
-        success(res.soundscape_id);
+        success(res);
       }
     });
   },
@@ -35,7 +35,7 @@ module.exports = {
       url: `api/tracks/${id}`,
       type: 'DELETE',
       success(res) {
-        success(res.soundscape_id);
+        success(res);
       }
     })
   },
@@ -47,7 +47,7 @@ module.exports = {
       dataType: 'json',
       data: {track: track},
       success(res) {
-        success(res.soundscape_id);
+        success(res);
       }
     });
   }

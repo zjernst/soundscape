@@ -20,7 +20,7 @@ SessionStore.__onDispatch = function(payload) {
     case SessionConstants.LOGIN:
       _login(payload.user);
       SessionStore.__emitChange();
-      hashHistory.push('/index');
+      // hashHistory.push('/index');
       break;
     case SessionConstants.LOGOUT:
       _logout();

@@ -42,7 +42,7 @@ const TrackIndexItem = React.createClass({
             {this.props.track.title}
           </div>
           <div className="track_index_artist" onClick={this._toArtist}>
-            {this.props.parent === "user" ? "0" : this.props.track.artist}
+            {this.props.parent === "user" ? this.props.track.downloads : this.props.track.artist}
           </div>
         </div>
         {details}

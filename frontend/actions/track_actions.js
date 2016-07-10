@@ -7,7 +7,7 @@ const Dispatcher = require('../dispatcher/dispatcher');
 
 const TrackActions = {
   createTrack(track) {
-    TrackApiUtil.createTrack(track, SoundscapeActions.getSoundscape)
+    TrackApiUtil.createTrack(track, TrackActions.receiveTrack)
   },
 
   getTrack(id) {
@@ -15,11 +15,11 @@ const TrackActions = {
   },
 
   deleteTrack(id) {
-    TrackApiUtil.deleteTrack(id, SoundscapeActions.getSoundscape)
+    TrackApiUtil.deleteTrack(id, TrackActions.removeTrack)
   },
 
   editTrack(track) {
-    TrackApiUtil.updateTrack(track, SoundscapeActions.getSoundscape)
+    TrackApiUtil.updateTrack(track, TrackActions.receiveTrack)
   },
 
   receiveTrack(track) {
@@ -32,6 +32,13 @@ const TrackActions = {
   removeTrack(track) {
     Dispatcher.dispatch({
       actionType: TrackConstants.REMOVE_TRACK,
+      track: track
+    })
+  },
+
+  dropTrack(track) {
+    Dispatcher.dispatch({
+      actionType: TrackConstants.DROP_TRACK,
       track: track
     })
   },
