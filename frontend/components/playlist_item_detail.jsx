@@ -8,7 +8,7 @@ const PlaylistItemDetail = React.createClass({
   },
 
   _trash() {
-    TrackActions.removeTrack(this.props.track)
+    TrackActions.dropTrack(this.props.track)
   },
 
   _setPlaying() {

@@ -29,6 +29,12 @@ const TrackDetailItem = React.createClass({
     TrackActions.addTrack(this.props.track)
   },
 
+  _updateDownload() {
+    let track = this.props.track;
+    track.downloads += 1;
+    TrackActions.editTrack(track)
+  },
+
   render() {
     let tags = this.props.track.tags.map( (tag) => {
       return <Label className="tag" key={tag.id}>{tag.name}</Label>
@@ -55,8 +61,9 @@ const TrackDetailItem = React.createClass({
         </div>
         <div className="track_detail_options">
         <button className="download_button"
-        href={this.props.track.track_url}
-        download={this.props.track.title}>Download</button>
+         onClick={this._updateDownload}>
+         <a href={this.props.track.track_url}
+          download={this.props.track.title}>Download</a></button>
         <div className="add_to_playlist" onClick={this._addToPlayer}>
           <i className="fa fa-plus-circle" aria-hidden="true"></i>
           <span className="add_to_playlist_text">Add to playlist</span>

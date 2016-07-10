@@ -2,6 +2,7 @@ const React = require('react');
 const UserActions = require('../../actions/user_actions');
 const SessionActions = require('../../actions/session_actions');
 const SessionStore = require('../../stores/session_store');
+const FilterStore = require('../../stores/filter_store');
 const FilterActions = require('../../actions/filter_actions');
 const TrackIndex = require('../tracks/track_index');
 const UserStore = require('../../stores/user_store');
@@ -9,30 +10,38 @@ const hashHistory = require('react-router').hashHistory;
 
 const UserPage = React.createClass({
   getInitialState() {
-    return({user: ""})
+    return({user: "", tracks: FilterStore.all()})
   },
 
   componentDidMount() {
     this.userListener = UserStore.addListener(this._onChange);
+    this.filterListener = FilterStore.addListener(this._filterChange);
     UserActions.fetchAllUsers();
+    FilterActions.fetchAllTracks({filters: {artists: [this.props.params.userId]}});
   },
 
   componentWillUnmount() {
     this.userListener.remove();
+    this.filterListener.remove();
   },
 
   _onChange() {
     this.setState({user: UserStore.find(this.props.params.userId)})
   },
 
+  _filterChange() {
+    this.setState({tracks: FilterStore.all()})
+  },
+
   componentWillReceiveProps(newProps) {
     this.setState({user: UserStore.find(newProps.params.userId)})
+    FilterActions.fetchAllTracks({filters: {artists: [newProps.params.userId]}})
   },
 
   render() {
     let num_tracks
-    if (this.state.user) {
-      num_tracks = this.state.user.tracks.length
+    if (this.state.tracks) {
+      num_tracks = this.state.tracks.length
     }
     return(
       <div className="user_page">
@@ -72,7 +81,7 @@ const UserPage = React.createClass({
           </div>
           <div className="users_uploaded_tracks">
             <h4>Tracks Uploaded</h4>
-            <TrackIndex tracks={this.state.user.tracks} parent="user"/>
+            <TrackIndex tracks={this.state.tracks} parent="user"/>
           </div>
         </div>
       </div>
