@@ -1,6 +1,6 @@
 # Soundscape
 
-[link] soundscape.online
+[link] http://soundscape.online/
 
 
 Soundscape is a full-stack web application inspired by popular online music
