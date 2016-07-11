@@ -60,8 +60,8 @@ Soundscape.create({title: 'home', image_url: 'https://res.cloudinary.com/soundsc
 Soundscape.create({title: 'fire', image_url: 'https://res.cloudinary.com/soundscape/image/upload/c_crop,h_370/v1467311158/logo_5_kptop2.png'})
 Soundscape.create({title: 'cafe', image_url: 'https://res.cloudinary.com/soundscape/image/upload/c_crop,h_310,w_350/v1467311151/logo_8_qqdcng.png'})
 
-Track.create({title: 'Gentle Rain Storm in Meadow', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467350593/156994__chrscrwfrd18__rain_xat7od.mp3',
-  description: "10 minutes of a gentle rain accompanied by field birds. Distant thunder claps interspersed. (10 seconds delayed start to ease in for usage)", downloads: 26, soundscape_id: 1, artist_id: 2})
+Track.create({title: 'Soft Rain and Thunder', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468219722/327699__dobroide__20151101-soft-rain-thunder-05_tedd06.mp3',
+  description: "Soft rain with some thunder in the distance. Very calming", downloads: 26, soundscape_id: 1, artist_id: 2})
 
 Tagging.create({track_id: 1, tag_id: 3})
 Tagging.create({track_id: 1, tag_id: 9})
@@ -533,3 +533,152 @@ Tagging.create({track_id: 50, tag_id: 8})
 Tagging.create({track_id: 50, tag_id: 12})
 Tagging.create({track_id: 50, tag_id: 16})
 Tagging.create({track_id: 50, tag_id: 20})
+
+Track.create({title: 'Gentle Rain Storm in Meadow', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467350593/156994__chrscrwfrd18__rain_xat7od.mp3',
+  description: "10 minutes of a gentle rain accompanied by field birds. Distant thunder claps interspersed. (10 seconds delayed start to ease in for usage)", downloads: 26, soundscape_id: 1, artist_id: 2})
+
+Tagging.create({track_id: 51, tag_id: 3})
+Tagging.create({track_id: 51, tag_id: 9})
+Tagging.create({track_id: 51, tag_id: 4})
+Tagging.create({track_id: 51, tag_id: 19})
+Tagging.create({track_id: 51, tag_id: 8})
+Tagging.create({track_id: 51, tag_id: 1})
+
+Track.create({title: 'Wind Chimes', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468219760/196712__littleboot__wind-chimes_dwhpex.mp3',
+  description: "Just messing around with some wind chimes. Going for a light, haunty sound.", downloads: 5, soundscape_id: 3, artist_id: 5})
+
+Tagging.create({track_id: 52, tag_id: 4})
+Tagging.create({track_id: 52, tag_id: 19})
+Tagging.create({track_id: 52, tag_id: 1})
+Tagging.create({track_id: 52, tag_id: 3})
+
+Track.create({title: 'Dark Rain', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468219824/167881__bradovic__dark-background-sounds_xdcdrc.mp3',
+  description: "Ominous sound of rain. Found the quality very interesting mixed with the background sounds", downloads: 2, soundscape_id: 1, artist_id: 2})
+
+Tagging.create({track_id: 53, tag_id: 4})
+Tagging.create({track_id: 53, tag_id: 6})
+Tagging.create({track_id: 53, tag_id: 20})
+Tagging.create({track_id: 53, tag_id: 3})
+
+Track.create({title: 'Mild Storm Thunderclaps', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468219824/167881__bradovic__dark-background-sounds_xdcdrc.mp3',
+  description: "Quiet storm that passed us through. Just ran outside to grab it for y'all! Enjoy!", downloads: 7, soundscape_id: 1, artist_id: 3})
+
+Tagging.create({track_id: 54, tag_id: 4})
+Tagging.create({track_id: 54, tag_id: 1})
+Tagging.create({track_id: 54, tag_id: 9})
+Tagging.create({track_id: 54, tag_id: 3})
+
+Track.create({title: 'Spring Rain', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468219824/167881__bradovic__dark-background-sounds_xdcdrc.mp3',
+  description: "Gentle early spring rain. Recorded with a HPC794 AudioMAXTER693.", downloads: 7, soundscape_id: 1, artist_id: 3})
+
+Tagging.create({track_id: 55, tag_id: 4})
+Tagging.create({track_id: 55, tag_id: 1})
+Tagging.create({track_id: 55, tag_id: 9})
+Tagging.create({track_id: 55, tag_id: 3})
+
+Track.create({title: 'Crackling Thunder', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468219873/169158__joniheinonen__weather-thunder-lightning-loud-crackling-thunder-in-mid-sized-quiet-city-some-seagulls-0001_u7skzn.mp3',
+  description: "Gorgeous thunder cracklings over a steady rain. Perfect study sounds.", downloads: 33, soundscape_id: 1, artist_id: 3})
+
+Tagging.create({track_id: 56, tag_id: 4})
+Tagging.create({track_id: 56, tag_id: 1})
+Tagging.create({track_id: 56, tag_id: 9})
+Tagging.create({track_id: 56, tag_id: 3})
+Tagging.create({track_id: 56, tag_id: 18})
+Tagging.create({track_id: 56, tag_id: 17})
+
+Track.create({title: 'Heavy Storm', track_url: 'http://res.cloudinary.com/soundscape/video/upload/v1468219910/169159__joniheinonen__weather-thunder-drips-thunder-medium-rain-water-dripping-to-concrete-0001_crhfnj.mp3',
+  description: "Powerful thunderstorm moving over the midwest.", downloads: 33, soundscape_id: 1, artist_id: 3})
+
+Tagging.create({track_id: 57, tag_id: 4})
+Tagging.create({track_id: 57, tag_id: 1})
+Tagging.create({track_id: 57, tag_id: 9})
+Tagging.create({track_id: 57, tag_id: 3})
+Tagging.create({track_id: 57, tag_id: 18})
+Tagging.create({track_id: 57, tag_id: 17})
+
+Track.create({title: 'Extended Chimes', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468219900/196015__mc2method__wind-chimes_rogdxy.mp3',
+  description: "Longer more elaborate version of my first recording. Decided to try more active chimes this time.", downloads: 14, soundscape_id: 3, artist_id: 5})
+
+Tagging.create({track_id: 58, tag_id: 4})
+Tagging.create({track_id: 58, tag_id: 19})
+Tagging.create({track_id: 58, tag_id: 1})
+Tagging.create({track_id: 58, tag_id: 3})
+
+Track.create({title: 'Courtyard Thunder', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468220000/169157__joniheinonen__weather-thunder-heavy-thunder-medium-rain-courtyard-echoes-0001_aty3km.mp3',
+  description: "Storm echoes through the courtyard for a nice reverby effect.", downloads: 15, soundscape_id: 1, artist_id: 6})
+
+Tagging.create({track_id: 59, tag_id: 4})
+Tagging.create({track_id: 59, tag_id: 1})
+Tagging.create({track_id: 59, tag_id: 9})
+Tagging.create({track_id: 59, tag_id: 3})
+Tagging.create({track_id: 59, tag_id: 18})
+Tagging.create({track_id: 59, tag_id: 17})
+
+Track.create({title: 'Creaking Oak', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468220048/211776__klankbeeld__piezo-cracking-oak-tree-131223-00_oczsrs.mp3',
+  description: "Old oak tree creaking in the wind.. Spooky.", downloads: 25, soundscape_id: 3, artist_id: 5})
+
+Tagging.create({track_id: 60, tag_id: 4})
+Tagging.create({track_id: 60, tag_id: 19})
+Tagging.create({track_id: 60, tag_id: 12})
+Tagging.create({track_id: 60, tag_id: 18})
+
+Track.create({title: 'Cans in the Wind', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468220048/211776__klankbeeld__piezo-cracking-oak-tree-131223-00_oczsrs.mp3',
+  description: "Put some cans in the wind and let nature play them.", downloads: 0, soundscape_id: 3, artist_id: 6})
+
+Tagging.create({track_id: 61, tag_id: 4})
+Tagging.create({track_id: 61, tag_id: 17})
+Tagging.create({track_id: 61, tag_id: 12})
+Tagging.create({track_id: 61, tag_id: 16})
+
+Track.create({title: 'Gulf Waves', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468224012/255153__the-toilet-guy__ocean-waves-in-the-gulf-of-mexico_tewefp.mp3',
+  description: "Waves crashing over a beach on the Gulf of Mexico", downloads: 30, soundscape_id: 2, artist_id: 2})
+
+Tagging.create({track_id: 62, tag_id: 20})
+Tagging.create({track_id: 62, tag_id: 4})
+Tagging.create({track_id: 62, tag_id: 2})
+Tagging.create({track_id: 62, tag_id: 8})
+Tagging.create({track_id: 62, tag_id: 1})
+
+Track.create({title: 'Ocean Pulau', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468224077/257822__rtb45__jungle-meets-ocean-pulau-seram-indonesia_fpx1sp.mp3',
+  description: "water and waves in Indonesia", downloads: 10, soundscape_id: 2, artist_id: 2})
+
+Tagging.create({track_id: 63, tag_id: 3})
+Tagging.create({track_id: 63, tag_id: 4})
+Tagging.create({track_id: 63, tag_id: 2})
+Tagging.create({track_id: 63, tag_id: 1})
+
+Track.create({title: 'Shoreline Mondays', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468224032/254857__afeeto__waves-against-shore_dypohj.mp3',
+  description: "Intended as light listening over Monday coffee", downloads: 15, soundscape_id: 2, artist_id: 2})
+
+Tagging.create({track_id: 64, tag_id: 3})
+Tagging.create({track_id: 64, tag_id: 4})
+Tagging.create({track_id: 64, tag_id: 2})
+Tagging.create({track_id: 64, tag_id: 16})
+Tagging.create({track_id: 64, tag_id: 1})
+
+Track.create({title: 'Sailboat', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468224054/252670__augustsandberg__sailboat-sailing-interior-2_g3w99z.mp3',
+  description: "Ocean sounds captured on a sailing trip", downloads: 27, soundscape_id: 2, artist_id: 2})
+
+Tagging.create({track_id: 65, tag_id: 3})
+Tagging.create({track_id: 65, tag_id: 4})
+Tagging.create({track_id: 65, tag_id: 2})
+Tagging.create({track_id: 65, tag_id: 8})
+Tagging.create({track_id: 65, tag_id: 1})
+
+Track.create({title: 'Waves pt.1', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468224033/278986__inchadney__cambo-sands_qbathf.mp3',
+  description: "Just some good ol' waves", downloads: 13, soundscape_id: 2, artist_id: 2})
+
+Tagging.create({track_id: 66, tag_id: 3})
+Tagging.create({track_id: 66, tag_id: 4})
+Tagging.create({track_id: 66, tag_id: 2})
+Tagging.create({track_id: 66, tag_id: 8})
+Tagging.create({track_id: 66, tag_id: 1})
+
+Track.create({title: 'Waves pt.2', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468224098/197792__drni__fehmarn-sea-waves-404-1_no3muv.mp3',
+  description: "Just some more waves. Waves are great.", downloads: 16, soundscape_id: 2, artist_id: 2})
+
+Tagging.create({track_id: 67, tag_id: 3})
+Tagging.create({track_id: 67, tag_id: 4})
+Tagging.create({track_id: 67, tag_id: 2})
+Tagging.create({track_id: 67, tag_id: 8})
+Tagging.create({track_id: 67, tag_id: 1})

@@ -17,7 +17,7 @@ const LoginForm = React.createClass({
   getInitialState() {
     return({username: "", password: "", show: true, formType: "login"})
   },
-  // 
+  //
   // componentDidMount() {
   //   this.sessionListener = SessionStore.addListener(this._redirectIfLoggedIn)
   //   // this.errorListener = ErrorStore.addListener(this._displayErrors);
@@ -76,7 +76,7 @@ const LoginForm = React.createClass({
   },
 
   _guestLogin() {
-    let guest = {username: 'Charizard', password: 'password'}
+    let guest = {username: 'Blastoise', password: 'password'}
     SessionActions.login(guest);
   },
 

@@ -63,7 +63,6 @@ const Navbar = React.createClass({
     } else {
       buttons.push(<button className="nav_button" key="signup" onClick={this._toSignup}>Sign Up</button>);
       buttons.push(<button className="nav_button" key="login" onClick={this._toLogin}>Log In</button>);
-      buttons.push(<button className="nav_button" key="guest" onClick={this._handleGuest}>Guest</button>);
     }
     return(
       <div className="navbar">
@@ -81,6 +80,8 @@ const Navbar = React.createClass({
 })
 
 module.exports = Navbar;
+
+// buttons.push(<button className="nav_button" key="guest" onClick={this._handleGuest}>Guest</button>);
 
 // <Navbar>
 //   <Navbar.Header>

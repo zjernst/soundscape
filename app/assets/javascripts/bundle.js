@@ -33727,7 +33727,7 @@
 	    };
 	  },
 	  _guestLogin: function _guestLogin() {
-	    var guest = { username: 'Charizard', password: 'password' };
+	    var guest = { username: 'Blastoise', password: 'password' };
 	    SessionActions.login(guest);
 	  },
 	  close: function close() {
@@ -54475,11 +54475,6 @@
 	        { className: 'nav_button', key: 'login', onClick: this._toLogin },
 	        'Log In'
 	      ));
-	      buttons.push(React.createElement(
-	        'button',
-	        { className: 'nav_button', key: 'guest', onClick: this._handleGuest },
-	        'Guest'
-	      ));
 	    }
 	    return React.createElement(
 	      'div',
@@ -54506,6 +54501,8 @@
 	
 	module.exports = Navbar;
 	
+	// buttons.push(<button className="nav_button" key="guest" onClick={this._handleGuest}>Guest</button>);
+
 	// <Navbar>
 	//   <Navbar.Header>
 	//     <Navbar.Brand>
@@ -54604,7 +54601,7 @@
 	    e.preventDefault();
 	    this.setState({ username: "", password1: "", password2: "" });
 	
-	    var username = "Charizard".split("");
+	    var username = "Blastoise".split("");
 	    var password = "password".split("");
 	    var time = 50;
 	    var that = this;
@@ -55147,7 +55144,7 @@
 /* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
