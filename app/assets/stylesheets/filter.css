@@ -137,24 +137,21 @@
 .tracks_search_box {
   text-align: center;
   background: #212121;
-  display: flex;
   justify-content: center;
 }
 
 .tracks_search_label {
   padding: 6px;
-  margin-right: 20px;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 600;
   color: white;
 }
 
 .search_box {
   margin: 6px;
-    padding: 3px;
-    padding-left: 10px;
-    border-radius: 3px;
-    min-width: 200px;
+  padding: 3px;
+  border-radius: 3px;
+  min-width: 300px;
 }
 
 .selected {
