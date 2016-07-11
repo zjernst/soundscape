@@ -5,7 +5,8 @@
 }
 
 .track_play_button:hover {
-  color: #ffcf59;
+  color: #ff1346;
+  font-size: 36px;
 }
 
 .collapse_track:hover {

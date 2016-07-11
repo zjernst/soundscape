@@ -3,7 +3,7 @@ const ErrorStore = require('../stores/error_store.js');
 
 const Errors = React.createClass({
   getInitialState: function () {
-    return { errors: [] };
+    return { errors: {} };
   },
 
   componentDidMount: function() {
@@ -19,8 +19,9 @@ const Errors = React.createClass({
   },
 
   render: function() {
-    let errors = this.state.errors.map(function(error, i) {
-      return <li key={i}>{error}</li>;
+    let errorKeys = Object.keys(this.state.errors)
+    let errors = errorKeys.map((key, i) => {
+      return <li key={i}>{this.state.errors[key]}</li>;
     });
     return (
       <ul>

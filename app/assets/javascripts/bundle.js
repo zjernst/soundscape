@@ -105,6 +105,7 @@
 	
 	function authSuccess(nextState, transition) {
 	  var isLoggedIn = SessionStore.isUserLoggedIn();
+	  debugger;
 	  if (isLoggedIn) {
 	    transition({
 	      path: '/index',
@@ -26019,7 +26020,8 @@
 	        ErrorActions.resetErrors();
 	      },
 	      error: function error(res) {
-	        ErrorActions.receiveErrors(res.responseJSON);
+	        var errors = res.responseJSON;
+	        ErrorActions.receiveErrors(errors);
 	      }
 	    });
 	  },
@@ -33099,7 +33101,7 @@
 	var Store = __webpack_require__(240).Store;
 	var ErrorConstants = __webpack_require__(236);
 	
-	var _errors = [];
+	var _errors = {};
 	
 	var ErrorStore = new Store(AppDispatcher);
 	
@@ -33108,15 +33110,11 @@
 	}
 	
 	function resetErrors() {
-	  _errors = [];
+	  _errors = {};
 	}
 	
 	ErrorStore.all = function () {
-	  if (_errors.length > 0) {
-	    return _errors.slice();
-	  } else {
-	    return [];
-	  }
+	  return Object.assign({}, _errors);
 	};
 	
 	ErrorStore.__onDispatch = function (payload) {
@@ -33328,9 +33326,11 @@
 
 /***/ },
 /* 265 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+	
+	var ErrorActions = __webpack_require__(231);
 	
 	module.exports = {
 	  fetchAllTracks: function fetchAllTracks(filters, _success) {
@@ -33358,6 +33358,11 @@
 	      data: { track: track },
 	      success: function success(res) {
 	        _success3(res);
+	        ErrorActions.resetErrors();
+	      },
+	      error: function error(res) {
+	        var errors = res.responseJSON;
+	        ErrorActions.receiveErrors(errors);
 	      }
 	    });
 	  },
@@ -33660,25 +33665,30 @@
 	  getInitialState: function getInitialState() {
 	    return { username: "", password: "", show: true, formType: "login" };
 	  },
-	  componentDidMount: function componentDidMount() {
-	    this.sessionListener = SessionStore.addListener(this._redirectIfLoggedIn);
-	    // this.errorListener = ErrorStore.addListener(this._displayErrors);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.sessionListener.remove();
-	    // this.errorListener.remove();
-	  },
+	
+	  //
+	  // componentDidMount() {
+	  //   this.sessionListener = SessionStore.addListener(this._redirectIfLoggedIn)
+	  //   // this.errorListener = ErrorStore.addListener(this._displayErrors);
+	  // },
+	  //
+	  // componentWillUnmount() {
+	  //   this.sessionListener.remove();
+	  //   // this.errorListener.remove();
+	  // },
+	
 	  _displayErrors: function _displayErrors() {
 	    if (!(ErrorStore.form() === "")) {
 	      this.setState({ username: "", password: "" });
 	    }
 	  },
-	  _redirectIfLoggedIn: function _redirectIfLoggedIn() {
-	    if (SessionStore.isUserLoggedIn()) {
-	      hashHistory.push('/index');
-	    }
-	  },
 	
+	  //
+	  // _redirectIfLoggedIn() {
+	  //   if (SessionStore.isUserLoggedIn()) {
+	  //     hashHistory.push(`/index`);
+	  //   }
+	  // },
 	
 	  // fieldErrors(field) {
 	  //   const errors = ErrorStore.formErrors(this.formType());
@@ -33696,6 +33706,7 @@
 	    e.preventDefault();
 	    var formData = { username: this.state.username, password: this.state.password };
 	    SessionActions.login(formData);
+	    this.close();
 	    // if (this.state.formFrom === "login") {
 	    // } else {
 	    //   SessionActions.signup(formData);
@@ -33900,7 +33911,7 @@
 	  displayName: 'Errors',
 	
 	  getInitialState: function getInitialState() {
-	    return { errors: [] };
+	    return { errors: {} };
 	  },
 	
 	  componentDidMount: function componentDidMount() {
@@ -33916,11 +33927,14 @@
 	  },
 	
 	  render: function render() {
-	    var errors = this.state.errors.map(function (error, i) {
+	    var _this = this;
+	
+	    var errorKeys = Object.keys(this.state.errors);
+	    var errors = errorKeys.map(function (key, i) {
 	      return React.createElement(
 	        'li',
 	        { key: i },
-	        error
+	        _this.state.errors[key]
 	      );
 	    });
 	    return React.createElement(
@@ -53560,6 +53574,8 @@
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var SessionStore = __webpack_require__(239);
 	var UploadButton = __webpack_require__(543);
+	var ErrorStore = __webpack_require__(261);
+	var Errors = __webpack_require__(273);
 	
 	var Modal = __webpack_require__(274).Modal;
 	var FormControl = __webpack_require__(274).FormControl;
@@ -53634,11 +53650,12 @@
 	        artist_id: SessionStore.currentUser().id,
 	        soundscape_id: this.state.soundscape_id,
 	        tags_added: this.state.tags };
-	      debugger;
 	      TrackActions.createTrack(_track);
 	      this.setState({ title: '', description: '' });
 	    }
-	    this.close();
+	    if (Object.keys(ErrorStore.all()).length === 0) {
+	      this.close();
+	    }
 	  },
 	  close: function close() {
 	    this.setState({ showModal: false });
@@ -53679,12 +53696,17 @@
 	      { show: this.state.showModal, onHide: this.close },
 	      React.createElement(
 	        Modal.Header,
-	        null,
-	        'Enter Track Information'
+	        { closeButton: true },
+	        React.createElement(
+	          Modal.Title,
+	          null,
+	          'Enter Track Information'
+	        )
 	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'track_form_container' },
+	        React.createElement(Errors, null),
 	        React.createElement(
 	          'form',
 	          { className: 'track_form', onSubmit: this._handleSubmit },
@@ -53770,12 +53792,18 @@
 	              className: 'track_field' })
 	          ),
 	          React.createElement(
+	            ControlLabel,
+	            { className: 'track_description_label' },
+	            'Tags'
+	          ),
+	          React.createElement(
 	            FormGroup,
 	            null,
 	            tags
 	          ),
 	          React.createElement(UploadButton, { uploadTrack: this._uploadTrack }),
-	          React.createElement('input', { type: 'submit', className: 'button', disabled: this.state.disabled })
+	          React.createElement('input', { type: 'text', value: this.state.track_url, disabled: true }),
+	          React.createElement('input', { type: 'submit', className: 'track_submit button', disabled: this.state.disabled })
 	        )
 	      )
 	    );
@@ -54387,6 +54415,9 @@
 	  },
 	  _onChange: function _onChange() {
 	    this.setState({ logged_in: SessionStore.isUserLoggedIn() });
+	    if (window.location.pathname === '/' && SessionStore.isUserLoggedIn()) {
+	      hashHistory.push('/index');
+	    }
 	  },
 	  _toSignup: function _toSignup() {
 	    this.setState({ form: React.createElement(SignupForm, { closeForm: this._close }) });
@@ -54538,7 +54569,6 @@
 	      });
 	      if (ErrorStore.all().length === 0) {
 	        this.close();
-	        hashHistory.push('/index');
 	        this.setState({ show: false, username: "", password1: "", password2: "" });
 	      }
 	    } else {
@@ -54603,7 +54633,6 @@
 	        password: that.state.password1
 	      });
 	      that.close();
-	      hashHistory.push('/index');
 	    }, time);
 	  },
 	

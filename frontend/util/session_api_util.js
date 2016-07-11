@@ -11,7 +11,8 @@ module.exports = {
         ErrorActions.resetErrors();
       },
       error: function(res) {
-        ErrorActions.receiveErrors(res.responseJSON)
+        const errors = res.responseJSON
+        ErrorActions.receiveErrors(errors)
       }
     });
   },

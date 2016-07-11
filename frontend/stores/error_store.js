@@ -2,24 +2,20 @@ const AppDispatcher = require('../dispatcher/dispatcher.js');
 const Store = require('flux/utils').Store;
 const ErrorConstants = require('../constants/error_constants');
 
-let _errors = [];
+let _errors = {};
 
 let ErrorStore = new Store(AppDispatcher);
 
 function setErrors(errors) {
-  _errors = errors;
+  _errors = errors
 }
 
 function resetErrors() {
-  _errors = [];
+  _errors = {};
 }
 
 ErrorStore.all = function() {
-  if (_errors.length > 0) {
-    return _errors.slice();
-  } else {
-    return []
-  }
+  return Object.assign({}, _errors)
 };
 
 ErrorStore.__onDispatch = function(payload) {

@@ -1,3 +1,5 @@
+const ErrorActions = require('../actions/error_actions');
+
 module.exports = {
   fetchAllTracks(filters, success) {
     $.ajax({
@@ -26,6 +28,11 @@ module.exports = {
       data: {track: track},
       success(res) {
         success(res);
+        ErrorActions.resetErrors();
+      },
+      error(res) {
+        const errors = res.responseJSON;
+        ErrorActions.receiveErrors(errors);
       }
     });
   },

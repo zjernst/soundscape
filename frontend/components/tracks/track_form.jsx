@@ -5,6 +5,8 @@ const TrackActions = require('../../actions/track_actions');
 const hashHistory = require('react-router').hashHistory;
 const SessionStore = require('../../stores/session_store');
 const UploadButton = require('../upload_button');
+const ErrorStore = require('../../stores/error_store');
+const Errors = require('../errors');
 
 const Modal = require('react-bootstrap').Modal;
 const FormControl = require('react-bootstrap').FormControl;
@@ -78,11 +80,12 @@ const TrackForm = React.createClass({
                    artist_id: SessionStore.currentUser().id,
                    soundscape_id: this.state.soundscape_id,
                    tags_added: this.state.tags}
-                   debugger
       TrackActions.createTrack(track);
       this.setState({title: '', description: ''});
     }
-    this.close();
+    if (Object.keys(ErrorStore.all()).length === 0) {
+      this.close();
+    }
   },
 
   close() {
@@ -119,8 +122,11 @@ const TrackForm = React.createClass({
     })
     return(
       <Modal show={this.state.showModal} onHide={this.close}>
-      <Modal.Header>Enter Track Information</Modal.Header>
+      <Modal.Header closeButton>
+        <Modal.Title>Enter Track Information</Modal.Title>
+      </Modal.Header>
         <div className="track_form_container">
+          <Errors />
           <form className="track_form" onSubmit={this._handleSubmit}>
             <FormGroup>
               <ControlLabel className="track_title_label">Title</ControlLabel>
@@ -151,11 +157,13 @@ const TrackForm = React.createClass({
                      onChange={this._update('description')}
                      className="track_field" />
              </FormGroup>
+             <ControlLabel className="track_description_label">Tags</ControlLabel>
              <FormGroup>
              {tags}
              </FormGroup>
             <UploadButton uploadTrack={this._uploadTrack}/>
-            <input type="submit" className="button" disabled={this.state.disabled} />
+            <input type="text" value={this.state.track_url} disabled />
+            <input type="submit" className="track_submit button" disabled={this.state.disabled}/>
           </form>
         </div>
       </Modal>

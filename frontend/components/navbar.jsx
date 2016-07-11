@@ -20,6 +20,9 @@ const Navbar = React.createClass({
 
   _onChange() {
     this.setState({logged_in: SessionStore.isUserLoggedIn()})
+    if (window.location.pathname === '/' && SessionStore.isUserLoggedIn()) {
+      hashHistory.push('/index');
+    }
   },
 
   _toSignup() {

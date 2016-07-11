@@ -17,28 +17,28 @@ const LoginForm = React.createClass({
   getInitialState() {
     return({username: "", password: "", show: true, formType: "login"})
   },
-
-  componentDidMount() {
-    this.sessionListener = SessionStore.addListener(this._redirectIfLoggedIn)
-    // this.errorListener = ErrorStore.addListener(this._displayErrors);
-  },
-
-  componentWillUnmount() {
-    this.sessionListener.remove();
-    // this.errorListener.remove();
-  },
+  // 
+  // componentDidMount() {
+  //   this.sessionListener = SessionStore.addListener(this._redirectIfLoggedIn)
+  //   // this.errorListener = ErrorStore.addListener(this._displayErrors);
+  // },
+  //
+  // componentWillUnmount() {
+  //   this.sessionListener.remove();
+  //   // this.errorListener.remove();
+  // },
 
   _displayErrors() {
     if (!(ErrorStore.form() === "")) {
       this.setState({username: "", password: ""})
     }
   },
-
-  _redirectIfLoggedIn() {
-    if (SessionStore.isUserLoggedIn()) {
-      hashHistory.push(`/index`);
-    }
-  },
+  //
+  // _redirectIfLoggedIn() {
+  //   if (SessionStore.isUserLoggedIn()) {
+  //     hashHistory.push(`/index`);
+  //   }
+  // },
 
   // fieldErrors(field) {
   //   const errors = ErrorStore.formErrors(this.formType());
@@ -56,6 +56,7 @@ const LoginForm = React.createClass({
     e.preventDefault();
     const formData = {username: this.state.username, password: this.state.password};
     SessionActions.login(formData);
+    this.close();
     // if (this.state.formFrom === "login") {
     // } else {
     //   SessionActions.signup(formData);

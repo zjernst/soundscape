@@ -56,6 +56,7 @@ function requireAuth(nextState, transition) {
 
 function authSuccess(nextState, transition) {
   let isLoggedIn = SessionStore.isUserLoggedIn()
+  debugger
   if (isLoggedIn) {
     transition({
       path: '/index',

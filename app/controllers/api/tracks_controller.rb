@@ -28,8 +28,10 @@ class Api::TracksController < ApplicationController
   def create
     @track = Track.new(track_params)
     if @track.save
-      params[:track][:tags_added].each do |tag|
-        Tagging.create(track_id: @track.id, tag_id: tag)
+      if params[:track][:tags_added]
+        params[:track][:tags_added].each do |tag|
+          Tagging.create(track_id: @track.id, tag_id: tag)
+        end
       end
       render :show
     else
