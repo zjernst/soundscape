@@ -28,6 +28,7 @@ the eight soundscape categories or, for the more detail focused, manually by
 utilizing search, sort, and filter functionality to create the perfect, curated,
 playlist.
 
+
 ### Filtering
 
 Soundscape boasts powerful filtering and search functionality to find the perfect
@@ -58,6 +59,17 @@ Users can also download any track hosted for their own personal use. Think of
 Soundscape as a sharing platform that lets you interact with the world at an
 aural level.
 
+## Screenshots
+
+### Filter
+![filter]
+
+### Player
+![player]
+
+### Userpage
+![userpage]
+
 
 ## Future Directions for Soundscape
 
@@ -80,13 +92,6 @@ Users should be able to rate tracks, and this feature could be added to the
 search system. Other improvements to filtering to be implemented include sorting
 by downloads, uploads, and new additions.
 
-
-
-### Bonus Features
-- implement and build out additional components, flux cycles, API for:
-  - [ ] welcome
-  - [ ] info
-  - [ ] community
-- [ ] community features
-- [ ] multiple sessions
-- [ ] purchase track functionality
+[player]: ./docs/screenshots/audio_player.png
+[filter]: ./docs/screenshots/filter_ss.png
+[userpage]: ./docs/screenshots/user_page.png
