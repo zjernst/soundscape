@@ -52,3 +52,7 @@ select {
 .btn-default {
   margin: 10px;
 }
+
+.modal-header {
+  padding-left: 0;
+}

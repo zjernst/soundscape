@@ -1,6 +1,6 @@
 # Soundscape
 
-[Heroku link] https://sound-scape.herokuapp.com/
+[link] https://soundscape.online
 
 
 Soundscape is a full-stack web application inspired by popular online music
