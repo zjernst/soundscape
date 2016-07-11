@@ -89,3 +89,11 @@
 .playlist_item_content_container {
   flex: 1;
 }
+
+.playlist_download_link {
+  color: white;
+}
+
+.playlist_download_link:hover {
+  color: black;
+}

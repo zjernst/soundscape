@@ -4,13 +4,36 @@
     cursor: pointer;
 }
 
+.track_description_container {
+  font-size: 18px;
+}
+
+.track_description {
+  font-size: 16px;
+  line-height: normal;
+  padding-bottom: 5px;
+}
+
+.track_tags {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
 .track_play_button:hover {
   color: #ff1346;
   font-size: 36px;
 }
 
+.collapse_track {
+  margin-right: 14%;
+  height: 30px;
+  font-size: 20px;
+}
+
 .collapse_track:hover {
   cursor: pointer;
+  background: white;
 }
 
 .download_link {

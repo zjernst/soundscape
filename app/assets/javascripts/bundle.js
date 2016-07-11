@@ -53126,6 +53126,7 @@
 	var TrackIndex = __webpack_require__(539);
 	var UserStore = __webpack_require__(257);
 	var hashHistory = __webpack_require__(168).hashHistory;
+	var AddTrack = __webpack_require__(591);
 	
 	var UserPage = React.createClass({
 	  displayName: 'UserPage',
@@ -53152,11 +53153,19 @@
 	    this.setState({ user: UserStore.find(newProps.params.userId) });
 	    FilterActions.fetchAllTracks({ filters: { artists: [newProps.params.userId] } });
 	  },
+	  downloads: function downloads() {
+	    var count = 0;
+	    this.state.tracks.forEach(function (track) {
+	      count = count + track.downloads;
+	    });
+	    return count;
+	  },
 	  render: function render() {
 	    var num_tracks = void 0;
 	    if (this.state.tracks) {
 	      num_tracks = this.state.tracks.length;
 	    }
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'user_page' },
@@ -53166,7 +53175,11 @@
 	        React.createElement(
 	          'div',
 	          { className: 'cover_photo_container' },
-	          React.createElement('img', { className: 'cover_photo', src: this.state.user.cover_photo })
+	          React.createElement(
+	            'div',
+	            { className: 'centerer' },
+	            React.createElement('img', { className: 'cover_photo', src: this.state.user.cover_photo })
+	          )
 	        ),
 	        React.createElement(
 	          'div',
@@ -53197,7 +53210,7 @@
 	                React.createElement(
 	                  'div',
 	                  { className: 'value' },
-	                  '0'
+	                  this.downloads()
 	                ),
 	                React.createElement(
 	                  'div',
@@ -53211,7 +53224,7 @@
 	                React.createElement(
 	                  'div',
 	                  { className: 'value' },
-	                  '0'
+	                  this.state.tracks.length
 	                ),
 	                React.createElement(
 	                  'div',
@@ -53230,7 +53243,7 @@
 	          'div',
 	          { className: 'bio_container' },
 	          React.createElement(
-	            'h4',
+	            'h2',
 	            null,
 	            'Bio'
 	          ),
@@ -53248,7 +53261,7 @@
 	          'div',
 	          { className: 'users_uploaded_tracks' },
 	          React.createElement(
-	            'h4',
+	            'h2',
 	            null,
 	            'Tracks Uploaded'
 	          ),
@@ -57638,7 +57651,12 @@
 	      React.createElement(
 	        "div",
 	        { className: "midsection_text" },
-	        "Find your sound."
+	        "Find your sound.",
+	        React.createElement(
+	          "p",
+	          { className: "midsection_subtext" },
+	          "Broaden your search by looking through multiple Soundscapes and Artists, or narrow in by requiring specific Tags.  Use the Search field to peer into both Titles and Descriptions to find that exact sound you have been seeking."
+	        )
 	      )
 	    );
 	  }

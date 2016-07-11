@@ -29,13 +29,15 @@
 .add_track_title {
   flex: 1;
   margin-top: 25px;
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 600;
 }
 
 .add_track_p {
   flex: 1;
+  font-size: 20px;
   color: #333333;
+  margin-bottom: 40px;
 }
 
 .add_track_button_container {

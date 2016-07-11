@@ -177,8 +177,16 @@ body.cafe {
   font-size: 50px;
   font-weight: 700;
   position: absolute;
-  right: 20%;
-  bottom: 250px;
+  left: 40%;
+  bottom: 200px;
+}
+
+.midsection_subtext {
+  font-size: 18px;
+  width: 450px;
+  color: #5d5d5d;
+  margin-top: 10px;
+  margin-left: 25px;
 }
 
 .soundscape_index {
@@ -258,7 +266,8 @@ body.cafe {
 }
 
 .waves.ss_item_container {
-  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,h_400/v1467349002/beachwaves_qgvy7z.jpg');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1468216689/oceansagains_v0op8t.jpg');
+  background-size: 600px;
   background-position: center;
 }
 
@@ -471,7 +480,7 @@ body.cafe {
 .track_detail_options {
   height: 50px;
   text-align: left;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .add_to_playlist {
@@ -487,6 +496,10 @@ body.cafe {
   padding-right: 0;
   margin-right: 0;
   font-size: 20px;
+}
+
+.edit_track:hover {
+  cursor: pointer;
 }
 
 .download_button {
@@ -508,20 +521,12 @@ body.cafe {
   font-size: 20px;
 }
 
-.collapse_track {
-  margin-right: 14%;
-  height: 30px;
-  font-size: 20px;
+.trash_track:hover {
+  cursor: pointer;
 }
 
 .collapse_glyph {
   float: right;
-}
-
-.track_description {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  line-height: normal;
 }
 
 .soundscape_icon {
@@ -647,7 +652,7 @@ body.cafe {
 .content_bottom {
   position: absolute;
   bottom: 25px;
-  background-color: transparent;
+  background-color: rgba(0,0,0,.6);
   z-index: 5;
   left: 0;
   height: 80px;
@@ -714,6 +719,12 @@ body.cafe {
 .bio_container {
   flex: 1;
   margin-right: 20px;
+}
+
+.bio_text {
+  font-size: 18px;
+  margin: 10px;
+  line-height: 2;
 }
 
 .user_page {
