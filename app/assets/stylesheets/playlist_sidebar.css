@@ -91,9 +91,9 @@
 }
 
 .playlist_download_link {
-  color: white;
+  color: inherit;
 }
 
 .playlist_download_link:hover {
-  color: black;
+  color: #ff1346;
 }

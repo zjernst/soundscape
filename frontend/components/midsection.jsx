@@ -7,10 +7,7 @@ const Midsection = React.createClass({
         <div className="midsection_background" />
         <div className="midsection_text">Find your sound.
          <p className="midsection_subtext">
-          Broaden your search by looking through multiple Soundscapes
-          and Artists, or narrow in by requiring specific Tags.  Use the Search
-          field to peer into both Titles and Descriptions to find that exact
-          sound you have been seeking.</p>
+          Filter by Soundscapes, Tags, and Artists to find the perfect sound.</p>
         </div>
       </div>
     )
@@ -18,3 +15,8 @@ const Midsection = React.createClass({
 });
 
 module.exports = Midsection;
+
+// Broaden your search by looking through multiple Soundscapes
+// and Artists, or narrow in by requiring specific Tags.  Use the Search
+// field to peer into both Titles and Descriptions to find that exact
+// sound you have been seeking.

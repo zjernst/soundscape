@@ -55144,7 +55144,7 @@
 /* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -57652,7 +57652,7 @@
 	        React.createElement(
 	          "p",
 	          { className: "midsection_subtext" },
-	          "Broaden your search by looking through multiple Soundscapes and Artists, or narrow in by requiring specific Tags.  Use the Search field to peer into both Titles and Descriptions to find that exact sound you have been seeking."
+	          "Filter by Soundscapes, Tags, and Artists to find the perfect sound."
 	        )
 	      )
 	    );
@@ -57660,6 +57660,11 @@
 	});
 	
 	module.exports = Midsection;
+	
+	// Broaden your search by looking through multiple Soundscapes
+	// and Artists, or narrow in by requiring specific Tags.  Use the Search
+	// field to peer into both Titles and Descriptions to find that exact
+	// sound you have been seeking.
 
 /***/ },
 /* 580 */
