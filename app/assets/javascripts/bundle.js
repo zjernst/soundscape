@@ -53515,7 +53515,7 @@
 	              onClick: this._updateDownload },
 	            React.createElement(
 	              'a',
-	              { href: this.props.track.track_url,
+	              { className: 'download_link', href: this.props.track.track_url,
 	                download: this.props.track.title },
 	              'Download'
 	            )
@@ -57831,27 +57831,40 @@
 	        applyTag: _this._applyTag,
 	        all: _this.state.all });
 	    });
-	    var allClass = "tag_index_item";
+	    var allClass = "tag_label";
 	    if (this.state.all) {
 	      allClass = allClass + " selected";
 	    }
 	    return React.createElement(
 	      'div',
-	      { className: 'tag_index' },
+	      { className: 'tag filter_container' },
 	      React.createElement(
 	        'div',
-	        { className: allClass, onClick: this._all },
+	        { className: 'tag filter_title' },
 	        React.createElement(
-	          'h4',
-	          { className: 'tag_item_text' },
-	          React.createElement(
-	            Label,
-	            { className: 'tag_label' },
-	            'Any Tag'
-	          )
+	          'span',
+	          { className: 'tag filter_text' },
+	          'Tags'
 	        )
 	      ),
-	      tags
+	      React.createElement(
+	        'div',
+	        { className: 'tag_index' },
+	        React.createElement(
+	          'div',
+	          { className: 'tag_index_item', onClick: this._all },
+	          React.createElement(
+	            'h4',
+	            { className: 'tag_item_text' },
+	            React.createElement(
+	              Label,
+	              { className: allClass },
+	              'Any Tag'
+	            )
+	          )
+	        ),
+	        tags
+	      )
 	    );
 	  }
 	});
@@ -57886,21 +57899,21 @@
 	  render: function render() {
 	    var tagClass = void 0;
 	    if (this.state.selected) {
-	      tagClass = classNames("tag_index_item", "selected");
+	      tagClass = classNames("tag_label", "selected");
 	    } else {
-	      tagClass = "tag_index_item";
+	      tagClass = "tag_label";
 	    }
 	    name = this.props.tag.name;
 	    name = name.charAt(0).toUpperCase() + name.slice(1);
 	    return React.createElement(
 	      'div',
-	      { className: tagClass, onClick: this._tagFilter },
+	      { className: 'tag_index_item', onClick: this._tagFilter },
 	      React.createElement(
 	        'h4',
 	        { className: 'tag_item_text' },
 	        React.createElement(
 	          Label,
-	          { className: 'tag_label' },
+	          { className: tagClass },
 	          name
 	        )
 	      )
@@ -57951,28 +57964,41 @@
 	        applySoundscape: _this._applySoundscape,
 	        all: _this.state.all });
 	    });
-	    var allClass = "soundscape_filter_item";
+	    var allClass = "soundscape_label";
 	    if (this.state.all) {
 	      allClass = allClass + " selected";
 	    }
 	    return React.createElement(
 	      'div',
-	      { className: 'soundscape_filter_index' },
+	      { className: 'soundscape filter_container' },
 	      React.createElement(
 	        'div',
-	        { className: allClass,
-	          onClick: this._all },
+	        { className: 'soundscape filter_title' },
 	        React.createElement(
-	          'h4',
-	          { className: 'soundscape_item_text' },
-	          React.createElement(
-	            Label,
-	            { className: 'soundscape_label' },
-	            'All Soundscapes'
-	          )
+	          'span',
+	          { className: 'soundscape filter_text' },
+	          'Soundscapes'
 	        )
 	      ),
-	      soundscapes
+	      React.createElement(
+	        'div',
+	        { className: 'soundscape_filter_index' },
+	        React.createElement(
+	          'div',
+	          { className: 'soundscape_filter_item',
+	            onClick: this._all },
+	          React.createElement(
+	            'h4',
+	            { className: 'soundscape_item_text' },
+	            React.createElement(
+	              Label,
+	              { className: allClass },
+	              'All Soundscapes'
+	            )
+	          )
+	        ),
+	        soundscapes
+	      )
 	    );
 	  }
 	});
@@ -58007,21 +58033,21 @@
 	  render: function render() {
 	    var soundscapeClass = void 0;
 	    if (this.state.selected) {
-	      soundscapeClass = classNames("soundscape_filter_item", "selected");
+	      soundscapeClass = classNames("soundscape_label", "selected");
 	    } else {
-	      soundscapeClass = "soundscape_filter_item";
+	      soundscapeClass = "soundscape_label";
 	    }
 	    name = this.props.soundscape.title;
 	    name = name.charAt(0).toUpperCase() + name.slice(1);
 	    return React.createElement(
 	      'div',
-	      { className: soundscapeClass, onClick: this._soundscapeFilter },
+	      { className: 'soundscape_filter_item', onClick: this._soundscapeFilter },
 	      React.createElement(
 	        'h4',
 	        { className: 'soundscape_item_text' },
 	        React.createElement(
 	          Label,
-	          { className: 'soundscape_label' },
+	          { className: soundscapeClass },
 	          name
 	        )
 	      )
@@ -58072,28 +58098,41 @@
 	        applyArtist: _this._applyArtist,
 	        all: _this.state.all });
 	    });
-	    var allClass = "artist_filter_item";
+	    var allClass = "artist_label";
 	    if (this.state.all) {
 	      allClass = allClass + " selected";
 	    }
 	    return React.createElement(
 	      'div',
-	      { className: 'artist_filter_index' },
+	      { className: 'artist filter_container' },
 	      React.createElement(
 	        'div',
-	        { className: allClass,
-	          onClick: this._all },
+	        { className: 'artist filter_title' },
 	        React.createElement(
-	          'h4',
-	          { className: 'artist_item_text' },
-	          React.createElement(
-	            Label,
-	            { className: 'artist_label' },
-	            'All Artists'
-	          )
+	          'span',
+	          { className: 'artist filter_text' },
+	          'Artists'
 	        )
 	      ),
-	      artists
+	      React.createElement(
+	        'div',
+	        { className: 'artist_filter_index' },
+	        React.createElement(
+	          'div',
+	          { className: 'artist_filter_item',
+	            onClick: this._all },
+	          React.createElement(
+	            'h4',
+	            { className: 'artist_item_text' },
+	            React.createElement(
+	              Label,
+	              { className: allClass },
+	              'All Artists'
+	            )
+	          )
+	        ),
+	        artists
+	      )
 	    );
 	  }
 	});
@@ -58128,19 +58167,19 @@
 	  render: function render() {
 	    var artistClass = void 0;
 	    if (this.state.selected) {
-	      artistClass = classNames("artist_filter_item", "selected");
+	      artistClass = classNames("artist_label", "selected");
 	    } else {
-	      artistClass = "artist_filter_item";
+	      artistClass = "artist_label";
 	    }
 	    return React.createElement(
 	      'div',
-	      { className: artistClass, onClick: this._artistFilter },
+	      { className: 'artist_filter_item', onClick: this._artistFilter },
 	      React.createElement(
 	        'h4',
 	        { className: 'artist_item_text' },
 	        React.createElement(
 	          Label,
-	          { className: 'artist_label' },
+	          { className: artistClass },
 	          this.props.artist.username
 	        )
 	      )

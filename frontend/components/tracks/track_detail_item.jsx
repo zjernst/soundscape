@@ -62,7 +62,7 @@ const TrackDetailItem = React.createClass({
         <div className="track_detail_options">
         <button className="download_button"
          onClick={this._updateDownload}>
-         <a href={this.props.track.track_url}
+         <a className="download_link" href={this.props.track.track_url}
           download={this.props.track.title}>Download</a></button>
         <div className="add_to_playlist" onClick={this._addToPlayer}>
           <i className="fa fa-plus-circle" aria-hidden="true"></i>

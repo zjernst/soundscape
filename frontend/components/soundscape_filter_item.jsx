@@ -22,15 +22,15 @@ const SoundscapeFilterItem = React.createClass({
   render() {
     let soundscapeClass
     if (this.state.selected) {
-      soundscapeClass = classNames("soundscape_filter_item", "selected")
+      soundscapeClass = classNames("soundscape_label", "selected")
     } else {
-      soundscapeClass = "soundscape_filter_item"
+      soundscapeClass = "soundscape_label"
     }
     name = this.props.soundscape.title
     name = name.charAt(0).toUpperCase() + name.slice(1);
     return(
-      <div className={soundscapeClass} onClick={this._soundscapeFilter}>
-        <h4 className="soundscape_item_text"><Label className="soundscape_label">{name}</Label></h4>
+      <div className="soundscape_filter_item" onClick={this._soundscapeFilter}>
+        <h4 className="soundscape_item_text"><Label className={soundscapeClass}>{name}</Label></h4>
       </div>
     )
   }
