@@ -50,7 +50,6 @@ const SigninForm = React.createClass({
       });
       if (ErrorStore.all().length === 0){
         this.close();
-        hashHistory.push('/index');
         this.setState({ show: false, username: "", password1: "", password2: ""});
       }
     } else {
@@ -117,7 +116,6 @@ const SigninForm = React.createClass({
         password: that.state.password1
       });
       that.close();
-      hashHistory.push('/index');
     }, time);
   },
 

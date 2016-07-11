@@ -5,6 +5,8 @@
 
 .form-group {
     margin-bottom: 15px;
+    max-height: 350px;
+    overflow: scroll;
 }
 
 label {
@@ -21,10 +23,24 @@ select {
 
 .button {
   font-size: 18px;
+  display: block;
+}
+
+.track_submit.button {
+  display: block;
+  background: #3abfb4;
+  color: white;
+}
+
+.track_submit.button[disabled] {
+    background: #ebebeb;
+    color: lightgray;
 }
 
 .upload-form {
-  font-size: 18px;
+    font-size: 18px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .modal-content {
