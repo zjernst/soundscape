@@ -524,8 +524,8 @@ Tagging.create({track_id: 49, tag_id: 17})
 Tagging.create({track_id: 49, tag_id: 5})
 Tagging.create({track_id: 49, tag_id: 1})
 
-Track.create({title: 'Tidepool', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467989056/332171__pyro13djt__water-in-a-pond_ng0co9.ogg',
-  description: "Playing in a tidepool on the Pacific.", downloads: 4, soundscape_id: 2, artist_id: 2})
+Track.create({title: 'Another Tidepool', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467989056/332171__pyro13djt__water-in-a-pond_ng0co9.ogg',
+  description: "Playing in a tidepool (again) on the Pacific.", downloads: 4, soundscape_id: 2, artist_id: 2})
 
 Tagging.create({track_id: 50, tag_id: 1})
 Tagging.create({track_id: 50, tag_id: 2})
