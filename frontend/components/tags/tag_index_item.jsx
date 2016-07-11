@@ -22,15 +22,15 @@ const TagIndexItem = React.createClass({
   render() {
     let tagClass
     if (this.state.selected) {
-      tagClass = classNames("tag_index_item", "selected")
+      tagClass = classNames("tag_label", "selected")
     } else {
-      tagClass = "tag_index_item"
+      tagClass = "tag_label"
     }
     name = this.props.tag.name
     name = name.charAt(0).toUpperCase() + name.slice(1);
     return(
-      <div className={tagClass} onClick={this._tagFilter}>
-        <h4 className="tag_item_text"><Label className="tag_label">{name}</Label></h4>
+      <div className="tag_index_item" onClick={this._tagFilter}>
+        <h4 className="tag_item_text"><Label className={tagClass}>{name}</Label></h4>
       </div>
     )
   }

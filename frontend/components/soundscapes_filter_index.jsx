@@ -33,21 +33,27 @@ const SoundscapeFilterIndex = React.createClass({
               applySoundscape={this._applySoundscape}
               all={this.state.all} />
     });
-    let allClass = "soundscape_filter_item"
+    let allClass = "soundscape_label"
     if (this.state.all) {
       allClass = allClass + " selected"
     }
     return(
+      <div className="soundscape filter_container">
+      <div className="soundscape filter_title">
+        <span className="soundscape filter_text">Soundscapes</span>
+      </div>
       <div className="soundscape_filter_index">
-        <div className={allClass}
+
+        <div className="soundscape_filter_item"
              onClick={this._all}>
              <h4 className="soundscape_item_text">
-             <Label className="soundscape_label">
+             <Label className={allClass}>
              All Soundscapes
              </Label>
              </h4>
         </div>
         {soundscapes}
+        </div>
       </div>
     )
   }

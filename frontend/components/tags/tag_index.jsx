@@ -33,18 +33,23 @@ const TagIndex = React.createClass({
               applyTag={this._applyTag}
               all={this.state.all} />
     });
-    let allClass = "tag_index_item"
+    let allClass = "tag_label"
     if (this.state.all) {
       allClass = allClass + " selected"
     }
     return(
+      <div className="tag filter_container">
+      <div className="tag filter_title">
+        <span className="tag filter_text">Tags</span>
+      </div>
       <div className="tag_index">
-        <div className={allClass} onClick={this._all}>
-          <h4 className="tag_item_text"><Label className="tag_label">
+        <div className="tag_index_item" onClick={this._all}>
+          <h4 className="tag_item_text"><Label className={allClass}>
           Any Tag
           </Label></h4>
         </div>
         {tags}
+        </div>
       </div>
     )
   }

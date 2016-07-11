@@ -22,13 +22,13 @@ const ArtistFilterItem = React.createClass({
   render() {
     let artistClass
     if (this.state.selected) {
-      artistClass = classNames("artist_filter_item", "selected")
+      artistClass = classNames("artist_label", "selected")
     } else {
-      artistClass = "artist_filter_item"
+      artistClass = "artist_label"
     }
     return(
-      <div className={artistClass} onClick={this._artistFilter}>
-        <h4 className="artist_item_text"><Label className="artist_label">{this.props.artist.username}</Label></h4>
+      <div className="artist_filter_item" onClick={this._artistFilter}>
+        <h4 className="artist_item_text"><Label className={artistClass}>{this.props.artist.username}</Label></h4>
       </div>
     )
   }

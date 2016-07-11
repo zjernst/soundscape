@@ -34,21 +34,26 @@ const ArtistFilterIndex = React.createClass({
               applyArtist={this._applyArtist}
               all={this.state.all} />
     });
-    let allClass = "artist_filter_item"
+    let allClass = "artist_label"
     if (this.state.all) {
       allClass = allClass + " selected"
     }
     return(
+      <div className="artist filter_container">
+      <div className="artist filter_title">
+        <span className="artist filter_text">Artists</span>
+      </div>
       <div className="artist_filter_index">
-        <div className={allClass}
+        <div className="artist_filter_item"
              onClick={this._all}>
              <h4 className="artist_item_text">
-             <Label className="artist_label">
+             <Label className={allClass}>
              All Artists
              </Label>
              </h4>
          </div>
         {artists}
+        </div>
       </div>
     )
   }
