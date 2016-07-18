@@ -60,7 +60,7 @@ Soundscape.create({title: 'home', image_url: 'https://res.cloudinary.com/soundsc
 Soundscape.create({title: 'fire', image_url: 'https://res.cloudinary.com/soundscape/image/upload/c_crop,h_370/v1467311158/logo_5_kptop2.png'})
 Soundscape.create({title: 'cafe', image_url: 'https://res.cloudinary.com/soundscape/image/upload/c_crop,h_310,w_350/v1467311151/logo_8_qqdcng.png'})
 
-Track.create({title: 'Soft Rain and Thunder', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1468219722/327699__dobroide__20151101-soft-rain-thunder-05_tedd06.mp3',
+Track.create({title: 'Soft Rain and Thunder', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467350570/141251__oroborosnz__thunder-storm_xgafnf.mp3',
   description: "Soft rain with some thunder in the distance. Very calming", downloads: 26, soundscape_id: 1, artist_id: 2})
 
 Tagging.create({track_id: 1, tag_id: 3})
@@ -134,7 +134,7 @@ Tagging.create({track_id: 8, tag_id: 10})
 Tagging.create({track_id: 8, tag_id: 12})
 Tagging.create({track_id: 8, tag_id: 17})
 
-Track.create({title: 'Crouds', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467321148/Allegro_from_Duet_in_C_Major_jvdgmr.mp3',
+Track.create({title: 'Crowds', track_url: 'https://res.cloudinary.com/soundscape/video/upload/v1467963537/city/244623__metzik__crowds.mp3',
   description: "A sampling of a variety of crowds", downloads: 9, soundscape_id: 4, artist_id: 1})
 
 Tagging.create({track_id: 9, tag_id: 5})
