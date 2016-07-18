@@ -69,14 +69,14 @@
 	
 	var LoginForm = __webpack_require__(272);
 	var UserPage = __webpack_require__(537);
-	var SoundscapeIndex = __webpack_require__(549);
-	var Navbar = __webpack_require__(555);
-	var SoundscapeDetail = __webpack_require__(551);
-	var Player = __webpack_require__(557);
-	var PlaylistSidebar = __webpack_require__(574);
-	var Frontpage = __webpack_require__(577);
-	var Footer = __webpack_require__(589);
-	var SplashPage = __webpack_require__(590);
+	var SoundscapeIndex = __webpack_require__(551);
+	var Navbar = __webpack_require__(557);
+	var SoundscapeDetail = __webpack_require__(553);
+	var Player = __webpack_require__(559);
+	var PlaylistSidebar = __webpack_require__(576);
+	var Frontpage = __webpack_require__(579);
+	var Footer = __webpack_require__(591);
+	var SplashPage = __webpack_require__(592);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -53126,7 +53126,7 @@
 	var TrackIndex = __webpack_require__(539);
 	var UserStore = __webpack_require__(257);
 	var hashHistory = __webpack_require__(168).hashHistory;
-	var AddTrack = __webpack_require__(591);
+	var AddTrack = __webpack_require__(550);
 	
 	var UserPage = React.createClass({
 	  displayName: 'UserPage',
@@ -53332,7 +53332,7 @@
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var classNames = __webpack_require__(296);
 	var TrackHeader = __webpack_require__(548);
-	var NullTrack = __webpack_require__(592);
+	var NullTrack = __webpack_require__(549);
 	
 	var TrackIndex = React.createClass({
 	  displayName: 'TrackIndex',
@@ -54043,10 +54043,112 @@
 	'use strict';
 	
 	var React = __webpack_require__(1);
+	
+	var NullTrack = React.createClass({
+	  displayName: 'NullTrack',
+	  _scrollToLink: function _scrollToLink() {
+	    $('html,body').animate({
+	      scrollTop: $('.add_track_container').offset().top - 100 }, 'slow');
+	  },
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'null track_index_item' },
+	      React.createElement(
+	        'div',
+	        { className: 'null_text' },
+	        React.createElement(
+	          'p',
+	          null,
+	          'No Results Found'
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'link_to_add' },
+	        React.createElement(
+	          'a',
+	          { onClick: this._scrollToLink },
+	          'Have something in mind? Be the sound in the world you want to hear!'
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = NullTrack;
+
+/***/ },
+/* 550 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var TrackForm = __webpack_require__(542);
+	
+	var AddTrack = React.createClass({
+	  displayName: 'AddTrack',
+	  getInitialState: function getInitialState() {
+	    return { show: false };
+	  },
+	  _addForm: function _addForm() {
+	    this.setState({ show: true });
+	  },
+	  _closeForm: function _closeForm() {
+	    this.setState({ show: false });
+	  },
+	  render: function render() {
+	    var form = void 0;
+	    if (this.state.show) {
+	      form = React.createElement(TrackForm, { toggleButton: this._closeForm });
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      { id: 'add', className: 'add_track_container' },
+	      form,
+	      React.createElement('div', { className: 'add_track_inner' }),
+	      React.createElement(
+	        'div',
+	        { className: 'add_track_text' },
+	        React.createElement(
+	          'h4',
+	          { className: 'add_track_title' },
+	          'Share your sounds!'
+	        ),
+	        React.createElement(
+	          'p',
+	          { className: 'add_track_p' },
+	          'Upload your own tracks. Make the world a more audible place for all.'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'add_track_button_container' },
+	          React.createElement(
+	            'button',
+	            { className: 'add_track_button', onClick: this._addForm },
+	            'Add Track'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = AddTrack;
+
+/***/ },
+/* 551 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
-	var SoundscapeIndexItem = __webpack_require__(550);
-	var WelcomeCarousel = __webpack_require__(554);
+	var SoundscapeIndexItem = __webpack_require__(552);
+	var WelcomeCarousel = __webpack_require__(556);
 	
 	var SoundscapeIndex = React.createClass({
 	  displayName: 'SoundscapeIndex',
@@ -54089,7 +54191,7 @@
 	module.exports = SoundscapeIndex;
 
 /***/ },
-/* 550 */
+/* 552 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54098,7 +54200,7 @@
 	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
-	var SoundscapeDetail = __webpack_require__(551);
+	var SoundscapeDetail = __webpack_require__(553);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var TrackActions = __webpack_require__(264);
 	
@@ -54135,7 +54237,7 @@
 	module.exports = SoundscapeIndexItem;
 
 /***/ },
-/* 551 */
+/* 553 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54144,7 +54246,7 @@
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
 	var TrackIndex = __webpack_require__(539);
-	var SoundscapeDetailsIndex = __webpack_require__(552);
+	var SoundscapeDetailsIndex = __webpack_require__(554);
 	var TrackForm = __webpack_require__(542);
 	
 	var SoundscapeDetail = React.createClass({
@@ -54218,7 +54320,7 @@
 	module.exports = SoundscapeDetail;
 
 /***/ },
-/* 552 */
+/* 554 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54226,7 +54328,7 @@
 	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
-	var SoundscapeIcon = __webpack_require__(553);
+	var SoundscapeIcon = __webpack_require__(555);
 	
 	var SoundscapeDetailsIndex = React.createClass({
 	  displayName: 'SoundscapeDetailsIndex',
@@ -54249,7 +54351,7 @@
 	module.exports = SoundscapeDetailsIndex;
 
 /***/ },
-/* 553 */
+/* 555 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54257,7 +54359,7 @@
 	var React = __webpack_require__(1);
 	var SoundscapeStore = __webpack_require__(262);
 	var SoundscapeActions = __webpack_require__(268);
-	var SoundscapeIndexItem = __webpack_require__(550);
+	var SoundscapeIndexItem = __webpack_require__(552);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	var classNames = __webpack_require__(296);
 	var Image = __webpack_require__(274).Image;
@@ -54285,7 +54387,7 @@
 	module.exports = SoundscapeIcon;
 
 /***/ },
-/* 554 */
+/* 556 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54403,7 +54505,7 @@
 	module.exports = WelcomeCarousel;
 
 /***/ },
-/* 555 */
+/* 557 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54412,13 +54514,13 @@
 	var SessionStore = __webpack_require__(239);
 	var SessionActions = __webpack_require__(237);
 	var LoginForm = __webpack_require__(272);
-	var SignupForm = __webpack_require__(556);
+	var SignupForm = __webpack_require__(558);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	
 	var Navbar = React.createClass({
 	  displayName: 'Navbar',
 	  getInitialState: function getInitialState() {
-	    return { logged_in: SessionStore.isUserLoggedIn(), form: "" };
+	    return { logged_in: SessionStore.isUserLoggedIn(), form: "", logoutButton: false };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.sessionListener = SessionStore.addListener(this._onChange);
@@ -54455,15 +54557,60 @@
 	    SessionActions.logout();
 	    hashHistory.push('/');
 	  },
+	  _scrollToAdd: function _scrollToAdd() {
+	    $('html,body').animate({
+	      scrollTop: $('.add_track_container').offset().top - 100 }, 'slow');
+	  },
+	  _scrollToDiscover: function _scrollToDiscover() {
+	    $('html,body').animate({
+	      scrollTop: $('.soundscape_index').offset().top - 100 }, 'slow');
+	  },
+	  _scrollToFilter: function _scrollToFilter() {
+	    $('html,body').animate({
+	      scrollTop: $('.midsection_container').offset().top - 100 }, 'slow');
+	  },
+	  _mouseEnter: function _mouseEnter() {
+	    this.setState({ logoutButton: true });
+	  },
+	  _mouseLeave: function _mouseLeave() {
+	    this.setState({ logoutButton: false });
+	  },
 	  render: function render() {
 	    var logged_in = SessionStore.isUserLoggedIn();
 	    var buttons = [];
+	    var navlinks = void 0;
+	    var logout = void 0;
+	    if (this.state.logoutButton) {
+	      logout = React.createElement(
+	        'div',
+	        { className: 'logout_container' },
+	        React.createElement(
+	          'button',
+	          { className: 'nav_button', key: 'logout', onClick: this._logout },
+	          'Logout'
+	        )
+	      );
+	    }
 	    if (logged_in) {
-	      buttons.push(React.createElement(
-	        'button',
-	        { className: 'nav_button', key: 'logout', onClick: this._logout },
-	        'Logout'
-	      ));
+	      navlinks = React.createElement(
+	        'div',
+	        { className: 'nav_links' },
+	        React.createElement(
+	          'a',
+	          { className: 'navlink', onClick: this._scrollToDiscover },
+	          'Discover'
+	        ),
+	        React.createElement(
+	          'a',
+	          { className: 'navlink', onClick: this._scrollToFilter },
+	          'Search'
+	        ),
+	        React.createElement(
+	          'a',
+	          { className: 'navlink', onClick: this._scrollToAdd },
+	          'Contribute'
+	        )
+	      );
 	    } else {
 	      buttons.push(React.createElement(
 	        'button',
@@ -54489,11 +54636,22 @@
 	          'sound s_c_a_p_e'
 	        )
 	      ),
+	      navlinks,
 	      buttons,
 	      React.createElement(
 	        'div',
 	        { className: 'account_container', onClick: this._gotoUserpage },
 	        SessionStore.currentUser().username
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'nav_avatar',
+	          onMouseEnter: this._mouseEnter,
+	          onMouseLeave: this._mouseLeave },
+	        React.createElement('img', { className: 'nav_profile_pic',
+	          src: SessionStore.currentUser().profile_pic
+	        }),
+	        logout
 	      )
 	    );
 	  }
@@ -54520,7 +54678,7 @@
 	// </Navbar>
 
 /***/ },
-/* 556 */
+/* 558 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54733,7 +54891,7 @@
 	module.exports = SigninForm;
 
 /***/ },
-/* 557 */
+/* 559 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54741,7 +54899,7 @@
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	var React = __webpack_require__(1);
-	var ReactPlayer = __webpack_require__(558);
+	var ReactPlayer = __webpack_require__(560);
 	var TrackStore = __webpack_require__(269);
 	var TrackActions = __webpack_require__(264);
 	var Nav = __webpack_require__(274).Nav;
@@ -55003,7 +55161,7 @@
 	module.exports = Player;
 
 /***/ },
-/* 558 */
+/* 560 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -55016,15 +55174,15 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	__webpack_require__(559);
+	__webpack_require__(561);
 	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _props = __webpack_require__(563);
+	var _props = __webpack_require__(565);
 	
-	var _players = __webpack_require__(564);
+	var _players = __webpack_require__(566);
 	
 	var _players2 = _interopRequireDefault(_players);
 	
@@ -55141,7 +55299,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 559 */
+/* 561 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
@@ -55274,7 +55432,7 @@
 	    function lib$es6$promise$asap$$attemptVertx() {
 	      try {
 	        var r = require;
-	        var vertx = __webpack_require__(561);
+	        var vertx = __webpack_require__(563);
 	        lib$es6$promise$asap$$vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	        return lib$es6$promise$asap$$useVertxTimer();
 	      } catch(e) {
@@ -56092,7 +56250,7 @@
 	    };
 	
 	    /* global define:true module:true window: true */
-	    if ("function" === 'function' && __webpack_require__(562)['amd']) {
+	    if ("function" === 'function' && __webpack_require__(564)['amd']) {
 	      !(__WEBPACK_AMD_DEFINE_RESULT__ = function() { return lib$es6$promise$umd$$ES6Promise; }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof module !== 'undefined' && module['exports']) {
 	      module['exports'] = lib$es6$promise$umd$$ES6Promise;
@@ -56104,10 +56262,10 @@
 	}).call(this);
 	
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), (function() { return this; }()), __webpack_require__(560)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), (function() { return this; }()), __webpack_require__(562)(module)))
 
 /***/ },
-/* 560 */
+/* 562 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -56123,20 +56281,20 @@
 
 
 /***/ },
-/* 561 */
+/* 563 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 562 */
+/* 564 */
 /***/ function(module, exports) {
 
 	module.exports = function() { throw new Error("define cannot be used indirect"); };
 
 
 /***/ },
-/* 563 */
+/* 565 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56215,7 +56373,7 @@
 	};
 
 /***/ },
-/* 564 */
+/* 566 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56224,19 +56382,19 @@
 	  value: true
 	});
 	
-	var _YouTube = __webpack_require__(565);
+	var _YouTube = __webpack_require__(567);
 	
 	var _YouTube2 = _interopRequireDefault(_YouTube);
 	
-	var _SoundCloud = __webpack_require__(569);
+	var _SoundCloud = __webpack_require__(571);
 	
 	var _SoundCloud2 = _interopRequireDefault(_SoundCloud);
 	
-	var _Vimeo = __webpack_require__(572);
+	var _Vimeo = __webpack_require__(574);
 	
 	var _Vimeo2 = _interopRequireDefault(_Vimeo);
 	
-	var _FilePlayer = __webpack_require__(571);
+	var _FilePlayer = __webpack_require__(573);
 	
 	var _FilePlayer2 = _interopRequireDefault(_FilePlayer);
 	
@@ -56246,7 +56404,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 565 */
+/* 567 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56265,15 +56423,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _loadScript = __webpack_require__(566);
+	var _loadScript = __webpack_require__(568);
 	
 	var _loadScript2 = _interopRequireDefault(_loadScript);
 	
-	var _Base2 = __webpack_require__(567);
+	var _Base2 = __webpack_require__(569);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _utils = __webpack_require__(568);
+	var _utils = __webpack_require__(570);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -56475,7 +56633,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 566 */
+/* 568 */
 /***/ function(module, exports) {
 
 	
@@ -56546,7 +56704,7 @@
 
 
 /***/ },
-/* 567 */
+/* 569 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56559,7 +56717,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _props = __webpack_require__(563);
+	var _props = __webpack_require__(565);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -56683,7 +56841,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 568 */
+/* 570 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -56735,7 +56893,7 @@
 	}
 
 /***/ },
-/* 569 */
+/* 571 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56752,11 +56910,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _fetchJsonp = __webpack_require__(570);
+	var _fetchJsonp = __webpack_require__(572);
 	
 	var _fetchJsonp2 = _interopRequireDefault(_fetchJsonp);
 	
-	var _FilePlayer2 = __webpack_require__(571);
+	var _FilePlayer2 = __webpack_require__(573);
 	
 	var _FilePlayer3 = _interopRequireDefault(_FilePlayer2);
 	
@@ -56876,7 +57034,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 570 */
+/* 572 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
@@ -56986,7 +57144,7 @@
 	});
 
 /***/ },
-/* 571 */
+/* 573 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57005,7 +57163,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Base2 = __webpack_require__(567);
+	var _Base2 = __webpack_require__(569);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
@@ -57134,7 +57292,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 572 */
+/* 574 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57153,9 +57311,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _queryString = __webpack_require__(573);
+	var _queryString = __webpack_require__(575);
 	
-	var _Base2 = __webpack_require__(567);
+	var _Base2 = __webpack_require__(569);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
@@ -57317,7 +57475,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 573 */
+/* 575 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57421,7 +57579,7 @@
 
 
 /***/ },
-/* 574 */
+/* 576 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57429,7 +57587,7 @@
 	var React = __webpack_require__(1);
 	var TrackStore = __webpack_require__(269);
 	var TrackActions = __webpack_require__(264);
-	var PlaylistItem = __webpack_require__(575);
+	var PlaylistItem = __webpack_require__(577);
 	
 	var PlaylistSidebar = React.createClass({
 	  displayName: 'PlaylistSidebar',
@@ -57475,13 +57633,13 @@
 	module.exports = PlaylistSidebar;
 
 /***/ },
-/* 575 */
+/* 577 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var PlaylistItemDetail = __webpack_require__(576);
+	var PlaylistItemDetail = __webpack_require__(578);
 	
 	var PlaylistItem = React.createClass({
 	  displayName: 'PlaylistItem',
@@ -57523,7 +57681,7 @@
 	module.exports = PlaylistItem;
 
 /***/ },
-/* 576 */
+/* 578 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57575,17 +57733,17 @@
 	module.exports = PlaylistItemDetail;
 
 /***/ },
-/* 577 */
+/* 579 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var SoundscapeIndex = __webpack_require__(549);
-	var Header = __webpack_require__(578);
-	var Midsection = __webpack_require__(579);
-	var FilteredList = __webpack_require__(580);
-	var AddTrack = __webpack_require__(591);
+	var SoundscapeIndex = __webpack_require__(551);
+	var Header = __webpack_require__(580);
+	var Midsection = __webpack_require__(581);
+	var FilteredList = __webpack_require__(582);
+	var AddTrack = __webpack_require__(550);
 	
 	var Frontpage = React.createClass({
 	  displayName: 'Frontpage',
@@ -57605,7 +57763,7 @@
 	module.exports = Frontpage;
 
 /***/ },
-/* 578 */
+/* 580 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -57631,7 +57789,7 @@
 	module.exports = Header;
 
 /***/ },
-/* 579 */
+/* 581 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -57667,7 +57825,7 @@
 	// sound you have been seeking.
 
 /***/ },
-/* 580 */
+/* 582 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57678,7 +57836,7 @@
 	var SoundscapeStore = __webpack_require__(262);
 	var FilterActions = __webpack_require__(538);
 	var TrackIndex = __webpack_require__(539);
-	var Filter = __webpack_require__(581);
+	var Filter = __webpack_require__(583);
 	
 	var FilteredList = React.createClass({
 	  displayName: 'FilteredList',
@@ -57712,7 +57870,7 @@
 	module.exports = FilteredList;
 
 /***/ },
-/* 581 */
+/* 583 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57728,10 +57886,10 @@
 	var UserActions = __webpack_require__(259);
 	var TrackIndex = __webpack_require__(539);
 	var TagActions = __webpack_require__(546);
-	var TagIndex = __webpack_require__(582);
-	var SoundscapesFilterIndex = __webpack_require__(584);
-	var ArtistFilterIndex = __webpack_require__(586);
-	var TrackSearchBox = __webpack_require__(588);
+	var TagIndex = __webpack_require__(584);
+	var SoundscapesFilterIndex = __webpack_require__(586);
+	var ArtistFilterIndex = __webpack_require__(588);
+	var TrackSearchBox = __webpack_require__(590);
 	var Filter = React.createClass({
 	  displayName: 'Filter',
 	  getInitialState: function getInitialState() {
@@ -57811,13 +57969,13 @@
 	module.exports = Filter;
 
 /***/ },
-/* 582 */
+/* 584 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var TagIndexItem = __webpack_require__(583);
+	var TagIndexItem = __webpack_require__(585);
 	var FilterActions = __webpack_require__(538);
 	var Label = __webpack_require__(274).Label;
 	
@@ -57892,7 +58050,7 @@
 	module.exports = TagIndex;
 
 /***/ },
-/* 583 */
+/* 585 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57944,13 +58102,13 @@
 	module.exports = TagIndexItem;
 
 /***/ },
-/* 584 */
+/* 586 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var SoundscapeFilterItem = __webpack_require__(585);
+	var SoundscapeFilterItem = __webpack_require__(587);
 	var FilterActions = __webpack_require__(538);
 	var Label = __webpack_require__(274).Label;
 	
@@ -58026,7 +58184,7 @@
 	module.exports = SoundscapeFilterIndex;
 
 /***/ },
-/* 585 */
+/* 587 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58078,13 +58236,13 @@
 	module.exports = SoundscapeFilterItem;
 
 /***/ },
-/* 586 */
+/* 588 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var ArtistFilterItem = __webpack_require__(587);
+	var ArtistFilterItem = __webpack_require__(589);
 	var FilterActions = __webpack_require__(538);
 	var Label = __webpack_require__(274).Label;
 	
@@ -58160,7 +58318,7 @@
 	module.exports = ArtistFilterIndex;
 
 /***/ },
-/* 587 */
+/* 589 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58210,7 +58368,7 @@
 	module.exports = ArtistFilterItem;
 
 /***/ },
-/* 588 */
+/* 590 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58239,7 +58397,7 @@
 	module.exports = FilterSearch;
 
 /***/ },
-/* 589 */
+/* 591 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -58261,14 +58419,14 @@
 	module.exports = Footer;
 
 /***/ },
-/* 590 */
+/* 592 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
 	var LoginForm = __webpack_require__(272);
-	var SignupForm = __webpack_require__(556);
+	var SignupForm = __webpack_require__(558);
 	
 	var SplashPage = React.createClass({
 	  displayName: 'SplashPage',
@@ -58322,108 +58480,6 @@
 	//   <p className="infotext third">Explore the Soundscape</p>
 	// </div>
 	module.exports = SplashPage;
-
-/***/ },
-/* 591 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var TrackForm = __webpack_require__(542);
-	
-	var AddTrack = React.createClass({
-	  displayName: 'AddTrack',
-	  getInitialState: function getInitialState() {
-	    return { show: false };
-	  },
-	  _addForm: function _addForm() {
-	    this.setState({ show: true });
-	  },
-	  _closeForm: function _closeForm() {
-	    this.setState({ show: false });
-	  },
-	  render: function render() {
-	    var form = void 0;
-	    if (this.state.show) {
-	      form = React.createElement(TrackForm, { toggleButton: this._closeForm });
-	    }
-	
-	    return React.createElement(
-	      'div',
-	      { id: 'add', className: 'add_track_container' },
-	      form,
-	      React.createElement('div', { className: 'add_track_inner' }),
-	      React.createElement(
-	        'div',
-	        { className: 'add_track_text' },
-	        React.createElement(
-	          'h4',
-	          { className: 'add_track_title' },
-	          'Share your sounds!'
-	        ),
-	        React.createElement(
-	          'p',
-	          { className: 'add_track_p' },
-	          'Upload your own tracks. Make the world a more audible place for all.'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'add_track_button_container' },
-	          React.createElement(
-	            'button',
-	            { className: 'add_track_button', onClick: this._addForm },
-	            'Add Track'
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = AddTrack;
-
-/***/ },
-/* 592 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	
-	var NullTrack = React.createClass({
-	  displayName: 'NullTrack',
-	  _scrollToLink: function _scrollToLink() {
-	    $('html,body').animate({
-	      scrollTop: $('.add_track_container').offset().top - 100 }, 'slow');
-	  },
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'null track_index_item' },
-	      React.createElement(
-	        'div',
-	        { className: 'null_text' },
-	        React.createElement(
-	          'p',
-	          null,
-	          'No Results Found'
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'link_to_add' },
-	        React.createElement(
-	          'a',
-	          { onClick: this._scrollToLink },
-	          'Have something in mind? Be the sound in the world you want to hear!'
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = NullTrack;
 
 /***/ }
 /******/ ]);

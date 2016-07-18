@@ -7,7 +7,7 @@ const hashHistory = require('react-router').hashHistory;
 
 const Navbar = React.createClass({
   getInitialState() {
-    return({logged_in: SessionStore.isUserLoggedIn(), form: ""})
+    return({logged_in: SessionStore.isUserLoggedIn(), form: "", logoutButton: false})
   },
 
   componentDidMount() {
@@ -55,11 +55,49 @@ const Navbar = React.createClass({
     hashHistory.push('/');
   },
 
+  _scrollToAdd() {
+    $('html,body').animate({
+      scrollTop: $('.add_track_container').offset().top - 100},
+    'slow');
+  },
+
+  _scrollToDiscover() {
+    $('html,body').animate({
+      scrollTop: $('.soundscape_index').offset().top - 100},
+    'slow');
+  },
+
+  _scrollToFilter() {
+    $('html,body').animate({
+      scrollTop: $('.midsection_container').offset().top - 100},
+    'slow');
+  },
+
+  _mouseEnter() {
+    this.setState({logoutButton: true})
+  },
+
+  _mouseLeave() {
+    this.setState({logoutButton: false})
+  },
+
   render() {
     let logged_in = SessionStore.isUserLoggedIn();
     let buttons = []
+    let navlinks
+    let logout
+    if (this.state.logoutButton) {
+      logout = <div className="logout_container">
+                <button className="nav_button" key="logout" onClick={this._logout}>Logout</button>
+               </div>
+    }
     if (logged_in) {
-      buttons.push(<button className="nav_button" key="logout" onClick={this._logout}>Logout</button>)
+      navlinks = (
+        <div className="nav_links">
+          <a className="navlink" onClick={this._scrollToDiscover}>Discover</a>
+          <a className="navlink" onClick={this._scrollToFilter}>Search</a>
+          <a className="navlink" onClick={this._scrollToAdd}>Contribute</a>
+        </div>)
     } else {
       buttons.push(<button className="nav_button" key="signup" onClick={this._toSignup}>Sign Up</button>);
       buttons.push(<button className="nav_button" key="login" onClick={this._toLogin}>Log In</button>);
@@ -70,9 +108,18 @@ const Navbar = React.createClass({
         <div className="logo_container">
           <h2 className="logo" onClick={this._gotoIndex}>sound s_c_a_p_e</h2>
         </div>
+        {navlinks}
         {buttons}
         <div className="account_container" onClick={this._gotoUserpage}>
           {SessionStore.currentUser().username}
+        </div>
+        <div className="nav_avatar"
+             onMouseEnter={this._mouseEnter}
+             onMouseLeave={this._mouseLeave}>
+          <img className="nav_profile_pic"
+               src={SessionStore.currentUser().profile_pic}
+               />
+          {logout}
         </div>
       </div>
     )

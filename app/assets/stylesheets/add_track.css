@@ -13,7 +13,7 @@
   flex: 2;
   background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1467996341/market_nvc260.jpg');
   background-position: center;
-  background-size: 800px;
+  background-size: cover;
 }
 
 .add_track_text {

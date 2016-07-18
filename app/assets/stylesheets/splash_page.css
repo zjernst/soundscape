@@ -1,7 +1,7 @@
 .splash_page {
   background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1467949981/mountainlandscape_kf309i.jpg');
   height: 1000px;
-  background-size: 1600px;
+  background-size: cover;
   background-position: center;
   width: 100%;
   position: fixed;

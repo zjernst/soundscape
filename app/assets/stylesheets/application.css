@@ -84,48 +84,19 @@ body.cafe {
 }
 
 .logo_container {
-  margin-left: 60px;
+  margin-top: 2px;
   height: 30px;
-  float: left;
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  height: 65px;
-  width: 100%;
-  padding: 20px 0;
-  z-index: 20;
-  background: white;
-  border-bottom: 1px solid white;
+  flex: 1;
 }
 
 .logo:hover {
   cursor: pointer;
 }
 
-.account_container {
-  float: right;
-  display: inline-block;
-  margin-top: 5px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
 .account_container:hover {
   cursor: pointer;
 }
 
-.nav_button {
-  float: right;
-  margin-top: 5px;
-  margin-left: 10px;
-  margin-right: 40px;
-}
-
-.nav_button:hover {
-  cursor: pointer;
-}
 
 .header_container {
   height: 600px;
