@@ -88,7 +88,7 @@ const Navbar = React.createClass({
     let logout
     if (this.state.logoutButton) {
       logout = <div className="logout_container">
-                <button className="nav_button" key="logout" onClick={this._logout}>Logout</button>
+                <button className="nav_button_logout" key="logout" onClick={this._logout}>Logout</button>
                </div>
     }
     if (logged_in) {
@@ -109,7 +109,9 @@ const Navbar = React.createClass({
           <h2 className="logo" onClick={this._gotoIndex}>sound s_c_a_p_e</h2>
         </div>
         {navlinks}
-        {buttons}
+        <div className="nav_button_container">
+          {buttons}
+        </div>
         <div className="account_container" onClick={this._gotoUserpage}>
           {SessionStore.currentUser().username}
         </div>

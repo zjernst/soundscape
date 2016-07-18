@@ -54586,7 +54586,7 @@
 	        { className: 'logout_container' },
 	        React.createElement(
 	          'button',
-	          { className: 'nav_button', key: 'logout', onClick: this._logout },
+	          { className: 'nav_button_logout', key: 'logout', onClick: this._logout },
 	          'Logout'
 	        )
 	      );
@@ -54637,7 +54637,11 @@
 	        )
 	      ),
 	      navlinks,
-	      buttons,
+	      React.createElement(
+	        'div',
+	        { className: 'nav_button_container' },
+	        buttons
+	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'account_container', onClick: this._gotoUserpage },

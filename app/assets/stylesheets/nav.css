@@ -1,9 +1,19 @@
 .nav_button {
   /*flex: .4;*/
+  flex: 1;
+  margin-left: 20px;
   margin-top: 7px;
   height: 25px;
   z-index: 25;
 }
+
+.nav_button_container {
+  display: flex;
+  justify-content: flex-end;
+  flex: .3;
+  text-align: right;
+}
+
 
 .nav_button:hover {
   cursor: pointer;
