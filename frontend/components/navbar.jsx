@@ -86,6 +86,8 @@ const Navbar = React.createClass({
     let buttons = []
     let navlinks
     let logout
+    let accountContainer
+    let avatar
     if (this.state.logoutButton) {
       logout = <div className="logout_container">
                 <button className="nav_button_logout" key="logout" onClick={this._logout}>Logout</button>
@@ -98,6 +100,21 @@ const Navbar = React.createClass({
           <a className="navlink" onClick={this._scrollToFilter}>Search</a>
           <a className="navlink" onClick={this._scrollToAdd}>Contribute</a>
         </div>)
+      accountContainer = (
+        <div className="account_container" onClick={this._gotoUserpage}>
+          {SessionStore.currentUser().username}
+        </div>
+      )
+      avatar = (
+        <div className="nav_avatar"
+             onMouseEnter={this._mouseEnter}
+             onMouseLeave={this._mouseLeave}>
+          <img className="nav_profile_pic"
+               src={SessionStore.currentUser().profile_pic}
+               />
+          {logout}
+        </div>
+      )
     } else {
       buttons.push(<button className="nav_button" key="signup" onClick={this._toSignup}>Sign Up</button>);
       buttons.push(<button className="nav_button" key="login" onClick={this._toLogin}>Log In</button>);
@@ -112,17 +129,8 @@ const Navbar = React.createClass({
         <div className="nav_button_container">
           {buttons}
         </div>
-        <div className="account_container" onClick={this._gotoUserpage}>
-          {SessionStore.currentUser().username}
-        </div>
-        <div className="nav_avatar"
-             onMouseEnter={this._mouseEnter}
-             onMouseLeave={this._mouseLeave}>
-          <img className="nav_profile_pic"
-               src={SessionStore.currentUser().profile_pic}
-               />
-          {logout}
-        </div>
+        {accountContainer}
+        {avatar}
       </div>
     )
   }
