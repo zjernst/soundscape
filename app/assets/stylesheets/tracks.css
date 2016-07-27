@@ -26,8 +26,13 @@
 }
 
 .collapse_track {
-  margin-right: 14%;
+  padding-right: 14%;
   height: 30px;
+  font-size: 20px;
+}
+
+.open_track {
+  flex: .4;
   font-size: 20px;
 }
 

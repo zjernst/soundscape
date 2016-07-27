@@ -3,6 +3,7 @@ const AppDispatcher = require('../dispatcher/dispatcher.js');
 const Store = require('flux/utils').Store;
 
 let _tracks = [];
+let _playing = 0;
 const TrackStore = new Store(AppDispatcher);
 
 TrackStore.__onDispatch = function(payload) {
@@ -32,6 +33,11 @@ TrackStore.__onDispatch = function(payload) {
 TrackStore.all = function() {
   return _tracks.slice();
 };
+
+TrackStore.playing = function() {
+  let dup = _playing;
+  return dup;
+}
 
 function removeTrack(track) {
   let idx = _tracks.indexOf(track)
