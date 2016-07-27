@@ -55,11 +55,7 @@ function addTrack(track) {
 };
 
 function setPlaying(track) {
-  let idx = _tracks.indexOf(track);
-  if (idx !== -1) {
-    _tracks.splice(idx, 1);
-  }
-  _tracks.unshift(track);
+  _playing = track;
 };
 
 module.exports = TrackStore;

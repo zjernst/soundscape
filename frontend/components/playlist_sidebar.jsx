@@ -29,11 +29,11 @@ const PlaylistSidebar = React.createClass({
   },
 
   render() {
-    let tracks = this.state.tracks.map((track) => {
+    let tracks = this.state.tracks.map((track, idx) => {
       return <PlaylistItem key={track.id}
                            track={track}
                            details={this.state.details}
-                           playing={track === this.state.tracks[0]}/>
+                           playing={idx === this.state.playing}/>
     })
 
     return(

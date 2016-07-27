@@ -33523,11 +33523,7 @@
 	};
 	
 	function setPlaying(track) {
-	  var idx = _tracks.indexOf(track);
-	  if (idx !== -1) {
-	    _tracks.splice(idx, 1);
-	  }
-	  _tracks.unshift(track);
+	  _playing = track;
 	};
 	
 	module.exports = TrackStore;
@@ -54934,7 +54930,8 @@
 	      played: 0,
 	      paused: false,
 	      volume: 1,
-	      duration: 0 };
+	      duration: 0,
+	      currentPlaying: TrackStore.playing() };
 	  },
 	  _playPause: function _playPause() {
 	    this.setState({ playing: !this.state.playing });
@@ -54959,13 +54956,18 @@
 	  },
 	  _next: function _next() {
 	    var front = this.state.tracks.shift();
-	    var newOrder = this.state.tracks;
-	    newOrder.push(front);
-	    this.setState({ tracks: newOrder });
+	    // let newOrder = this.state.tracks
+	    // newOrder.push(front);
+	    // this.setState({tracks: newOrder})
+	    this.setState({ currentPlaying: this.state.currentPlaying + 1 });
+	    if (this.state.currentPlaying >= this.state.tracks.length) {
+	      this.setState({ currentPlaying: this.state.currentPlaying - this.state.tracks.length });
+	    }
 	    if (this.state.playing) {
 	      this.keepPlaying = true;
 	    }
-	    TrackActions.updateTracks(this.state.tracks);
+	    TrackActions.setPlaying(this.state.currentPlaying);
+	    // TrackActions.updateTracks(this.state.tracks);
 	  },
 	  _back: function _back() {
 	    var back = this.state.tracks.pop();
@@ -57632,11 +57634,11 @@
 	  render: function render() {
 	    var _this = this;
 	
-	    var tracks = this.state.tracks.map(function (track) {
+	    var tracks = this.state.tracks.map(function (track, idx) {
 	      return React.createElement(PlaylistItem, { key: track.id,
 	        track: track,
 	        details: _this.state.details,
-	        playing: track === _this.state.tracks[0] });
+	        playing: idx === _this.state.playing });
 	    });
 	
 	    return React.createElement(

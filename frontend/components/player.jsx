@@ -13,7 +13,8 @@ const Player = React.createClass({
             played: 0,
             paused: false,
             volume: 1,
-            duration: 0})
+            duration: 0,
+            currentPlaying: TrackStore.playing()})
   },
 
   _playPause() {
@@ -44,13 +45,18 @@ const Player = React.createClass({
 
   _next() {
     let front = this.state.tracks.shift();
-    let newOrder = this.state.tracks
-    newOrder.push(front);
-    this.setState({tracks: newOrder})
+    // let newOrder = this.state.tracks
+    // newOrder.push(front);
+    // this.setState({tracks: newOrder})
+    this.setState({currentPlaying: this.state.currentPlaying + 1});
+    if (this.state.currentPlaying >= this.state.tracks.length) {
+      this.setState({currentPlaying: this.state.currentPlaying - this.state.tracks.length})
+    }
     if (this.state.playing) {
       this.keepPlaying = true
     }
-    TrackActions.updateTracks(this.state.tracks);
+    TrackActions.setPlaying(this.state.currentPlaying);
+    // TrackActions.updateTracks(this.state.tracks);
   },
 
   _back() {
