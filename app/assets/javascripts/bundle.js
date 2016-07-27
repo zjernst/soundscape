@@ -72,11 +72,11 @@
 	var SoundscapeIndex = __webpack_require__(551);
 	var Navbar = __webpack_require__(557);
 	var SoundscapeDetail = __webpack_require__(553);
-	var Player = __webpack_require__(558);
-	var PlaylistSidebar = __webpack_require__(575);
-	var Frontpage = __webpack_require__(578);
-	var Footer = __webpack_require__(590);
-	var SplashPage = __webpack_require__(591);
+	var Player = __webpack_require__(559);
+	var PlaylistSidebar = __webpack_require__(576);
+	var Frontpage = __webpack_require__(579);
+	var Footer = __webpack_require__(591);
+	var SplashPage = __webpack_require__(592);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -33471,6 +33471,7 @@
 	var Store = __webpack_require__(240).Store;
 	
 	var _tracks = [];
+	var _playing = 0;
 	var TrackStore = new Store(AppDispatcher);
 	
 	TrackStore.__onDispatch = function (payload) {
@@ -33499,6 +33500,11 @@
 	
 	TrackStore.all = function () {
 	  return _tracks.slice();
+	};
+	
+	TrackStore.playing = function () {
+	  var dup = _playing;
+	  return dup;
 	};
 	
 	function removeTrack(track) {
@@ -53425,6 +53431,11 @@
 	          'div',
 	          { className: 'track_index_artist', onClick: this._toArtist },
 	          this.props.parent === "user" ? this.props.track.downloads : this.props.track.artist
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'open_track', onClick: this._displayDetails },
+	          React.createElement(Glyphicon, { className: 'open_glyph', glyph: 'collapse-down' })
 	        )
 	      ),
 	      details
@@ -54029,7 +54040,8 @@
 	        "span",
 	        { className: "track_artist_header" },
 	        this.props.parent === "user" ? "Downloads" : "Artist"
-	      )
+	      ),
+	      React.createElement("div", { className: "collapse_header" })
 	    );
 	  }
 	});
@@ -54514,7 +54526,7 @@
 	var SessionStore = __webpack_require__(239);
 	var SessionActions = __webpack_require__(237);
 	var LoginForm = __webpack_require__(272);
-	var SignupForm = __webpack_require__(592);
+	var SignupForm = __webpack_require__(558);
 	var hashHistory = __webpack_require__(168).hashHistory;
 	
 	var Navbar = React.createClass({
@@ -54691,10 +54703,223 @@
 
 	'use strict';
 	
+	var React = __webpack_require__(1);
+	var SessionActions = __webpack_require__(237);
+	var ErrorActions = __webpack_require__(231);
+	var hashHistory = __webpack_require__(168).hashHistory;
+	var ErrorStore = __webpack_require__(261);
+	var Errors = __webpack_require__(273);
+	var UserStore = __webpack_require__(257);
+	var NavItem = __webpack_require__(274).NavItem;
+	var Modal = __webpack_require__(274).Modal;
+	var FormGroup = __webpack_require__(274).FormGroup;
+	var ControlLabel = __webpack_require__(274).ControlLabel;
+	var FormControl = __webpack_require__(274).FormControl;
+	var Button = __webpack_require__(274).Button;
+	
+	var SigninForm = React.createClass({
+	  displayName: 'SigninForm',
+	
+	  getInitialState: function getInitialState() {
+	    return { show: true, username: "", password1: "", password2: "" };
+	  },
+	
+	  close: function close() {
+	    this.setState({ show: false });
+	    this.props.closeForm();
+	  },
+	
+	  open: function open() {
+	    this.setState({ show: true });
+	  },
+	
+	  handleUsernameChange: function handleUsernameChange(e) {
+	    e.preventDefault();
+	    this.setState({ username: e.target.value });
+	  },
+	
+	  handlePasswordChange: function handlePasswordChange(e) {
+	    e.preventDefault();
+	    this.setState({ password1: e.target.value });
+	  },
+	
+	  handlePasswordChange2: function handlePasswordChange2(e) {
+	    e.preventDefault();
+	    this.setState({ password2: e.target.value });
+	  },
+	
+	  handleSubmit: function handleSubmit(e) {
+	    e.preventDefault();
+	    if (this.getValidationState() === 'success') {
+	      SessionActions.signup({
+	        username: this.state.username,
+	        password: this.state.password1
+	      });
+	      if (ErrorStore.all().length === 0) {
+	        this.close();
+	        this.setState({ show: false, username: "", password1: "", password2: "" });
+	      }
+	    } else {
+	      ErrorActions.receiveErrors(['Passwords must match and be 6 or more characters']);
+	    }
+	  },
+	
+	  getValidationState: function getValidationState() {
+	    if (this.state.password1.length === 0 && this.state.password2.length === 0) {
+	      return null;
+	    }
+	    if (this.state.password1 === this.state.password2 && this.state.password1.length > 5) {
+	      return 'success';
+	    } else {
+	      return 'error';
+	    }
+	  },
+	
+	  demoSignIn: function demoSignIn(e) {
+	    e.preventDefault();
+	    this.setState({ username: "", password1: "", password2: "" });
+	
+	    var username = "Blastoise".split("");
+	    var password = "password".split("");
+	    var time = 50;
+	    var that = this;
+	
+	    $(".btn").addClass("disabled");
+	    $(".btn").attr("disabled", true);
+	    $("input").attr("disabled", true);
+	
+	    username.forEach(function (letter) {
+	      time += 50;
+	      setTimeout(function () {
+	        that.setState({ username: that.state.username + letter });
+	      }, time);
+	    });
+	
+	    time += 500;
+	
+	    password.forEach(function (letter) {
+	      time += 50;
+	      setTimeout(function () {
+	        that.setState({ password1: that.state.password1 + letter });
+	      }, time);
+	    });
+	
+	    time += 500;
+	
+	    password.forEach(function (letter) {
+	      time += 50;
+	      setTimeout(function () {
+	        that.setState({ password2: that.state.password2 + letter });
+	      }, time);
+	    });
+	
+	    time += 500;
+	
+	    setTimeout(function () {
+	      SessionActions.login({
+	        username: that.state.username,
+	        password: that.state.password1
+	      });
+	      that.close();
+	    }, time);
+	  },
+	
+	  render: function render() {
+	    return React.createElement(
+	      Modal,
+	      {
+	        show: this.state.show,
+	        onHide: this.close
+	      },
+	      React.createElement(
+	        Modal.Header,
+	        { closeButton: true },
+	        React.createElement(
+	          Modal.Title,
+	          null,
+	          'Sign Up'
+	        )
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'modal-form', onSubmit: this.handleSubmit },
+	        React.createElement(
+	          FormGroup,
+	          null,
+	          React.createElement(
+	            ControlLabel,
+	            null,
+	            'Username'
+	          ),
+	          React.createElement(FormControl, {
+	            type: 'text',
+	            onChange: this.handleUsernameChange,
+	            value: this.state.username
+	          })
+	        ),
+	        React.createElement(
+	          FormGroup,
+	          {
+	            validationState: this.getValidationState()
+	          },
+	          React.createElement(
+	            ControlLabel,
+	            null,
+	            'Password'
+	          ),
+	          React.createElement(FormControl, {
+	            type: 'password',
+	            onChange: this.handlePasswordChange,
+	            value: this.state.password1
+	          }),
+	          React.createElement(FormControl.Feedback, null)
+	        ),
+	        React.createElement(
+	          FormGroup,
+	          {
+	            validationState: this.getValidationState()
+	          },
+	          React.createElement(
+	            ControlLabel,
+	            null,
+	            'Confirm Password'
+	          ),
+	          React.createElement(FormControl, {
+	            type: 'password',
+	            onChange: this.handlePasswordChange2,
+	            value: this.state.password2
+	          }),
+	          React.createElement(FormControl.Feedback, null)
+	        ),
+	        React.createElement(
+	          Button,
+	          { type: 'submit' },
+	          'Submit'
+	        ),
+	        React.createElement(
+	          Button,
+	          { onClick: this.demoSignIn },
+	          'Demo Sign In'
+	        )
+	      ),
+	      React.createElement(Errors, null)
+	    );
+	  }
+	
+	});
+	
+	module.exports = SigninForm;
+
+/***/ },
+/* 559 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
 	var React = __webpack_require__(1);
-	var ReactPlayer = __webpack_require__(559);
+	var ReactPlayer = __webpack_require__(560);
 	var TrackStore = __webpack_require__(269);
 	var TrackActions = __webpack_require__(264);
 	var Nav = __webpack_require__(274).Nav;
@@ -54956,7 +55181,7 @@
 	module.exports = Player;
 
 /***/ },
-/* 559 */
+/* 560 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -54969,15 +55194,15 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	__webpack_require__(560);
+	__webpack_require__(561);
 	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _props = __webpack_require__(564);
+	var _props = __webpack_require__(565);
 	
-	var _players = __webpack_require__(565);
+	var _players = __webpack_require__(566);
 	
 	var _players2 = _interopRequireDefault(_players);
 	
@@ -55094,10 +55319,10 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 560 */
+/* 561 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -55227,7 +55452,7 @@
 	    function lib$es6$promise$asap$$attemptVertx() {
 	      try {
 	        var r = require;
-	        var vertx = __webpack_require__(562);
+	        var vertx = __webpack_require__(563);
 	        lib$es6$promise$asap$$vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	        return lib$es6$promise$asap$$useVertxTimer();
 	      } catch(e) {
@@ -56045,7 +56270,7 @@
 	    };
 	
 	    /* global define:true module:true window: true */
-	    if ("function" === 'function' && __webpack_require__(563)['amd']) {
+	    if ("function" === 'function' && __webpack_require__(564)['amd']) {
 	      !(__WEBPACK_AMD_DEFINE_RESULT__ = function() { return lib$es6$promise$umd$$ES6Promise; }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	    } else if (typeof module !== 'undefined' && module['exports']) {
 	      module['exports'] = lib$es6$promise$umd$$ES6Promise;
@@ -56057,10 +56282,10 @@
 	}).call(this);
 	
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), (function() { return this; }()), __webpack_require__(561)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), (function() { return this; }()), __webpack_require__(562)(module)))
 
 /***/ },
-/* 561 */
+/* 562 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -56076,20 +56301,20 @@
 
 
 /***/ },
-/* 562 */
+/* 563 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 563 */
+/* 564 */
 /***/ function(module, exports) {
 
 	module.exports = function() { throw new Error("define cannot be used indirect"); };
 
 
 /***/ },
-/* 564 */
+/* 565 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56168,7 +56393,7 @@
 	};
 
 /***/ },
-/* 565 */
+/* 566 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56177,19 +56402,19 @@
 	  value: true
 	});
 	
-	var _YouTube = __webpack_require__(566);
+	var _YouTube = __webpack_require__(567);
 	
 	var _YouTube2 = _interopRequireDefault(_YouTube);
 	
-	var _SoundCloud = __webpack_require__(570);
+	var _SoundCloud = __webpack_require__(571);
 	
 	var _SoundCloud2 = _interopRequireDefault(_SoundCloud);
 	
-	var _Vimeo = __webpack_require__(573);
+	var _Vimeo = __webpack_require__(574);
 	
 	var _Vimeo2 = _interopRequireDefault(_Vimeo);
 	
-	var _FilePlayer = __webpack_require__(572);
+	var _FilePlayer = __webpack_require__(573);
 	
 	var _FilePlayer2 = _interopRequireDefault(_FilePlayer);
 	
@@ -56199,7 +56424,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 566 */
+/* 567 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56218,15 +56443,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _loadScript = __webpack_require__(567);
+	var _loadScript = __webpack_require__(568);
 	
 	var _loadScript2 = _interopRequireDefault(_loadScript);
 	
-	var _Base2 = __webpack_require__(568);
+	var _Base2 = __webpack_require__(569);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _utils = __webpack_require__(569);
+	var _utils = __webpack_require__(570);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -56428,7 +56653,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 567 */
+/* 568 */
 /***/ function(module, exports) {
 
 	
@@ -56499,7 +56724,7 @@
 
 
 /***/ },
-/* 568 */
+/* 569 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56512,7 +56737,7 @@
 	
 	var _react = __webpack_require__(1);
 	
-	var _props = __webpack_require__(564);
+	var _props = __webpack_require__(565);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -56636,7 +56861,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 569 */
+/* 570 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -56688,7 +56913,7 @@
 	}
 
 /***/ },
-/* 570 */
+/* 571 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56705,11 +56930,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _fetchJsonp = __webpack_require__(571);
+	var _fetchJsonp = __webpack_require__(572);
 	
 	var _fetchJsonp2 = _interopRequireDefault(_fetchJsonp);
 	
-	var _FilePlayer2 = __webpack_require__(572);
+	var _FilePlayer2 = __webpack_require__(573);
 	
 	var _FilePlayer3 = _interopRequireDefault(_FilePlayer2);
 	
@@ -56829,7 +57054,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 571 */
+/* 572 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
@@ -56939,7 +57164,7 @@
 	});
 
 /***/ },
-/* 572 */
+/* 573 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -56958,7 +57183,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Base2 = __webpack_require__(568);
+	var _Base2 = __webpack_require__(569);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
@@ -57087,7 +57312,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 573 */
+/* 574 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57106,9 +57331,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _queryString = __webpack_require__(574);
+	var _queryString = __webpack_require__(575);
 	
-	var _Base2 = __webpack_require__(568);
+	var _Base2 = __webpack_require__(569);
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
@@ -57270,7 +57495,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 574 */
+/* 575 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57374,7 +57599,7 @@
 
 
 /***/ },
-/* 575 */
+/* 576 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57382,12 +57607,12 @@
 	var React = __webpack_require__(1);
 	var TrackStore = __webpack_require__(269);
 	var TrackActions = __webpack_require__(264);
-	var PlaylistItem = __webpack_require__(576);
+	var PlaylistItem = __webpack_require__(577);
 	
 	var PlaylistSidebar = React.createClass({
 	  displayName: 'PlaylistSidebar',
 	  getInitialState: function getInitialState() {
-	    return { tracks: TrackStore.all(), details: false };
+	    return { tracks: TrackStore.all(), playing: TrackStore.playing(), details: false };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.trackListener = TrackStore.addListener(this._onChange);
@@ -57428,13 +57653,13 @@
 	module.exports = PlaylistSidebar;
 
 /***/ },
-/* 576 */
+/* 577 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var PlaylistItemDetail = __webpack_require__(577);
+	var PlaylistItemDetail = __webpack_require__(578);
 	
 	var PlaylistItem = React.createClass({
 	  displayName: 'PlaylistItem',
@@ -57476,7 +57701,7 @@
 	module.exports = PlaylistItem;
 
 /***/ },
-/* 577 */
+/* 578 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57528,16 +57753,16 @@
 	module.exports = PlaylistItemDetail;
 
 /***/ },
-/* 578 */
+/* 579 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
 	var SoundscapeIndex = __webpack_require__(551);
-	var Header = __webpack_require__(579);
-	var Midsection = __webpack_require__(580);
-	var FilteredList = __webpack_require__(581);
+	var Header = __webpack_require__(580);
+	var Midsection = __webpack_require__(581);
+	var FilteredList = __webpack_require__(582);
 	var AddTrack = __webpack_require__(550);
 	
 	var Frontpage = React.createClass({
@@ -57558,7 +57783,7 @@
 	module.exports = Frontpage;
 
 /***/ },
-/* 579 */
+/* 580 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -57584,7 +57809,7 @@
 	module.exports = Header;
 
 /***/ },
-/* 580 */
+/* 581 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -57620,7 +57845,7 @@
 	// sound you have been seeking.
 
 /***/ },
-/* 581 */
+/* 582 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57631,7 +57856,7 @@
 	var SoundscapeStore = __webpack_require__(262);
 	var FilterActions = __webpack_require__(538);
 	var TrackIndex = __webpack_require__(539);
-	var Filter = __webpack_require__(582);
+	var Filter = __webpack_require__(583);
 	
 	var FilteredList = React.createClass({
 	  displayName: 'FilteredList',
@@ -57665,7 +57890,7 @@
 	module.exports = FilteredList;
 
 /***/ },
-/* 582 */
+/* 583 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57681,10 +57906,10 @@
 	var UserActions = __webpack_require__(259);
 	var TrackIndex = __webpack_require__(539);
 	var TagActions = __webpack_require__(546);
-	var TagIndex = __webpack_require__(583);
-	var SoundscapesFilterIndex = __webpack_require__(585);
-	var ArtistFilterIndex = __webpack_require__(587);
-	var TrackSearchBox = __webpack_require__(589);
+	var TagIndex = __webpack_require__(584);
+	var SoundscapesFilterIndex = __webpack_require__(586);
+	var ArtistFilterIndex = __webpack_require__(588);
+	var TrackSearchBox = __webpack_require__(590);
 	var Filter = React.createClass({
 	  displayName: 'Filter',
 	  getInitialState: function getInitialState() {
@@ -57764,13 +57989,13 @@
 	module.exports = Filter;
 
 /***/ },
-/* 583 */
+/* 584 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var TagIndexItem = __webpack_require__(584);
+	var TagIndexItem = __webpack_require__(585);
 	var FilterActions = __webpack_require__(538);
 	var Label = __webpack_require__(274).Label;
 	
@@ -57845,7 +58070,7 @@
 	module.exports = TagIndex;
 
 /***/ },
-/* 584 */
+/* 585 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -57897,13 +58122,13 @@
 	module.exports = TagIndexItem;
 
 /***/ },
-/* 585 */
+/* 586 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var SoundscapeFilterItem = __webpack_require__(586);
+	var SoundscapeFilterItem = __webpack_require__(587);
 	var FilterActions = __webpack_require__(538);
 	var Label = __webpack_require__(274).Label;
 	
@@ -57979,7 +58204,7 @@
 	module.exports = SoundscapeFilterIndex;
 
 /***/ },
-/* 586 */
+/* 587 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58031,13 +58256,13 @@
 	module.exports = SoundscapeFilterItem;
 
 /***/ },
-/* 587 */
+/* 588 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var ArtistFilterItem = __webpack_require__(588);
+	var ArtistFilterItem = __webpack_require__(589);
 	var FilterActions = __webpack_require__(538);
 	var Label = __webpack_require__(274).Label;
 	
@@ -58113,7 +58338,7 @@
 	module.exports = ArtistFilterIndex;
 
 /***/ },
-/* 588 */
+/* 589 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58163,7 +58388,7 @@
 	module.exports = ArtistFilterItem;
 
 /***/ },
-/* 589 */
+/* 590 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -58192,7 +58417,7 @@
 	module.exports = FilterSearch;
 
 /***/ },
-/* 590 */
+/* 591 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -58214,14 +58439,14 @@
 	module.exports = Footer;
 
 /***/ },
-/* 591 */
+/* 592 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var React = __webpack_require__(1);
 	var LoginForm = __webpack_require__(272);
-	var SignupForm = __webpack_require__(592);
+	var SignupForm = __webpack_require__(558);
 	
 	var SplashPage = React.createClass({
 	  displayName: 'SplashPage',
@@ -58257,7 +58482,7 @@
 	          React.createElement(
 	            'p',
 	            { className: 'small_text' },
-	            'Share, collect, and experience the sounds of our planet as never before'
+	            'Share, collect, and experience ambient sounds of the world'
 	          )
 	        )
 	      )
@@ -58275,219 +58500,6 @@
 	//   <p className="infotext third">Explore the Soundscape</p>
 	// </div>
 	module.exports = SplashPage;
-
-/***/ },
-/* 592 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var SessionActions = __webpack_require__(237);
-	var ErrorActions = __webpack_require__(231);
-	var hashHistory = __webpack_require__(168).hashHistory;
-	var ErrorStore = __webpack_require__(261);
-	var Errors = __webpack_require__(273);
-	var UserStore = __webpack_require__(257);
-	var NavItem = __webpack_require__(274).NavItem;
-	var Modal = __webpack_require__(274).Modal;
-	var FormGroup = __webpack_require__(274).FormGroup;
-	var ControlLabel = __webpack_require__(274).ControlLabel;
-	var FormControl = __webpack_require__(274).FormControl;
-	var Button = __webpack_require__(274).Button;
-	
-	var SigninForm = React.createClass({
-	  displayName: 'SigninForm',
-	
-	  getInitialState: function getInitialState() {
-	    return { show: true, username: "", password1: "", password2: "" };
-	  },
-	
-	  close: function close() {
-	    this.setState({ show: false });
-	    this.props.closeForm();
-	  },
-	
-	  open: function open() {
-	    this.setState({ show: true });
-	  },
-	
-	  handleUsernameChange: function handleUsernameChange(e) {
-	    e.preventDefault();
-	    this.setState({ username: e.target.value });
-	  },
-	
-	  handlePasswordChange: function handlePasswordChange(e) {
-	    e.preventDefault();
-	    this.setState({ password1: e.target.value });
-	  },
-	
-	  handlePasswordChange2: function handlePasswordChange2(e) {
-	    e.preventDefault();
-	    this.setState({ password2: e.target.value });
-	  },
-	
-	  handleSubmit: function handleSubmit(e) {
-	    e.preventDefault();
-	    if (this.getValidationState() === 'success') {
-	      SessionActions.signup({
-	        username: this.state.username,
-	        password: this.state.password1
-	      });
-	      if (ErrorStore.all().length === 0) {
-	        this.close();
-	        this.setState({ show: false, username: "", password1: "", password2: "" });
-	      }
-	    } else {
-	      ErrorActions.receiveErrors(['Passwords must match and be 6 or more characters']);
-	    }
-	  },
-	
-	  getValidationState: function getValidationState() {
-	    if (this.state.password1.length === 0 && this.state.password2.length === 0) {
-	      return null;
-	    }
-	    if (this.state.password1 === this.state.password2 && this.state.password1.length > 5) {
-	      return 'success';
-	    } else {
-	      return 'error';
-	    }
-	  },
-	
-	  demoSignIn: function demoSignIn(e) {
-	    e.preventDefault();
-	    this.setState({ username: "", password1: "", password2: "" });
-	
-	    var username = "Blastoise".split("");
-	    var password = "password".split("");
-	    var time = 50;
-	    var that = this;
-	
-	    $(".btn").addClass("disabled");
-	    $(".btn").attr("disabled", true);
-	    $("input").attr("disabled", true);
-	
-	    username.forEach(function (letter) {
-	      time += 50;
-	      setTimeout(function () {
-	        that.setState({ username: that.state.username + letter });
-	      }, time);
-	    });
-	
-	    time += 500;
-	
-	    password.forEach(function (letter) {
-	      time += 50;
-	      setTimeout(function () {
-	        that.setState({ password1: that.state.password1 + letter });
-	      }, time);
-	    });
-	
-	    time += 500;
-	
-	    password.forEach(function (letter) {
-	      time += 50;
-	      setTimeout(function () {
-	        that.setState({ password2: that.state.password2 + letter });
-	      }, time);
-	    });
-	
-	    time += 500;
-	
-	    setTimeout(function () {
-	      SessionActions.login({
-	        username: that.state.username,
-	        password: that.state.password1
-	      });
-	      that.close();
-	    }, time);
-	  },
-	
-	  render: function render() {
-	    return React.createElement(
-	      Modal,
-	      {
-	        show: this.state.show,
-	        onHide: this.close
-	      },
-	      React.createElement(
-	        Modal.Header,
-	        { closeButton: true },
-	        React.createElement(
-	          Modal.Title,
-	          null,
-	          'Sign Up'
-	        )
-	      ),
-	      React.createElement(
-	        'form',
-	        { className: 'modal-form', onSubmit: this.handleSubmit },
-	        React.createElement(
-	          FormGroup,
-	          null,
-	          React.createElement(
-	            ControlLabel,
-	            null,
-	            'Username'
-	          ),
-	          React.createElement(FormControl, {
-	            type: 'text',
-	            onChange: this.handleUsernameChange,
-	            value: this.state.username
-	          })
-	        ),
-	        React.createElement(
-	          FormGroup,
-	          {
-	            validationState: this.getValidationState()
-	          },
-	          React.createElement(
-	            ControlLabel,
-	            null,
-	            'Password'
-	          ),
-	          React.createElement(FormControl, {
-	            type: 'password',
-	            onChange: this.handlePasswordChange,
-	            value: this.state.password1
-	          }),
-	          React.createElement(FormControl.Feedback, null)
-	        ),
-	        React.createElement(
-	          FormGroup,
-	          {
-	            validationState: this.getValidationState()
-	          },
-	          React.createElement(
-	            ControlLabel,
-	            null,
-	            'Confirm Password'
-	          ),
-	          React.createElement(FormControl, {
-	            type: 'password',
-	            onChange: this.handlePasswordChange2,
-	            value: this.state.password2
-	          }),
-	          React.createElement(FormControl.Feedback, null)
-	        ),
-	        React.createElement(
-	          Button,
-	          { type: 'submit' },
-	          'Submit'
-	        ),
-	        React.createElement(
-	          Button,
-	          { onClick: this.demoSignIn },
-	          'Demo Sign In'
-	        )
-	      ),
-	      React.createElement(Errors, null)
-	    );
-	  }
-	
-	});
-	
-	module.exports = SigninForm;
 
 /***/ }
 /******/ ]);

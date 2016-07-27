@@ -44,6 +44,9 @@ const TrackIndexItem = React.createClass({
           <div className="track_index_artist" onClick={this._toArtist}>
             {this.props.parent === "user" ? this.props.track.downloads : this.props.track.artist}
           </div>
+          <div className='open_track' onClick={this._displayDetails}>
+            <Glyphicon className='open_glyph' glyph="collapse-down"/>
+          </div>
         </div>
         {details}
       </div>

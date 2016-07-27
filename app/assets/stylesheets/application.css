@@ -387,6 +387,10 @@ body.cafe {
   text-align: inherit;
 }
 
+.collapse_header {
+  flex: .4;
+}
+
 .track_index {
   display: flex;
   flex-direction: column;

@@ -11,6 +11,7 @@ const TrackHeader = React.createClass({
         <span className="play_button_header"></span>
         <span className="track_title_header">Track</span>
         <span className="track_artist_header">{this.props.parent === "user" ? "Downloads" : "Artist"}</span>
+        <div className="collapse_header" />
       </div>
     )
   }

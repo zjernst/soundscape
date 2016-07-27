@@ -26,7 +26,7 @@ const SplashPage = React.createClass({
         <div className="info first" onClick={this._displayLogin}>
           <p className="infotext first">Expand your aural palette</p>
           <div className="small_text_container">
-          <p className="small_text">Share, collect, and experience the sounds of our planet as never before</p>
+          <p className="small_text">Share, collect, and experience ambient sounds of the world</p>
           </div>
         </div>
       </div>

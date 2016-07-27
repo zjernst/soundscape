@@ -5,7 +5,7 @@ const PlaylistItem = require('./playlist_item');
 
 const PlaylistSidebar = React.createClass({
   getInitialState() {
-    return({tracks: TrackStore.all(), details: false})
+    return({tracks: TrackStore.all(), playing: TrackStore.playing(), details: false})
   },
 
   componentDidMount() {
