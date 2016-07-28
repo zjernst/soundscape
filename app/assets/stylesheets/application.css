@@ -131,7 +131,7 @@ body.cafe {
   overflow: hidden;
 }
 
-.midsection_background {
+/*.midsection_background {
   position: relative;
   background: url('https://res.cloudinary.com/soundscape/image/upload/v1467349002/beachwaves_qgvy7z.jpg');
   width: 100%;
@@ -141,7 +141,7 @@ body.cafe {
   background-repeat: no-repeat;
   background-size: cover;
   bottom: 120px;
-}
+}*/
 
 .midsection_text {
   z-index: 5;
