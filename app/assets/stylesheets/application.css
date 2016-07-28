@@ -104,16 +104,16 @@ body.cafe {
   overflow: hidden;
 }
 
-/*.header_background {
+.header_background {
   position: absolute;
   background: url('https://res.cloudinary.com/soundscape/image/upload/v1467305571/foggy_forest_qmxcjc.jpg');
   width: 100%;
   z-index: 1;
-  height: 1300px;
+  height: 900px;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-}*/
+}
 
 .header_background_text {
   position: absolute;
@@ -131,7 +131,7 @@ body.cafe {
   overflow: hidden;
 }
 
-/*.midsection_background {
+.midsection_background {
   position: relative;
   background: url('https://res.cloudinary.com/soundscape/image/upload/v1467349002/beachwaves_qgvy7z.jpg');
   width: 100%;
@@ -141,7 +141,7 @@ body.cafe {
   background-repeat: no-repeat;
   background-size: cover;
   bottom: 120px;
-}*/
+}
 
 .midsection_text {
   z-index: 5;
@@ -726,4 +726,9 @@ body.cafe {
 
 .react-parallax {
   height: inherit;
+}
+
+.react-parallax-background-children {
+  height: 100%;
+  width: 100%;
 }

@@ -55322,7 +55322,7 @@
 /* 561 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -57801,7 +57801,12 @@
 	      { className: 'header_container' },
 	      React.createElement(
 	        _reactParallax.Parallax,
-	        { bgImage: 'https://res.cloudinary.com/soundscape/image/upload/v1467305571/foggy_forest_qmxcjc.jpg', strength: 400 },
+	        { strength: 400 },
+	        React.createElement(
+	          _reactParallax.Background,
+	          null,
+	          React.createElement('div', { className: 'header_background' })
+	        ),
 	        React.createElement(
 	          'div',
 	          { className: 'header_background_text' },
@@ -57843,7 +57848,12 @@
 	      { className: 'midsection_container' },
 	      React.createElement(
 	        _reactParallax.Parallax,
-	        { bgImage: 'https://res.cloudinary.com/soundscape/image/upload/v1467349002/beachwaves_qgvy7z.jpg', strength: 300 },
+	        { strength: 300 },
+	        React.createElement(
+	          _reactParallax.Background,
+	          null,
+	          React.createElement('div', { className: 'midsection_background' })
+	        ),
 	        React.createElement(
 	          'div',
 	          { className: 'midsection_text' },
