@@ -22,6 +22,7 @@
     "react-bootstrap": "^0.29.5",
     "react-burger-menu": "^1.9.7",
     "react-dom": "^0.14.2",
+    "react-parallax": "^0.4.3",
     "react-player": "^0.7.4",
     "react-router": "2.0.1",
     "react-sidebar": "^2.1.4",

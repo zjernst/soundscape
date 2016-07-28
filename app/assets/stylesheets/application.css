@@ -99,21 +99,21 @@ body.cafe {
 
 
 .header_container {
-  height: 600px;
+  height: 650px;
   position: relative;
   overflow: hidden;
 }
 
-.header_background {
+/*.header_background {
   position: absolute;
   background: url('https://res.cloudinary.com/soundscape/image/upload/v1467305571/foggy_forest_qmxcjc.jpg');
   width: 100%;
   z-index: 1;
-  height: 900px;
+  height: 1300px;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-}
+}*/
 
 .header_background_text {
   position: absolute;
@@ -126,7 +126,7 @@ body.cafe {
 }
 
 .midsection_container {
-  height: 500px;
+  height: 600px;
   position: relative;
   overflow: hidden;
 }
@@ -136,7 +136,7 @@ body.cafe {
   background: url('https://res.cloudinary.com/soundscape/image/upload/v1467349002/beachwaves_qgvy7z.jpg');
   width: 100%;
   z-index: 1;
-  height: 900px;
+  height: 1000px;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -149,7 +149,7 @@ body.cafe {
   font-weight: 700;
   position: absolute;
   left: 40%;
-  bottom: 200px;
+  top: 250px;
 }
 
 .midsection_subtext {
@@ -486,7 +486,7 @@ body.cafe {
   color: white;
   padding: 8px;
   border-radius: 5px;
-  }
+}
 
 .trash_track {
   float: right;
@@ -722,4 +722,8 @@ body.cafe {
   width: 100%;
   background-color: #212121;
   bottom: 0;
+}
+
+.react-parallax {
+  height: inherit;
 }
