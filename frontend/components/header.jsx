@@ -8,8 +8,8 @@ const Header = React.createClass({
         <Parallax strength={400}>
         <Background>
           <div className="header_background" />
+          <div className="header_background_text">Hear the world.</div>
         </Background>
-        <div className="header_background_text">Hear the world.</div>
         </Parallax>
       </div>
     )
