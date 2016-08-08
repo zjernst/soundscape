@@ -46,39 +46,6 @@ body {
   /*background-image: url('http://res.cloudinary.com/soundscape/image/upload/v1467305571/foggy_forest_qmxcjc.jpg');*/
 }
 
-body.rain {
-  background-image: url('http://webneel.com/wallpaper/sites/default/files/images/04-2013/cute-rain-in-mirror.jpg');
-}
-
-body.waves {
-  background-image: url('http://www.wallpapersdb.org/wallpapers/beach/golden_beach_and_waves_1920x1200.jpg');
-}
-
-body.wind {
-  background-image: url('http://www.tantrumkitesurf.com/wp-content/uploads/2012/12/wind.jpg');
-}
-
-body.city {
-  background-image: url('https://wallpaperscraft.com/image/city_skyscrapers_night_light_road_62141_3840x2160.jpg');
-  background-size: 2000px;
-}
-
-body.forest {
-  background-image: url('https://static.pexels.com/photos/1826/wood-nature-sunny-forest.jpg');
-}
-
-body.home {
-  background-image: url('http://s.shld.net/is/image/Sears/s_025CO66554812B-qm-$cq_width_160$-qm-$cq_width_250$');
-}
-
-body.fire {
-  background-image: url('http://www.win10themes.com/wp-content/uploads/2016/01/Fireplace-Wallpaper-Images.png');
-}
-
-body.cafe {
-  background-image: url('http://www.atlascafe.net/images/02.jpg');
-}
-
 .logo {
 
 }
@@ -225,7 +192,7 @@ body.cafe {
 }
 
 .rain.ss_item_container {
-  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,h_500/v1467780063/drops_uggrdb.jpg');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,w_600/v1467780063/drops_uggrdb.jpg');
   background-position: center;
 }
 
@@ -237,7 +204,7 @@ body.cafe {
 }
 
 .waves.ss_item_container {
-  background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1468216689/oceansagains_v0op8t.jpg');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,w_600/v1468216689/oceansagains_v0op8t.jpg');
   background-size: 600px;
   background-position: center;
 }
@@ -250,7 +217,7 @@ body.cafe {
 }
 
 .wind.ss_item_container {
-  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,h_500/v1467780939/photo-1438045809872-34a58ff469f6_kyula2.jpg');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,w_600/v1467780939/photo-1438045809872-34a58ff469f6_kyula2.jpg');
   background-position: center;
 }
 
@@ -279,7 +246,7 @@ body.cafe {
 }
 
 .forest.ss_item_container {
-  background-image: url('https://static.pexels.com/photos/1826/wood-nature-sunny-forest.jpg');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,w_600/v1470627680/wood-nature-sunny-forest_otdy9v.jpg');
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -292,7 +259,7 @@ body.cafe {
 }
 
 .home.ss_item_container {
-  background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1467995598/home_qrl68f.jpg');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,w_500/v1467995598/home_qrl68f.jpg');
   background-position: center;
   background-size: 600px;
 }
@@ -305,7 +272,7 @@ body.cafe {
 }
 
 .fire.ss_item_container {
-  background-image: url('https://res.cloudinary.com/soundscape/image/upload/v1467995596/Fireplace-Wallpaper-Images_dnak9o.png');
+  background-image: url('https://res.cloudinary.com/soundscape/image/upload/c_scale,w_600/v1467995596/Fireplace-Wallpaper-Images_dnak9o.png');
   background-position: center;
   background-size: 600px;
 }
